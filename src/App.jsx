@@ -1,8 +1,17 @@
 /* eslint-disable react/react-in-jsx-scope */
-import './App.css';
+import './assets/global.css';
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
+import Home from './Pages/Home/Home';
 
 function App() {
-  return <h1>Deu bom</h1>;
+  return (
+    <div>
+      <Header />
+      <Home />
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

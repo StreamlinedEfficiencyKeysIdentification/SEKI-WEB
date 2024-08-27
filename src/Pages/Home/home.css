@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+  -webkit-text-stroke: 0.2px;
+}
+
+#home {
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background: linear-gradient(to bottom, #9fdaff 80vh, #eefafa 0);
+}
+
+.container {
+  width: auto;
+}
+
+.hi {
+  display: flex;
+  text-transform: uppercase;
+  font-size: 1.4em;
+  font-weight: 600;
+  font-family: 'Poppins', serif;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 5px;
+}
+
+.infos {
+  display: flex;
+  align-items: center;
+  height: 110px;
+  flex-direction: row;
+}
+
+.infos .infos-txt {
+  display: flex;
+  align-items: center;
+}
+
+.infos .infos-txt span {
+  font-size: 9em;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-family: 'Poppins', serif;
+}
+
+.infos2 {
+  display: flex;
+  align-items: center;
+  height: 110px;
+}
+
+.infos2 span {
+  font-size: 9em;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-family: 'Poppins', serif;
+}
+
+.infos .infos-link {
+  display: flex;
+  gap: 20px;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 60px;
+}
+
+.infos .infos-link a {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+  color: rgb(206, 197, 116);
+  text-decoration: none;
+  transition: transform 0.5s ease;
+}
+
+.infos .infos-link a:hover {
+  cursor: pointer;
+  transform: translateY(-10px);
+  color: white;
+}
+
+.container-text {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.container-text span {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  text-align: start;
+  width: 80%;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Poppins', serif;
+  line-height: 1;
+}
+
+@media screen and (max-width: 912px) {
+  .container {
+    width: auto;
+  }
+
+  .hi {
+    margin: 0;
+  }
+
+  .infos,
+  .infos2 {
+    height: 60px;
+  }
+
+  .infos .infos-txt span,
+  .infos2 span {
+    font-size: 5em;
+  }
+
+  .container-text {
+    display: flex;
+    width: 400px;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .container-text span {
+    font-size: 1em;
+  }
+
+  .infos .infos-link {
+    margin-bottom: 40px;
+  }
+
+  .infos .infos-link a {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    width: auto;
+  }
+
+  .hi {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  .infos,
+  .infos2 {
+    height: 50px;
+  }
+
+  .infos .infos-txt span,
+  .infos2 span {
+    font-size: 4em;
+  }
+
+  .container-text {
+    display: flex;
+    width: 400px;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .container-text span {
+    font-size: 0.9em;
+  }
+
+  .infos .infos-link {
+    margin-bottom: 30px;
+    gap: 10px;
+  }
+
+  .infos .infos-link a {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .container {
+    width: auto;
+  }
+
+  .hi {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  .infos,
+  .infos2 {
+    height: 35px;
+  }
+
+  .infos .infos-txt span,
+  .infos2 span {
+    font-size: 2.8em;
+  }
+
+  .container-text {
+    display: flex;
+    width: 300px;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .container-text span {
+    font-size: 0.9em;
+  }
+
+  .infos .infos-link {
+    margin-bottom: 30px;
+    gap: 5px;
+  }
+
+  .infos .infos-link a {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+  }
+}

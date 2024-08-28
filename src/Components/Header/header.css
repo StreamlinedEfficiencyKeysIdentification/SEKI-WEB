@@ -181,8 +181,8 @@ header {
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 338px) {
   .content .content-nav ul li a {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 }

@@ -25,8 +25,8 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="info-rodape">
-              <div className="rodape-icon">
+            <div className="home-rodape">
+              <div className="h-rodape-icon">
                 <AiOutlineGlobal size={24} color="#0072BB" />
               </div>
               <p>Utilize a internet ao seu favor</p>
@@ -37,7 +37,6 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="container-rodape"></div>
     </section>
   );
 }

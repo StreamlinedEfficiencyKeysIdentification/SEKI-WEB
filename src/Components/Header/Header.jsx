@@ -34,8 +34,8 @@ function Header() {
         <nav className={`content-nav ${showMenu ? 'show' : ''}`}>
           <ul>
             <li>
-              <Link to="home" smooth={true} duration={500} onClick={closeMenu}>
-                Home
+              <Link to="Controle" smooth={true} duration={500} onClick={closeMenu}>
+                Controle
               </Link>
             </li>
             <li>

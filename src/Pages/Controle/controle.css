@@ -1,0 +1,112 @@
+#Controle {
+  width: 100%;
+  height: 110vh;
+  background-color: #eefafa;
+}
+
+.c-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.r-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 12vh;
+  background-color: #eefafa;
+  gap: 20px;
+}
+
+.rodape-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.rodape-info .p-rodape {
+  font-weight: bold;
+  font-size: 22px;
+  color: black;
+}
+
+.c-c-l {
+  display: flex;
+  align-items: end;
+  height: 1vh;
+}
+
+.l {
+  height: 1px;
+  border: 1px solid #b7bcc0;
+}
+
+.c-c-content {
+  display: flex;
+  flex-direction: column;
+  height: 83vh;
+  padding: 0 10px;
+}
+
+.c-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.img-info {
+  display: flex;
+  height: 82vh;
+}
+
+.c-c-c-img {
+  display: flex;
+  justify-content: start;
+  width: 35%;
+}
+
+.c-c-c-info {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  width: 65%;
+  gap: 50px;
+  padding: 0 25px;
+}
+
+.i-titulo p {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.i-group {
+  display: flex;
+  width: 100%;
+  gap: 20%;
+}
+
+.g-sub1,
+.g-sub2 {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  gap: 20px;
+}
+
+.t-titulo {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.t-info {
+  font-size: 16px;
+}

@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './footer.css';
-import Logo from '/SEKI.png';
+import Logo from '/SEKI.svg';
 
 function Footer() {
   return (

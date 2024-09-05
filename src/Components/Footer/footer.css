@@ -7,23 +7,24 @@ footer {
   position: relative;
   bottom: 0;
   width: 100%;
-  height: 8vh;
+  overflow: hidden;
 }
 
 .footer-container {
-  width: 1196px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   position: relative;
-  margin: 0 auto;
+  width: 1296px;
+  padding: 25px 0;
+  gap: 1rem;
 }
 
 .footer-logo {
   display: flex;
   align-items: center;
-  position: absolute;
-  left: 10px;
+  position: relative;
   height: 100%;
 }
 
@@ -34,5 +35,12 @@ footer {
 @media screen and (max-width: 1196px) {
   .footer-container {
     width: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .footer-logo {
+    position: absolute;
+    left: 0;
   }
 }

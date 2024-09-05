@@ -1,0 +1,143 @@
+.section {
+  background: linear-gradient(180deg, #9fdaff 0%, #eefafa 100%);
+}
+
+.app,
+#Recurso {
+  max-width: 1296px;
+  height: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.a-container {
+  width: 100%;
+  height: 100%;
+  z-index: 96;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px 0 50px;
+}
+
+.ac-titulo p,
+.rc-titulo p {
+  font-size: 2.8rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.ac-info {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.i-download {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.i-download img {
+  width: 220px;
+}
+
+.i-qrcode {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.qr-content {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.i-arrow {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 0 0 1rem 1rem;
+  overflow: hidden;
+  padding: 24px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  gap: 1rem;
+}
+
+.qr-t {
+  font-size: 1rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
+.qr-p {
+  font-size: 0.9rem;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+}
+
+.qrcode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.qrcode::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  background-color: rgba(0, 114, 187, 0.5);
+  filter: blur(100px);
+  z-index: 97;
+}
+
+.qr-container img {
+  width: 100%;
+  z-index: 99;
+}
+
+.r-container {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 50px;
+  justify-content: center;
+  height: 100vh;
+}
+
+.rc-titulo {
+  display: flex;
+  justify-content: center;
+}
+
+.rc-titulo p {
+  margin-block-start: 0px;
+}
+
+.recurso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.recurso img {
+  max-width: 542px;
+  height: auto;
+  border-radius: 1rem;
+}

@@ -5,19 +5,44 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+  line-height: inherit;
+  image-rendering: -webkit-optimize-contrast;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: auto;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
 }
 
 body {
   overflow-x: hidden;
+  -webkit-text-stroke: 0.2px;
 }
 
-section {
-  min-height: 80vh;
-  width: 100%;
+p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+}
+
+p,
+h1,
+a {
+  color: #172734;
 }
 
 .w {
-  width: 1296px;
+  max-width: 1296px;
 }
 
 /* Estilização da barra de rolagem */

@@ -1,80 +1,119 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-scroll';
-import { RiMenu3Fill, RiCloseLine } from 'react-icons/ri';
-import Logo from '/SEKI.png';
+import { RiMenuLine, RiCloseLine } from 'react-icons/ri';
+import Logo from '/SEKI.svg';
 import './header.css';
 
 function Header() {
-  const [showMenu, setShowMenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showCloseIcon, setShowCloseIcon] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newIsMobile = window.innerWidth < 1024;
+      setIsMobile(newIsMobile);
+
+      if (!newIsMobile && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => setShowCloseIcon(true), 900);
+    } else {
+      document.body.style.overflow = 'unset';
+      setShowCloseIcon(false);
+    }
+  }, [isOpen]);
 
   const toggleMenu = () => {
-    setShowMenu(!showMenu);
+    setIsOpen(!isOpen);
   };
 
-  const closeMenu = () => {
-    setShowMenu(false);
+  const handleOutsideClick = (e) => {
+    if (menuRef.current && !menuRef.current.contains(e.target) && !e.target.closest('.mobile-menu-button')) {
+      setIsOpen(false);
+    }
   };
 
   useEffect(() => {
-    document.addEventListener('click', closeMenu);
-
+    document.addEventListener('mousedown', handleOutsideClick);
     return () => {
-      document.removeEventListener('click', closeMenu);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
 
   return (
     <header>
-      <div className="content" onClick={(e) => e.stopPropagation()}>
-        <div className="header-logo">
-          <Link to="home" smooth={true} duration={500} onClick={closeMenu}>
-            <img src={Logo}></img>
-          </Link>
-        </div>
-        <nav className={`content-nav ${showMenu ? 'show' : ''}`}>
-          <ul>
-            <li>
-              <Link to="Controle" smooth={true} duration={500} onClick={closeMenu}>
-                Controle
-              </Link>
-            </li>
-            <li>
-              <Link to="projects" smooth={true} duration={500} onClick={closeMenu}>
-                Quem Somos
-              </Link>
-            </li>
-            <li>
-              <Link to="about" smooth={true} duration={500} onClick={closeMenu}>
-                Recursos
-              </Link>
-            </li>
-            <li>
-              <Link to="contact" smooth={true} duration={500} onClick={closeMenu}>
-                Contato
-              </Link>
-            </li>
-          </ul>
-          <div className="content-auth-nav">
-            <Link to="login" smooth={true} duration={500} onClick={closeMenu} className="auth-login">
-              Login
-            </Link>
-            <Link to="register" smooth={true} duration={500} onClick={closeMenu} className="auth-comeceja">
-              Comece Já
+      <nav className="navbar">
+        <div className="navbar-container">
+          {isMobile && (
+            <button onClick={toggleMenu} className="mobile-menu-button">
+              <RiMenuLine size={32} color="black" />
+            </button>
+          )}
+
+          <div className="header-logo">
+            <Link to="home" smooth={true} duration={500}>
+              <img src={Logo}></img>
             </Link>
           </div>
-        </nav>
-        <div className="content-auth">
-          <Link to="login" smooth={true} duration={500} onClick={closeMenu} className="auth-login">
-            Login
-          </Link>
-          <Link to="register" smooth={true} duration={500} onClick={closeMenu} className="auth-comeceja">
-            Comece Já!
-          </Link>
+
+          {!isMobile && (
+            <>
+              <div className="navbar-links">
+                <Link to="Sobre" smooth={true} duration={500}>
+                  Quem Somos
+                </Link>
+                <Link to="Recurso" smooth={true} duration={500}>
+                  Recursos
+                </Link>
+                <Link to="Contato" smooth={true} duration={500}>
+                  Contato
+                </Link>
+              </div>
+              <div className="navbar-actions">
+                <a className="login-button">Entrar</a>
+                <button className="cta-button">Comece já!</button>
+              </div>
+            </>
+          )}
         </div>
-        <div className="content-button" onClick={toggleMenu}>
-          {showMenu ? <RiCloseLine size={40} /> : <RiMenu3Fill size={40} />}
+
+        {isOpen && isMobile && <div className="overlay" onClick={toggleMenu}></div>}
+
+        <div className={`mobile-menu ${isOpen && isMobile ? 'open' : ''}`} ref={menuRef}>
+          <div className="mobile-menu-content">
+            <Link to="Sobre" smooth={true} duration={500} onClick={toggleMenu}>
+              Quem Somos
+            </Link>
+            <Link to="Recurso" smooth={true} duration={500} onClick={toggleMenu}>
+              Recursos
+            </Link>
+            <Link to="Contato" smooth={true} duration={500} onClick={toggleMenu}>
+              Contato
+            </Link>
+            <button className="login-button">Entrar</button>
+            <button className="cta-button">Comece já!</button>
+          </div>
         </div>
-      </div>
+
+        {showCloseIcon && isMobile && (
+          <button onClick={toggleMenu} className="close-menu-button">
+            <RiCloseLine size={32} color="black" />
+          </button>
+        )}
+      </nav>
     </header>
   );
 }

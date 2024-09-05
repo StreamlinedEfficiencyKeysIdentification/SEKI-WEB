@@ -4,7 +4,7 @@ import './sobre.css';
 function Sobre() {
   return (
     <section id="Sobre">
-      <h1>teste</h1>
+      <div className="s-container"></div>
     </section>
   );
 }

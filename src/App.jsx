@@ -4,7 +4,7 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Home from './Pages/Home/Home';
 import Controle from './Pages/Controle/Controle';
-import Sobre from './Pages/QuemSomos/Sobre';
+import Recurso from './Pages/Recursos/Recurso';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Header />
       <Home />
       <Controle />
-      <Sobre />
+      <Recurso />
       <Footer />
     </div>
   );

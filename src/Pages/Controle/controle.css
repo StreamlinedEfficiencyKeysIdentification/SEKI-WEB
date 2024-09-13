@@ -198,8 +198,9 @@
 }
 
 @media screen and (max-width: 1296px) {
-  .c-container {
-    padding: 0 1rem;
+  .c-container,
+  .rodape-info {
+    padding: 50px 1rem;
   }
 
   .c2-container {

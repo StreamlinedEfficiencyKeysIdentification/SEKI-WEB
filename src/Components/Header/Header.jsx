@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-scroll';
+import { Link as ScrollLink } from 'react-scroll';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { RiMenuLine, RiCloseLine } from 'react-icons/ri';
 import Logo from '/SEKI.svg';
 import './header.css';
@@ -9,6 +10,27 @@ function Header() {
   const [isMobile, setIsMobile] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleCadastroClick = () => {
+    navigate('/cadastro');
+  };
+
+  const handleScrollToResources = () => {
+    navigate('/', { state: { scrollTo: 'Recurso' } });
+  };
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const element = document.getElementById(location.state.scrollTo);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop,
+        });
+      }
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,27 +86,31 @@ function Header() {
           )}
 
           <div className="header-logo">
-            <Link to="home" smooth={true} duration={500}>
+            <RouterLink
+              onClick={() => {
+                window.location.href = '/';
+              }}
+            >
               <img src={Logo}></img>
-            </Link>
+            </RouterLink>
           </div>
 
           {!isMobile && (
             <>
               <div className="navbar-links">
-                <Link to="Sobre" smooth={true} duration={500}>
-                  Quem Somos
-                </Link>
-                <Link to="Recurso" smooth={true} duration={500}>
+                <RouterLink to="/quemsomos">Quem Somos</RouterLink>
+                <ScrollLink onClick={handleScrollToResources} to="Recurso" smooth={true} duration={500}>
                   Recursos
-                </Link>
-                <Link to="Contato" smooth={true} duration={500}>
-                  Contato
-                </Link>
+                </ScrollLink>
+                <RouterLink to="/contato">Contato</RouterLink>
               </div>
               <div className="navbar-actions">
-                <a className="login-button">Entrar</a>
-                <button className="cta-button">Comece já!</button>
+                <RouterLink to="/login" className="login-button">
+                  Entrar
+                </RouterLink>
+                <button onClick={handleCadastroClick} className="cta-button">
+                  Comece já!
+                </button>
               </div>
             </>
           )}
@@ -94,17 +120,33 @@ function Header() {
 
         <div className={`mobile-menu ${isOpen && isMobile ? 'open' : ''}`} ref={menuRef}>
           <div className="mobile-menu-content">
-            <Link to="Sobre" smooth={true} duration={500} onClick={toggleMenu}>
+            <RouterLink to="/quemsomos" onClick={toggleMenu}>
               Quem Somos
-            </Link>
-            <Link to="Recurso" smooth={true} duration={500} onClick={toggleMenu}>
+            </RouterLink>
+            <ScrollLink
+              to=""
+              onClick={() => {
+                handleScrollToResources();
+                toggleMenu();
+              }}
+            >
               Recursos
-            </Link>
-            <Link to="Contato" smooth={true} duration={500} onClick={toggleMenu}>
+            </ScrollLink>
+            <RouterLink to="/contato" onClick={toggleMenu}>
               Contato
-            </Link>
-            <button className="login-button">Entrar</button>
-            <button className="cta-button">Comece já!</button>
+            </RouterLink>
+            <RouterLink to="/login" className="login-button" onClick={toggleMenu}>
+              Entrar
+            </RouterLink>
+            <button
+              onClick={() => {
+                handleCadastroClick();
+                toggleMenu();
+              }}
+              className="cta-button"
+            >
+              Comece já!
+            </button>
           </div>
         </div>
 

@@ -6,8 +6,15 @@ import Arrow from '/Arrow.svg';
 import RecursoImg from '/Recurso.svg';
 import './recurso.css';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Recurso() {
+  const navigate = useNavigate();
+
+  const goToContato = () => {
+    navigate('/contato');
+  };
+
   useEffect(() => {
     document.querySelectorAll('details').forEach((faq) => {
       faq.addEventListener('toggle', () => {
@@ -141,7 +148,7 @@ function Recurso() {
                 aproveitar o SEKI ao máximo!
               </p>
             </div>
-            <button>Entre em contato</button>
+            <button onClick={goToContato}>Entre em contato</button>
           </div>
         </div>
       </div>

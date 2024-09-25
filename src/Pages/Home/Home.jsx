@@ -1,10 +1,17 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { useNavigate } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { AiOutlineGlobal } from 'react-icons/ai';
 import Ghome from '/G-Home.svg';
 import './home.css';
 
 function Home() {
+  const navigate = useNavigate();
+
+  const goToCadastro = () => {
+    navigate('/cadastro');
+  };
+
   return (
     <section id="home">
       <div className="h-container">
@@ -21,7 +28,7 @@ function Home() {
               Obtenha o controle total dos seus patrimônios com uma solução completa, prática e segura para organizar
               sua empresa em tempo real.
             </p>
-            <a className="experimente">
+            <a onClick={goToCadastro} className="experimente">
               Experimente
               <div className="experimente-arrow">
                 <FaArrowRight size={'1.5rem'} color="white" />

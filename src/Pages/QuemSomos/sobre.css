@@ -1,12 +1,107 @@
 #Sobre {
   width: 100%;
-  height: 100vh;
 }
 
 .s-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
+  height: 90%;
+  overflow: hidden;
+  gap: 0.5rem;
+  padding: 100px 1rem 50px;
+}
+
+.card1,
+.card2,
+.card3,
+.card4 {
+  background: linear-gradient(to bottom, #ffffff, #449cd6);
+}
+
+.card {
+  flex: 1;
   height: 100%;
+  transition:
+    flex 0.7s ease,
+    opacity 0.7s ease;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.card-content {
+  text-align: center;
+  padding: 3rem;
+}
+
+.card h2 {
+  font-size: 2rem;
+  color: #044275;
+  margin: 0;
+  z-index: 1; /* Sempre visível */
+}
+
+.card-text {
+  display: block;
+  opacity: 1;
+  font-size: 1rem;
+  color: #172734;
+  transition: opacity 1s ease;
+}
+
+.card-text strong {
+  font-weight: 600;
+}
+
+.button-sobre {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.button-sobre button {
+  padding: 0.5rem 1rem;
+  background-color: #044275;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  font-size: 1.25rem;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.button-sobre button:hover {
+  background-color: #172734;
+}
+
+@media (min-width: 1024px) {
+  #Sobre {
+    height: 100vh;
+  }
+  .s-container {
+    flex-direction: row;
+  }
+
+  .card:hover {
+    flex: 2;
+  }
+
+  .s-container:hover > :not(:hover) {
+    opacity: 0.8;
+  }
+
+  .card-text {
+    display: none;
+  }
+
+  .card:hover .card-text {
+    display: block;
+    flex-direction: column;
+    opacity: 1;
+  }
 }

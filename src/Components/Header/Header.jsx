@@ -151,7 +151,7 @@ function Header() {
         </div>
 
         {showCloseIcon && isMobile && (
-          <button onClick={!isOpen} className="close-menu-button">
+          <button onClick={toggleMenu} className="close-menu-button">
             <RiCloseLine size={32} color="black" />
           </button>
         )}

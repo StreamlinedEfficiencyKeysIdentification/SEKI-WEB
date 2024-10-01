@@ -1,12 +1,18 @@
 /* eslint-disable react/react-in-jsx-scope */
 import Logo from '/SEKI.svg';
 import './login.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const navigate = useNavigate();
+  const handleCadastroClick = () => {
+    navigate('/');
+  };
+
   return (
     <section id="Login">
       <div className="container-login">
-        <img src={Logo} alt="" />
+        <img src={Logo} alt="" onClick={handleCadastroClick} className="logo" />
         <h1>Acesse sua conta</h1>
         <form>
           <div className="input-group">
@@ -18,17 +24,17 @@ function Login() {
             <input type="password" placeholder="Digite sua senha" />
           </div>
           <div className="lembrar-esqueci">
-            <label>
-              <input type="checkbox" className="check-lembrar" />
+            <label htmlFor="check-lembrar">
+              <input type="checkbox" id="check-lembrar" />
               Lembrar de mim
             </label>
             <a href="/">Esqueci minha senha</a>
           </div>
-          <button>Login</button>
+          <button>Entrar</button>
           <div className="dont-have-account">
             <p>
               Ainda não tem conta?
-              <a href="/">Cadastre-se</a>
+              <a href="/cadastro">Cadastre-se</a>
             </p>
           </div>
         </form>

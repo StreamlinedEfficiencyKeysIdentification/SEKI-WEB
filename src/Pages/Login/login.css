@@ -12,6 +12,10 @@
   flex-direction: column;
 }
 
+.container-login img {
+  cursor: pointer;
+}
+
 .container-login h1 {
   font-size: 2.5rem;
   color: #000;

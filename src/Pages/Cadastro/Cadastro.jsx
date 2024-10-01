@@ -2,15 +2,21 @@
 import './cadastro.css';
 import Logo from '/SEKI.svg';
 import ImgCad from '/ImgCadastro.svg';
+import { useNavigate } from 'react-router-dom';
 
 function Cadastro() {
+  const navigate = useNavigate();
+  const handleCadastroClick = () => {
+    navigate('/');
+  };
+
   return (
     <section id="Cadastro">
       <div className="container-cadastro">
         <div className="cadastro-content">
-          <img src={Logo} alt="Logo da Seki" />
+          <img src={Logo} alt="Logo da Seki" onClick={handleCadastroClick} className="logo" />
           <h1>Crie sua conta</h1>
-          <img src={ImgCad} alt="Imagem tela cadastro" />
+          <img src={ImgCad} alt="Imagem tela cadastro" className="img-cadastro" />
         </div>
         <form>
           <div className="input-group">
@@ -33,17 +39,43 @@ function Cadastro() {
             <label>E-mail *</label>
             <input type="text" placeholder="E-mail" />
           </div>
-          <div className="container-senha">
-            <div className="input-group">
-              <label>Senha</label>
-              <input type="password" placeholder="Digite sua senha" />
+          <div className="senha-info">
+            <div className="container-senha">
+              <div className="input-group">
+                <label>Senha *</label>
+                <input type="password" placeholder="Digite sua senha" />
+              </div>
+              <div className="input-group">
+                <label>Confirmar senha *</label>
+                <input type="password" placeholder="Confirme sua senha" />
+              </div>
             </div>
-            <div className="input-group">
-              <label>Confirmar senha</label>
-              <input type="password" placeholder="Confirme sua senha" />
+            <div className="container-info-senha">
+              Requisitos de senha:
+              <ul>
+                <li>Pelo menos 8 Caracteres</li>
+                <li>Pelo menos 1 caractere especial</li>
+                <li>Pelo menos 1 letra maiúscula</li>
+                <li>Pelo menos 1 letra minúscula</li>
+                <li>Pelo menos 1 número</li>
+                <li>As senhas coincidem</li>
+              </ul>
             </div>
           </div>
+          <div className="container-termo">
+            <input type="checkbox" id="check-termo" />
+            <label htmlFor="check-termo">
+              Li e concordo com os
+              <a href="/">termos de uso</a>
+            </label>
+          </div>
           <button>Cadastrar</button>
+          <div className="i-have-account">
+            <label>
+              Ja sou cadastrado.
+              <a href="/login">Quero fazer Login</a>
+            </label>
+          </div>
         </form>
       </div>
     </section>

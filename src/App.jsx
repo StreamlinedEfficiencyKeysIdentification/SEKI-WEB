@@ -1,5 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import './assets/global.css';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
@@ -10,8 +12,15 @@ import Sobre from './Pages/QuemSomos/Sobre';
 import Contato from './Pages/Contato/Contato';
 import Login from './Pages/Login/Login';
 import Cadastro from './Pages/Cadastro/Cadastro';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+    });
+  }, []);
+
   return (
     <Router>
       <Header />

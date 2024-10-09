@@ -120,37 +120,41 @@ function Header() {
 
         <div className={`mobile-menu ${isOpen && isMobile ? 'open' : ''}`} ref={menuRef}>
           <div className="mobile-menu-content">
-            <RouterLink to="/quemsomos" onClick={toggleMenu}>
-              Quem Somos
-            </RouterLink>
-            <ScrollLink
-              to=""
-              onClick={() => {
-                handleScrollToResources();
-                toggleMenu();
-              }}
-            >
-              Recursos
-            </ScrollLink>
-            <RouterLink to="/contato" onClick={toggleMenu}>
-              Contato
-            </RouterLink>
-            <RouterLink to="/login" className="login-button" onClick={toggleMenu}>
-              Entrar
-            </RouterLink>
-            <button
-              onClick={() => {
-                handleCadastroClick();
-                toggleMenu();
-              }}
-              className="cta-button"
-            >
-              Comece já!
-            </button>
+            <div className="menu-content">
+              <RouterLink to="/quemsomos" onClick={toggleMenu}>
+                Quem Somos
+              </RouterLink>
+              <ScrollLink
+                to=""
+                onClick={() => {
+                  handleScrollToResources();
+                  toggleMenu();
+                }}
+              >
+                Recursos
+              </ScrollLink>
+              <RouterLink to="/contato" onClick={toggleMenu}>
+                Contato
+              </RouterLink>
+            </div>
+            <div className="navactions">
+              <RouterLink to="/login" className="login-button" onClick={toggleMenu}>
+                Entrar
+              </RouterLink>
+              <button
+                onClick={() => {
+                  handleCadastroClick();
+                  toggleMenu();
+                }}
+                className="cta-button"
+              >
+                Comece já!
+              </button>
+            </div>
           </div>
         </div>
 
-        {showCloseIcon && isMobile && (
+        {isOpen && showCloseIcon && isMobile && (
           <button onClick={toggleMenu} className="close-menu-button">
             <RiCloseLine size={32} color="black" />
           </button>

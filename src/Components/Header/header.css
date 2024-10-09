@@ -31,8 +31,15 @@ header {
   gap: 1rem;
 }
 
+.menu-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .navbar-links a,
-.login-button {
+.login-button,
+.menu-content a {
+  width: fit-content;
   position: relative;
   color: black;
   text-decoration: none;
@@ -43,7 +50,8 @@ header {
 }
 
 .navbar-links a::after,
-.login-button::after {
+.login-button::after,
+.menu-content a::after {
   content: '';
   position: absolute;
   left: 0;
@@ -55,7 +63,8 @@ header {
 }
 
 .navbar-links a:hover::after,
-.login-button:hover::after {
+.login-button:hover::after,
+.menu-content a:hover::after {
   width: 50%;
 }
 
@@ -88,6 +97,7 @@ header {
 .cta-button:hover {
   box-shadow: 5px 5px 10px rgba(0, 115, 188, 0.7);
   scale: 1.01;
+  color: white;
   background-color: #172734;
 }
 
@@ -140,7 +150,7 @@ header {
 }
 
 :root {
-  --mobile-menu-width: 50%;
+  --mobile-menu-width: 70%;
 }
 
 .close-menu-button {
@@ -168,6 +178,16 @@ header {
 @media (max-width: 1024px) {
   .navbar-container {
     justify-content: center;
+  }
+
+  .mobile-menu-content {
+    gap: 2rem;
+  }
+
+  .navactions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .mobile-menu-button {

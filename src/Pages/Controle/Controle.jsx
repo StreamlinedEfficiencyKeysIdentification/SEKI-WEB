@@ -13,7 +13,7 @@ function Controle() {
       </div>
       <div className="linha"></div>
       <div className="c-container">
-        <div className="ccc-img">
+        <div className="ccc-img" data-aos="fade-up" data-aos-delay="200">
           <img src={ImgC} />
         </div>
         <div className="cc-content">
@@ -27,7 +27,7 @@ function Controle() {
               </p>
             </div>
             <div className="i-group">
-              <div className="s-topico">
+              <div className="s-topico" data-aos="fade-up" data-aos-delay="200">
                 <div className="t-numero">1</div>
                 <div className="t-content">
                   <div className="t-titulo">
@@ -40,7 +40,7 @@ function Controle() {
                   </div>
                 </div>
               </div>
-              <div className="s-topico">
+              <div className="s-topico" data-aos="fade-up" data-aos-delay="300">
                 <div className="t-numero">2</div>
                 <div className="t-content">
                   <div className="t-titulo">
@@ -51,7 +51,7 @@ function Controle() {
                   </div>
                 </div>
               </div>
-              <div className="s-topico">
+              <div className="s-topico" data-aos="fade-up" data-aos-delay="400">
                 <div className="t-numero">3</div>
                 <div className="t-content">
                   <div className="t-titulo">
@@ -65,7 +65,7 @@ function Controle() {
                   </div>
                 </div>
               </div>
-              <div className="s-topico">
+              <div className="s-topico" data-aos="fade-up" data-aos-delay="500">
                 <div className="t-numero">4</div>
                 <div className="t-content">
                   <div className="t-titulo">
@@ -92,7 +92,7 @@ function Controle() {
             <p>Você, no controle da sua empresa</p>
           </div>
           <div className="c2c-info">
-            <div className="i-grid">
+            <div className="i-grid" data-aos="fade-up" data-aos-delay="200">
               <div className="g-titulo">
                 <p>Colaboração e compartilhamento</p>
               </div>
@@ -103,7 +103,7 @@ function Controle() {
                 </p>
               </div>
             </div>
-            <div className="i-grid">
+            <div className="i-grid" data-aos="fade-up" data-aos-delay="300">
               <div className="g-titulo">
                 <p>Organização e visibilidade</p>
               </div>
@@ -114,7 +114,7 @@ function Controle() {
                 </p>
               </div>
             </div>
-            <div className="i-grid">
+            <div className="i-grid" data-aos="fade-up" data-aos-delay="400">
               <div className="g-titulo">
                 <p>Segurança reforçada</p>
               </div>
@@ -122,7 +122,7 @@ function Controle() {
                 <p>As informações com vinculos de usuários e abertura de chamados nunca foi tao segura.</p>
               </div>
             </div>
-            <div className="i-grid">
+            <div className="i-grid" data-aos="fade-up" data-aos-delay="500">
               <div className="g-titulo">
                 <p>Simples de usar</p>
               </div>
@@ -133,7 +133,7 @@ function Controle() {
                 </p>
               </div>
             </div>
-            <div className="i-grid">
+            <div className="i-grid" data-aos="fade-up" data-aos-delay="600">
               <div className="g-titulo">
                 <p>Sem anúncios</p>
               </div>

@@ -16,7 +16,7 @@ function Home() {
     <section id="home">
       <div className="h-container">
         <div className="hc-content">
-          <div className="hcc-info">
+          <div className="hcc-info" data-aos="fade-up" data-aos-delay="200">
             <h1>
               Controle patrimonial e muito mais com toda a{' '}
               <div className="h-span">
@@ -42,7 +42,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="hc-img">
+        <div className="hc-img" data-aos="fade-up-left" data-aos-delay="300">
           <img src={Ghome} />
         </div>
       </div>

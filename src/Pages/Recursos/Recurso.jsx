@@ -36,7 +36,7 @@ function Recurso() {
           <div className="ac-titulo">
             <p>Baixe nosso App</p>
           </div>
-          <div className="ac-info">
+          <div className="ac-info" data-aos="fade-up" data-aos-delay="200">
             <div className="i-download">
               <img src={AppStore} alt="AppStore" />
               <img src={GooglePlay} alt="GooglePlay" />
@@ -66,35 +66,35 @@ function Recurso() {
         </div>
         <div className="r-container">
           <div className="left-column">
-            <div className="resource-box">
+            <div className="resource-box" data-aos="fade-down-right" data-aos-delay="200">
               <h2>Controle de patrimônio</h2>
               <p>Gerencie todos os patrimônios em um só lugar.</p>
             </div>
-            <div className="resource-box">
+            <div className="resource-box" data-aos="fade-right" data-aos-delay="200">
               <h2>Abertura de chamados</h2>
               <p>Facilite a resolução de problemas técnicos na sua empresa.</p>
             </div>
-            <div className="resource-box">
+            <div className="resource-box" data-aos="fade-up-right" data-aos-delay="200">
               <h2>Rastreabilidade</h2>
               <p>Tenha, ao seu alcance, os detalhes e os locais onde se encontram seus bens patrimoniais.</p>
             </div>
           </div>
 
-          <div className="recurso">
+          <div className="recurso" data-aos="zoom-in" data-aos-delay="100">
             <img src={RecursoImg} alt="" />
             <div className="sombra-img"></div>
           </div>
 
           <div className="right-column">
-            <div className="resource-box">
+            <div className="resource-box" data-aos="fade-down-left" data-aos-delay="200">
               <h2>Criação de Filiais</h2>
               <p>Tenha o controle de suas filiais na palma da sua mão.</p>
             </div>
-            <div className="resource-box">
+            <div className="resource-box" data-aos="fade-left" data-aos-delay="200">
               <h2>Relatórios</h2>
               <p>Resumos e resultados incríveis, com gráficos simples e completos.</p>
             </div>
-            <div className="resource-box">
+            <div className="resource-box" data-aos="fade-up-left" data-aos-delay="200">
               <h2>Gestão Eficiente dos Seus Bens</h2>
               <p>Mantenha um controle preciso sobre seus bens.</p>
             </div>
@@ -140,7 +140,7 @@ function Recurso() {
             </details>
           </div>
 
-          <div className="contact-section">
+          <div className="contact-section" data-aos="fade-up" data-aos-delay="200">
             <div className="contato-info">
               <h2>Ainda com dúvidas?</h2>
               <p>

@@ -1,0 +1,36 @@
+.header-side-nav {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  height: 60px;
+  background-color: #449cd6;
+}
+
+.header-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.header-side-nav .button-side-nav {
+  background-color: transparent;
+  color: white;
+  box-shadow: none;
+  font-size: 1.3rem;
+  padding: 0;
+}
+
+.header-side-nav .button-side-nav:hover {
+  background-color: transparent !important;
+  color: black !important;
+}
+
+.side-nav .menu-side-nav {
+  height: calc(100% - 60px);
+  transition: none;
+}
+
+.menu-side-nav .bi {
+  font-size: 1.2rem !important;
+}

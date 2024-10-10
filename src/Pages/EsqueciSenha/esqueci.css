@@ -1,0 +1,107 @@
+#Esqueci {
+  height: 100vh;
+  width: 100%;
+}
+
+.container-esqueci {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container-esqueci img {
+  cursor: pointer;
+}
+
+.container-esqueci h1 {
+  font-size: 2.5rem;
+  color: #000;
+  margin: 1rem 0 2rem;
+}
+
+.container-esqueci a:hover {
+  text-decoration: underline;
+  color: #0072bb;
+}
+
+.container-esqueci form {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+form .input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+form .input-group label {
+  font-size: 1rem;
+  color: #333;
+  padding: 0 0.5rem;
+  pointer-events: none;
+}
+
+form .input-group input {
+  width: 100%;
+  height: 50px;
+  font-size: 1rem;
+  padding: 0 1rem;
+  color: #333;
+  background: transparent;
+  border: 1px solid #172734;
+  border-radius: 5px;
+  outline: none;
+}
+
+.container-esqueci form a {
+  text-decoration: none;
+  color: #172734;
+}
+
+.container-esqueci form button {
+  width: 100%;
+  height: 50px;
+  background-color: #0072bb;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  outline: none;
+  margin: 1rem 0;
+}
+
+.back-to-login {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.back-to-login a {
+  padding-left: 0.5rem;
+  text-decoration: underline !important;
+}
+
+@media screen and (max-width: 640px) {
+  .container-esqueci {
+    padding: 0 1rem;
+  }
+
+  .container-esqueci h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .container-esqueci form {
+    width: 100%;
+  }
+}

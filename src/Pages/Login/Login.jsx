@@ -9,6 +9,10 @@ function Login() {
     navigate('/');
   };
 
+  const handleEntrarClick = () => {
+    navigate('/atendente');
+  };
+
   return (
     <section id="Login">
       <div className="container-login">
@@ -28,9 +32,9 @@ function Login() {
               <input type="checkbox" id="check-lembrar" />
               Lembrar de mim
             </label>
-            <a href="/">Esqueci minha senha</a>
+            <a href="/esqueci">Esqueci minha senha</a>
           </div>
-          <button>Entrar</button>
+          <button onClick={handleEntrarClick}>Entrar</button>
           <div className="dont-have-account">
             <p>
               Ainda não tem conta?

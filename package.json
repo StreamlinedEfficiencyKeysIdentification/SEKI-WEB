@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@angular/core": "^18.2.7",
+    "antd": "^5.21.3",
     "aos": "^2.3.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

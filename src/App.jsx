@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import './assets/global.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -24,24 +23,21 @@ import { useEffect } from 'react';
 function App() {
   useEffect(() => {
     AOS.init({
-      duration: 1200,
+      duration: 1200
     });
   }, []);
 
   return (
     <Router>
-      {/* Rotas com Header e Footer */}
       <Routes>
         <Route
           path="/"
           element={
             <>
               <Header />
-              <div>
-                <Home />
-                <Controle />
-                <Recurso />
-              </div>
+              <Home />
+              <Controle />
+              <Recurso />
               <Footer />
             </>
           }
@@ -96,34 +92,29 @@ function App() {
             </>
           }
         />
-      </Routes>
 
-      {/* Rotas do atendente sem Header e Footer */}
-      <Routes>
         <Route path="/atendente" element={<AtendenteLayout />}>
           <Route path="" element={<Navigate to="home" />} />
           <Route path="home" element={<HomeAtendente />} />
-          {/* Redireciona /atendente/chamados para /atendente/chamados/lista */}
+
           <Route path="chamados" element={<Navigate to="/atendente/chamados/lista" />} />
           <Route path="chamados/lista" element={<ChamadosLista />} />
           <Route path="chamados/criar" element={<CriarChamado />} />
 
-          {/* Redireciona /atendente/usuarios para /atendente/usuarios/lista */}
           <Route path="usuarios" element={<Navigate to="/atendente/usuarios/lista" />} />
           <Route path="usuarios/lista" element={<UsuariosLista />} />
           {/* <Route path="usuarios/criar" element={<CriarUsuario />} /> */}
 
-          {/* Redireciona /atendente/empresa para /atendente/empresa/lista */}
           <Route path="empresa" element={<Navigate to="/atendente/empresa/lista" />} />
           {/* <Route path="empresa/lista" element={<EmpresasLista />} />
           <Route path="empresa/criar" element={<CriarEmpresa />} /> */}
 
-          {/* Redireciona /atendente/equipamento para /atendente/equipamento/lista */}
           <Route path="equipamento" element={<Navigate to="/atendente/equipamento/lista" />} />
           {/* <Route path="equipamento/lista" element={<EquipamentosLista />} />
           <Route path="equipamento/criar" element={<CriarEquipamento />} /> */}
-          {/* Adicione mais rotas conforme necessário */}
         </Route>
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

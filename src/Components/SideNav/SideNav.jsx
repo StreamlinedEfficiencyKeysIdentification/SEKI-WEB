@@ -108,7 +108,7 @@ function SideNav() {
         }}
       >
         {!collapsed && (
-          <div className="header-logo">
+          <div className="header-side-logo">
             <img src={Logo}></img>
           </div>
         )}

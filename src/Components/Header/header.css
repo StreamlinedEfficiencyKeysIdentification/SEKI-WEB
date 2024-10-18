@@ -5,7 +5,7 @@ header {
 }
 
 .navbar {
-  background-color: white;
+  background-color: var(--background-color-header);
   color: black;
   position: relative;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -41,10 +41,10 @@ header {
 .menu-content a {
   width: fit-content;
   position: relative;
-  color: black;
+  color: var(--color-header);
   text-decoration: none;
   margin: 0 1rem;
-  font-size: 1.1rem;
+  font-size: calc(var(--font-size-h2) * var(--font-size-multiplier));
   cursor: pointer;
   padding-bottom: 3px;
 }
@@ -75,11 +75,11 @@ header {
 
 .login-button {
   background-color: transparent;
-  color: black;
+  color: var(--color-header);
 }
 
 .cta-button {
-  font-size: 1rem;
+  font-size: calc(var(--font-size-button) * var(--font-size-multiplier));
   font-weight: 600;
   padding: 0.5rem 1rem;
   margin-left: 1rem;
@@ -125,7 +125,7 @@ header {
   left: -100%;
   width: var(--mobile-menu-width);
   height: 100vh;
-  background-color: white;
+  background-color: var(--background-color-header);
   transition: left 0.7s ease-in-out;
   z-index: 1000;
   overflow-y: auto;
@@ -144,9 +144,9 @@ header {
 .mobile-menu-content a,
 .mobile-menu-content button {
   margin: 0.5rem 0;
-  color: black;
+  color: var(--color-header);
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: calc(var(--font-size-button-mobile) * var(--font-size-multiplier));
 }
 
 :root {
@@ -160,7 +160,7 @@ header {
   position: fixed;
   width: 50px;
   height: 50px;
-  background: white;
+  background: var(--background-color);
   border: 1px solid #333;
   border-radius: 25px;
   top: 1rem;

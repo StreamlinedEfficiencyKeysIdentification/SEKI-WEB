@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { RiMenuLine, RiCloseLine } from 'react-icons/ri';
@@ -26,7 +26,7 @@ function Header() {
       const element = document.getElementById(location.state.scrollTo);
       if (element) {
         window.scrollTo({
-          top: element.offsetTop,
+          top: element.offsetTop
         });
       }
     }
@@ -81,7 +81,7 @@ function Header() {
         <div className="navbar-container">
           {isMobile && (
             <button onClick={toggleMenu} className="mobile-menu-button">
-              <RiMenuLine size={32} color="black" />
+              <RiMenuLine size={32} color="var(--color-header)" />
             </button>
           )}
 

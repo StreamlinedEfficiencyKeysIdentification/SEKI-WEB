@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import './footer.css';
 import Logo from '/SEKI.svg';
 

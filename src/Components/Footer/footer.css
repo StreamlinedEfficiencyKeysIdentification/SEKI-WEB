@@ -29,6 +29,7 @@ footer {
 }
 
 .footer-direitos {
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   text-align: center;
 }
 

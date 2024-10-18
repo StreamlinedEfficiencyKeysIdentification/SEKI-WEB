@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AlignLeftOutlined, AlignRightOutlined } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ const items = (navigate) => [
     key: '/atendente/home',
     icon: <i className="bi bi-house"></i>,
     label: 'Home',
-    onClick: () => navigate('/atendente/home'),
+    onClick: () => navigate('/atendente/home')
   },
   {
     key: 'sub1',
@@ -19,13 +19,13 @@ const items = (navigate) => [
     children: [
       {
         key: '/atendente/chamados/lista',
-        label: 'Lista de Chamados',
+        label: 'Lista de Chamados'
       },
       {
         key: '/atendente/chamados/criar',
-        label: 'Novo Chamado',
-      },
-    ],
+        label: 'Novo Chamado'
+      }
+    ]
   },
   {
     key: 'sub2',
@@ -34,13 +34,13 @@ const items = (navigate) => [
     children: [
       {
         key: '/atendente/empresa/lista',
-        label: 'Lista de Empresas',
+        label: 'Lista de Empresas'
       },
       {
         key: '/atendente/empresa/criar',
-        label: 'Nova Empresa',
-      },
-    ],
+        label: 'Nova Empresa'
+      }
+    ]
   },
   {
     key: 'sub3',
@@ -49,13 +49,13 @@ const items = (navigate) => [
     children: [
       {
         key: '/atendente/usuarios/lista',
-        label: 'Lista de Usuários',
+        label: 'Lista de Usuários'
       },
       {
         key: '/atendente/usuarios/criar',
-        label: 'Nova Usuário',
-      },
-    ],
+        label: 'Novo Usuário'
+      }
+    ]
   },
   {
     key: 'sub4',
@@ -64,14 +64,14 @@ const items = (navigate) => [
     children: [
       {
         key: '/atendente/equipamento/lista',
-        label: 'Lista de Equipamentos',
+        label: 'Lista de Equipamentos'
       },
       {
         key: '/atendente/equipamento/criar',
-        label: 'Nova Equipamento',
-      },
-    ],
-  },
+        label: 'Novo Equipamento'
+      }
+    ]
+  }
 ];
 
 function SideNav() {
@@ -98,13 +98,13 @@ function SideNav() {
     <div
       className="side-nav"
       style={{
-        height: '100vh',
+        height: '100vh'
       }}
     >
       <div
         className="header-side-nav"
         style={{
-          justifyContent: collapsed ? 'center' : 'flex-end',
+          justifyContent: collapsed ? 'center' : 'flex-end'
         }}
       >
         {!collapsed && (
@@ -121,7 +121,7 @@ function SideNav() {
         mode="inline"
         theme="light"
         style={{
-          width: collapsed ? 60 : 274,
+          width: collapsed ? 60 : 274
         }}
         inlineCollapsed={collapsed}
         onClick={handleClick}

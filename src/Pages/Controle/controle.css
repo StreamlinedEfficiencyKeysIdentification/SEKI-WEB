@@ -1,7 +1,7 @@
 #Controle {
   width: 100%;
   overflow: hidden;
-  background-color: #eefafa;
+  background-color: var(--background-color-controle);
 }
 
 .c-container {
@@ -46,13 +46,14 @@
 }
 
 .c-label p {
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   margin-block-end: 0px;
   padding: 0 0 15px 35px;
 }
 
 .i-titulo p,
 .c2c-titulo p {
-  font-size: 1.875rem;
+  font-size: calc(var(--font-size-h1-mobile) * var(--font-size-multiplier));
   line-height: 2.25rem;
   font-weight: 700;
 }
@@ -79,7 +80,7 @@
   align-items: center;
   max-width: 52px;
   border-radius: 0.75rem 0 0 0.75rem;
-  font-size: 2rem;
+  font-size: calc(var(--font-size-controle-numero) * var(--font-size-multiplier));
   line-height: 1.75rem;
   font-weight: 700;
   padding: 0.75rem 0.75rem 0.5rem 0.75rem;
@@ -91,7 +92,7 @@
 }
 
 .t-titulo p {
-  font-size: 1.125rem;
+  font-size: calc(var(--font-size-controle-titulo-mobile) * var(--font-size-multiplier));
   font-weight: 600;
   letter-spacing: 0.025em;
   line-height: 1.5rem;
@@ -99,15 +100,11 @@
   margin-bottom: 0.5rem;
 }
 
-.t-info {
-  font-size: 1.1rem;
-}
-
 .t-info p {
   display: block;
   letter-spacing: 0.025em;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   line-height: 1.5rem;
 }
 
@@ -124,6 +121,7 @@
 }
 
 .c2c-label p {
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   margin-block-end: 0px;
   padding: 35px 0 15px 0;
 }
@@ -150,7 +148,7 @@
 }
 
 .g-titulo p {
-  font-size: 1.125rem;
+  font-size: calc(var(--font-size-controle-titulo-mobile) * var(--font-size-multiplier));
   font-weight: 600;
   letter-spacing: 0.025em;
   line-height: 1.5rem;
@@ -158,15 +156,11 @@
   margin-block-end: 0px;
 }
 
-.g-text {
-  font-size: 1.1rem;
-}
-
 .g-text p {
   display: block;
   letter-spacing: 0.025em;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   line-height: 1.5rem;
 }
 
@@ -182,7 +176,7 @@
 
 .rodape-info .p-rodape {
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: calc(var(--font-size-rodape) * var(--font-size-multiplier));
 }
 
 .margin {
@@ -221,7 +215,7 @@
 @media screen and (min-width: 768px) {
   .i-titulo p,
   .c2c-titulo p {
-    font-size: 2.8rem;
+    font-size: calc(var(--font-size-h1) * var(--font-size-multiplier));
     line-height: 1;
   }
 
@@ -251,7 +245,7 @@
 
   .t-titulo p,
   .g-titulo p {
-    font-size: 1.25rem;
+    font-size: calc(var(--font-size-controle-titulo) * var(--font-size-multiplier));
     line-height: 1.75rem;
   }
 

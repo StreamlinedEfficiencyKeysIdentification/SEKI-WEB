@@ -1,6 +1,7 @@
 #Login {
   height: 100vh;
   width: 100%;
+  background-color: var(--background-color-login);
 }
 
 .container-login {
@@ -17,8 +18,8 @@
 }
 
 .container-login h1 {
-  font-size: 2.5rem;
-  color: #000;
+  font-size: calc(var(--font-size-h1) * var(--font-size-multiplier));
+  color: var(--color-home);
   margin: 1rem 0 2rem;
 }
 
@@ -35,28 +36,28 @@
   flex-direction: column;
 }
 
-form .input-group {
+.container-login form .input-group {
   width: 100%;
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
 }
 
-form .input-group label {
-  font-size: 1rem;
-  color: #333;
+.container-login form .input-group label {
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
+  color: var(--color-home);
   padding: 0 0.5rem;
   pointer-events: none;
 }
 
-form .input-group input {
+.container-login form .input-group input {
   width: 100%;
   height: 50px;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   padding: 0 1rem;
-  color: #333;
+  color: var(--color-home);
   background: transparent;
-  border: 1px solid #172734;
+  border: 1px solid var(--color-home);
   border-radius: 5px;
   outline: none;
 }
@@ -70,7 +71,7 @@ form .input-group input {
 
 .container-login form a {
   text-decoration: none;
-  color: #172734;
+  color: var(--color-home);
 }
 
 .container-login form button {
@@ -80,7 +81,7 @@ form .input-group input {
   color: #fff;
   border: none;
   border-radius: 0.5rem;
-  font-size: 1.2rem;
+  font-size: calc(var(--font-size-login-button) * var(--font-size-multiplier));
   cursor: pointer;
   outline: none;
   margin: 1rem 0;
@@ -98,7 +99,7 @@ form .input-group input {
   display: flex;
   padding: 0;
   margin: 0;
-  color: #172734;
+  color: var(--color-home);
 }
 
 .lembrar-esqueci label,
@@ -124,7 +125,7 @@ form .input-group input {
   }
 
   .container-login h1 {
-    font-size: 2rem;
+    font-size: calc(var(--font-size-h1-mobile) * var(--font-size-multiplier));
     text-align: center;
   }
 

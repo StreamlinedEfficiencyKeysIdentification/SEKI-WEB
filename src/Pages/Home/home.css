@@ -1,7 +1,7 @@
 #home {
   width: 100%;
   overflow: hidden;
-  background-color: #9fdaff;
+  background-color: var(--background-color-home);
 }
 
 .h-container {
@@ -33,7 +33,7 @@
   max-width: 590px;
   letter-spacing: -0.025em;
   font-weight: 600;
-  font-size: 1.875rem;
+  font-size: calc(var(--font-size-h1-mobile) * var(--font-size-multiplier));
   line-height: 2.25rem;
   text-align: center;
   margin: 0;
@@ -51,7 +51,7 @@
 
 .hcc-info p {
   font-weight: 300;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   line-height: 1.5rem;
   text-align: center;
   max-width: 400px;
@@ -70,7 +70,7 @@
   letter-spacing: -0.01em;
   font-weight: 600;
   color: white;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-button) * var(--font-size-multiplier));
   line-height: 1.5rem;
   padding-right: 0.5rem;
   padding-left: 1.5rem;
@@ -91,7 +91,7 @@
   margin-left: 1rem;
   letter-spacing: -0.01em;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: calc(var(--font-size-button) * var(--font-size-multiplier));
   line-height: 1.5rem;
 }
 
@@ -164,7 +164,6 @@
 
   .hcc-info h1 {
     max-width: 550px !important;
-    font-size: 3.75rem;
     line-height: 1;
   }
 }
@@ -182,7 +181,6 @@
 
   .hcc-info h1 {
     max-width: 460px;
-    font-size: 3rem;
     line-height: 1;
     text-align: left;
     margin: 0px;
@@ -190,7 +188,6 @@
   }
 
   .h-span span {
-    font-size: 3rem;
     line-height: 1;
     text-align: left;
   }
@@ -218,10 +215,12 @@
 
   .hcc-info h1 {
     line-height: 64px;
+    font-size: calc(var(--font-size-h1) * var(--font-size-multiplier));
   }
 
   .h-span span {
     line-height: 64px;
+    font-size: calc(var(--font-size-h1) * var(--font-size-multiplier));
   }
 }
 
@@ -232,12 +231,10 @@
   }
 
   .hcc-info h1 {
-    font-size: 3rem;
     line-height: 1;
   }
 
   .h-span span {
-    font-size: 3rem;
     line-height: 1;
   }
 }

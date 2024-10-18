@@ -1,5 +1,6 @@
 #Contato {
   width: 100%;
+  background-color: var(--background-color-controle);
 }
 
 .contato {
@@ -22,7 +23,7 @@
 }
 
 .contato-container h1 {
-  font-size: 2rem;
+  font-size: calc(var(--font-size-h1) * var(--font-size-multiplier));
   margin-bottom: 1rem;
 }
 
@@ -33,10 +34,11 @@
 }
 
 .contato-container form label {
-  font-size: 0.9rem;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   margin-top: 10px;
   margin-bottom: 0;
   padding: 0;
+  color: var(--color-home);
 }
 
 .contato-container form input,
@@ -46,7 +48,7 @@
   margin: 5px 0 10px;
   padding: 10px;
   border: none;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--box-shadow-contato);
   background: #e6f8f8;
 }
 
@@ -69,6 +71,7 @@
   background-color: #0072bb;
   color: #fff;
   cursor: pointer;
+  font-size: calc(var(--font-size-button) * var(--font-size-multiplier));
 }
 
 .contato-img {

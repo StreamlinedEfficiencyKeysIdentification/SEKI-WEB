@@ -1,18 +1,19 @@
 .section {
-  background: linear-gradient(180deg, #9fdaff 0%, #eefafa 100%);
+  background: linear-gradient(180deg, var(--background-color-home) 0%, var(--background-color-controle) 100%);
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .app,
 #Recurso {
   max-width: 1296px;
-  height: 100%;
   position: relative;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .a-container {
   width: 100%;
-  height: 100%;
   z-index: 96;
   display: flex;
   align-items: center;
@@ -23,7 +24,7 @@
 
 .ac-titulo p,
 .rc-titulo p {
-  font-size: 2.8rem;
+  font-size: calc(var(--font-size-h1) * var(--font-size-multiplier));
   line-height: 1;
   font-weight: 700;
 }
@@ -74,7 +75,7 @@
 }
 
 .qr-t {
-  font-size: 1rem;
+  font-size: calc(var(--font-size-recurso-qr-titulo) * var(--font-size-multiplier));
   line-height: 1.75rem;
   font-weight: 700;
   margin-block-start: 0px;
@@ -82,7 +83,7 @@
 }
 
 .qr-p {
-  font-size: 0.9rem;
+  font-size: calc(var(--font-size-recurso-qr-p) * var(--font-size-multiplier));
   margin-block-start: 0px;
   margin-block-end: 0px;
 }
@@ -114,6 +115,7 @@
 
 #Recurso {
   padding: 0 0 50px;
+  min-height: calc(80vh * var(--font-size-multiplier));
 }
 
 .r-container {
@@ -167,7 +169,7 @@
 }
 
 .resource-box {
-  background-color: #fff;
+  background-color: var(--background-color);
   width: 350px;
   padding: 5px 20px;
   border-radius: 10px;
@@ -175,12 +177,12 @@
 }
 
 .resource-box h2 {
-  font-size: 18px;
+  font-size: calc(var(--font-size-h2) * var(--font-size-multiplier));
   color: #333;
 }
 
 .resource-box p {
-  font-size: 14px;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   color: #555;
 }
 
@@ -206,11 +208,11 @@ details {
 }
 
 details:not([open]) {
-  height: 75px;
+  height: min-content;
 }
 
 details[open] {
-  height: 130px;
+  height: min-content;
 }
 
 @keyframes sweep {
@@ -225,7 +227,7 @@ details[open] {
 }
 
 .faq-item {
-  background-color: #fff;
+  background-color: var(--background-color);
   margin: 10px 0;
   padding: 15px;
   border-radius: 5px;
@@ -236,7 +238,7 @@ details[open] {
 .faq-item summary {
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  font-size: calc(var(--font-size-recurso-summary-titulo) * var(--font-size-multiplier));
   color: #333;
   list-style: none;
   outline: none;
@@ -244,12 +246,12 @@ details[open] {
 
 .faq-item p {
   margin-top: 10px;
-  font-size: 16px;
+  font-size: calc(var(--font-size-recurso-summary-p) * var(--font-size-multiplier));
   color: #555;
 }
 
 .icon {
-  font-size: 24px;
+  font-size: calc(var(--font-size-recurso-summary-icon) * var(--font-size-multiplier));
   color: #007aff;
 }
 
@@ -264,12 +266,12 @@ details[open] {
 }
 
 .contact-section h2 {
-  font-size: 22px;
+  font-size: calc(var(--font-size-contato-h2) * var(--font-size-multiplier));
   color: #333;
 }
 
 .contact-section p {
-  font-size: 16px;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
   max-width: 90%;
   color: #555;
 }
@@ -280,10 +282,10 @@ details[open] {
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: calc(var(--font-size-button) * var(--font-size-multiplier));
   cursor: pointer;
   width: 250px;
-  height: 50px;
+  height: min-content;
   transition: background-color 0.3s;
 }
 
@@ -295,7 +297,7 @@ details[open] {
   .r-container,
   .perguntas,
   #Recurso {
-    padding: 0 1rem;
+    padding: 50px 1rem;
   }
 }
 
@@ -326,7 +328,7 @@ details[open] {
 
   .ac-titulo p,
   .rc-titulo p {
-    font-size: 1.8rem;
+    font-size: calc(var(--font-size-h1-mobile) * var(--font-size-multiplier));
     text-align: center;
   }
 
@@ -371,9 +373,5 @@ details[open] {
 
   .perguntas {
     padding: 0 1rem 50px;
-  }
-
-  details[open] {
-    height: 180px;
   }
 }

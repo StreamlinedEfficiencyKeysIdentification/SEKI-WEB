@@ -1,5 +1,6 @@
 #Sobre {
   width: 100%;
+  background-color: var(--background-color-quem-somos);
 }
 
 .s-container {
@@ -9,14 +10,14 @@
   height: 90%;
   overflow: hidden;
   gap: 0.5rem;
-  padding: 100px 1rem 50px;
+  padding: 80px 1rem 0px;
 }
 
 .card1,
 .card2,
 .card3,
 .card4 {
-  background: linear-gradient(to bottom, #ffffff, #449cd6);
+  background: linear-gradient(to bottom, var(--background-color-quem-somos), var(--background-color-quem-somos2));
 }
 
 .card {
@@ -38,7 +39,7 @@
 }
 
 .card h2 {
-  font-size: 2rem;
+  font-size: calc(var(--font-size-quem-somos-h2) * var(--font-size-multiplier));
   color: #044275;
   margin: 0;
   z-index: 1; /* Sempre visível */
@@ -47,8 +48,8 @@
 .card-text {
   display: block;
   opacity: 1;
-  font-size: 1rem;
-  color: #172734;
+  font-size: calc(var(--font-size-p) * var(--font-size-multiplier));
+  color: var(--color-quem-somos);
   transition: opacity 1s ease;
 }
 
@@ -71,7 +72,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.5s ease;
-  font-size: 1.25rem;
+  font-size: calc(var(--font-size-quem-somos-button) * var(--font-size-multiplier));
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
 }
 

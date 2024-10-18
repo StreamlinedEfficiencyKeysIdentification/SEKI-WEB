@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './assets/global.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -17,8 +18,10 @@ import HomeAtendente from './Pages/Atendente/Home/Home'; // Novo layout
 import ChamadosLista from './Pages/Chamados/Lista'; // Nova página
 import CriarChamado from './Pages/Chamados/Criar'; // Nova página
 import UsuariosLista from './Pages/Usuarios/Lista'; // Nova página
-
-import { useEffect } from 'react';
+import ChamadoDetalhes from './Pages/Chamados/Detalhe';
+import EmpresasLista from './Pages/Empresas/Lista';
+import AccessibilityMenu from './Components/Acessibilidade/AccessibilityMenu';
+import ScrollToTop from './Components/scrolltotop/scroll';
 
 function App() {
   useEffect(() => {
@@ -34,6 +37,8 @@ function App() {
           path="/"
           element={
             <>
+              <ScrollToTop />
+              <AccessibilityMenu />
               <Header />
               <Home />
               <Controle />
@@ -46,6 +51,7 @@ function App() {
           path="/quemsomos"
           element={
             <>
+              <AccessibilityMenu />
               <Header />
               <Sobre />
               <Footer />
@@ -56,6 +62,7 @@ function App() {
           path="/contato"
           element={
             <>
+              <AccessibilityMenu />
               <Header />
               <Contato />
               <Footer />
@@ -66,6 +73,7 @@ function App() {
           path="/login"
           element={
             <>
+              <AccessibilityMenu />
               <Header />
               <Login />
               <Footer />
@@ -76,6 +84,7 @@ function App() {
           path="/cadastro"
           element={
             <>
+              <AccessibilityMenu />
               <Header />
               <Cadastro />
               <Footer />
@@ -86,6 +95,7 @@ function App() {
           path="/esqueci"
           element={
             <>
+              <AccessibilityMenu />
               <Header />
               <Esqueci />
               <Footer />
@@ -100,14 +110,15 @@ function App() {
           <Route path="chamados" element={<Navigate to="/atendente/chamados/lista" />} />
           <Route path="chamados/lista" element={<ChamadosLista />} />
           <Route path="chamados/criar" element={<CriarChamado />} />
+          <Route path="chamados/:IDdoc/:IDchamado" element={<ChamadoDetalhes />} />
 
           <Route path="usuarios" element={<Navigate to="/atendente/usuarios/lista" />} />
           <Route path="usuarios/lista" element={<UsuariosLista />} />
           {/* <Route path="usuarios/criar" element={<CriarUsuario />} /> */}
 
           <Route path="empresa" element={<Navigate to="/atendente/empresa/lista" />} />
-          {/* <Route path="empresa/lista" element={<EmpresasLista />} />
-          <Route path="empresa/criar" element={<CriarEmpresa />} /> */}
+          <Route path="empresa/lista" element={<EmpresasLista />} />
+          {/* <Route path="empresa/criar" element={<CriarEmpresa />} /> */}
 
           <Route path="equipamento" element={<Navigate to="/atendente/equipamento/lista" />} />
           {/* <Route path="equipamento/lista" element={<EquipamentosLista />} />

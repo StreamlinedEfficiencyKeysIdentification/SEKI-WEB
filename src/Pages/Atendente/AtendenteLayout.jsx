@@ -24,6 +24,8 @@ function AtendenteLayout() {
       if (!user) {
         // Usuário autenticado
         navigate('/login');
+      } else {
+        user.getIdToken().then((token) => console.log(token));
       }
     });
 
@@ -39,6 +41,14 @@ function AtendenteLayout() {
     .map((_, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
       const breadcrumbLabel = breadcrumbNameMap[url]; // Usa o nome amigável do map
+
+      // Adiciona lógica para a rota de detalhes do chamado
+      if (url.match(/\/atendente\/chamados\/[^/]+\/[^/]+/)) {
+        return {
+          key: url,
+          title: <span className="breadcrumb-item">Detalhes do Chamado</span>
+        };
+      }
 
       // Só exibe se houver um nome amigável no map
       if (breadcrumbLabel) {

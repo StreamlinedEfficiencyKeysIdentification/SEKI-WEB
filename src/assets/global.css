@@ -38,7 +38,7 @@ p {
 p,
 h1,
 a {
-  color: #172734;
+  color: var(--color-home);
 }
 
 .w {
@@ -65,4 +65,63 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #888;
   /* Cor de fundo do polegar ao passar o mouse */
+}
+
+:root {
+  /* Tamanhos de fonte padrão */
+  --font-size-h1: 3rem;
+  --font-size-h1-mobile: 1.875rem;
+  --font-size-h2: 1.25rem;
+  --font-size-p: 1rem;
+  --font-size-p-mobile: 0.9rem;
+  --font-size-button: 1rem;
+  --font-size-button-mobile: 1.2rem;
+  --font-size-rodape: 1.5rem;
+  --font-size-controle-numero: 2rem;
+  --font-size-controle-titulo: 1.25rem;
+  --font-size-controle-titulo-mobile: 1.125rem;
+  --font-size-recurso-qr-titulo: 1rem;
+  --font-size-recurso-qr-p: 0.9rem;
+  --font-size-recurso-summary-titulo: 1.25rem;
+  --font-size-recurso-summary-p: 1rem;
+  --font-size-recurso-summary-icon: 1.5rem;
+  --font-size-contato-titulo: 1.5rem;
+  --font-size-contato-h2: 1.4rem;
+  --font-size-quem-somos-h2: 2rem;
+  --font-size-quem-somos-button: 1.25rem;
+  --font-size-login-button: 1.25rem;
+  --font-size-cadastro-button: 1.25rem;
+
+  /* Multiplicador de tamanho de fonte (para controle de aumento) */
+  --font-size-multiplier: 1;
+
+  /* Variáveis de cores para tema claro */
+  --background-color: #ffffff;
+  --background-color-home: #9fdaff;
+  --color-home: #172734;
+  --background-color-controle: #eefafa;
+  --background-color-header: #ffffff;
+  --color-header: black;
+  --box-shadow-contato: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  --background-color-quem-somos: #ffffff;
+  --background-color-quem-somos2: #449cd6;
+  --color-quem-somos: #172734;
+  --background-color-login: #ffffff;
+  --background-color-cadastro: #ffffff;
+}
+
+.dark-mode {
+  /* Variáveis de cores para tema escuro */
+  --background-color: #e5e5e5;
+  --background-color-home: #202c33;
+  --color-home: #91b3cf;
+  --background-color-controle: #242424;
+  --background-color-header: #242424;
+  --color-header: #91b3cf;
+  --box-shadow-contato: 2px 2px 5px rgba(255, 255, 255, 0.7);
+  --background-color-quem-somos: #8a8a8a;
+  --background-color-quem-somos2: #272727;
+  --color-quem-somos: #91b3cf;
+  --background-color-login: #242424;
+  --background-color-cadastro: #242424;
 }

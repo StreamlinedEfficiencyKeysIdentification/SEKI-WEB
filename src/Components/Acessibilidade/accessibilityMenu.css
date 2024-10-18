@@ -1,0 +1,93 @@
+/* AccessibilityMenu.css */
+
+.accessibility-menu {
+  position: fixed;
+  bottom: 140px;
+  right: 2%;
+  background-color: #0073bc;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.accessibility-button {
+  background-color: #0073bc;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.accessibility-button span {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.accessibility-options {
+  width: 100%;
+  background-color: var(--background-color);
+  padding: 1rem;
+  border-top: 1px solid #0073bc;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.box {
+  width: calc((300px - 3rem) / 2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.font-size-button,
+.dark-mode-button {
+  height: 70px;
+  background-color: #0073bc;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.font-size-button:hover,
+.dark-mode-button:hover {
+  background-color: #004977;
+  color: white;
+}
+
+.font-size-indicators {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 10px;
+  transition:
+    background-color 0.3s ease,
+    width 0.3s ease;
+}
+
+.indicator.active {
+  background-color: #0073bc;
+  width: 25px;
+}
+
+.accessibility-menu.expanded {
+  width: 300px;
+  height: auto;
+  border-radius: 0.5rem;
+}

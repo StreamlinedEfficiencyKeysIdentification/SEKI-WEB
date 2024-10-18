@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import { useNavigate } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { AiOutlineGlobal } from 'react-icons/ai';

@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import ImgC2 from '/Controle2.svg';
 import Cadeado from '/Cadeado.svg';
 import ImgC from '/Controle.svg';

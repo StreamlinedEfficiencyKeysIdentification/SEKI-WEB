@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import GooglePlay from '/GooglePlay.svg';
 import AppStore from '/AppStore.svg';
 import QrCode from '/QrCode.svg';
@@ -134,8 +133,8 @@ function Recurso() {
                 <span className="icon">+</span>
               </summary>
               <p>
-                Sim, o SEKI pode ser usado offline com recursos limitados. Algumas funções dependem de conexão com a
-                internet.
+                Não, infelizmente o SEKI não possui a funcionalidade de uso offline. Para utilizar o sistema, é
+                necessário se conectar à internet.
               </p>
             </details>
           </div>

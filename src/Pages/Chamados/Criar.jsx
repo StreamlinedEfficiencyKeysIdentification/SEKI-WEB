@@ -37,9 +37,8 @@ function CriarChamado() {
 
     try {
       // Chama o serviço para salvar o chamado
-      const response = await chamadosService.save(titulo, descricao, empresaSelecionada, usuarioSelecionado);
+      await chamadosService.save(titulo, descricao, empresaSelecionada, usuarioSelecionado);
 
-      console.log('Chamado criado com sucesso:', response);
       alert('Chamado criado com sucesso!');
 
       // Limpa os campos do formulário após o sucesso
@@ -51,8 +50,6 @@ function CriarChamado() {
       console.error('Erro ao criar o chamado:', error);
       alert('Erro ao criar o chamado. Tente novamente.');
     }
-
-    console.log('Chamado criado:', { titulo, descricao, empresaSelecionada, usuarioSelecionado });
   };
 
   return (

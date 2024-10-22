@@ -12,6 +12,24 @@ const empresasService = {
       method: 'GET',
       url: 'http://localhost:3000/empresas/disponiveis'
     });
+  },
+  findById: (id) => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/empresas/find/${id}`
+    });
+  },
+  getEmpresasPai: () => {
+    return callApi({
+      method: 'GET',
+      url: 'http://localhost:3000/empresas/empresaspai'
+    });
+  },
+  save: (cnpj, razaoSocial, empresaSelecionada) => {
+    return callApi({
+      method: 'POST',
+      url: `http://localhost:3000/empresas/create/${cnpj}/${razaoSocial}/${empresaSelecionada}`
+    });
   }
 };
 

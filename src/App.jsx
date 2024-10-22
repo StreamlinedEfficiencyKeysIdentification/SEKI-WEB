@@ -22,6 +22,8 @@ import ChamadoDetalhes from './Pages/Chamados/Detalhe';
 import EmpresasLista from './Pages/Empresas/Lista';
 import AccessibilityMenu from './Components/Acessibilidade/AccessibilityMenu';
 import ScrollToTop from './Components/scrolltotop/scroll';
+import EmpresaDetalhes from './Pages/Empresas/Detalhe';
+import CriarEmpresa from './Pages/Empresas/Criar';
 
 function App() {
   useEffect(() => {
@@ -118,7 +120,8 @@ function App() {
 
           <Route path="empresa" element={<Navigate to="/atendente/empresa/lista" />} />
           <Route path="empresa/lista" element={<EmpresasLista />} />
-          {/* <Route path="empresa/criar" element={<CriarEmpresa />} /> */}
+          <Route path="empresa/criar" element={<CriarEmpresa />} />
+          <Route path="empresa/:IDdoc" element={<EmpresaDetalhes />} />
 
           <Route path="equipamento" element={<Navigate to="/atendente/equipamento/lista" />} />
           {/* <Route path="equipamento/lista" element={<EquipamentosLista />} />

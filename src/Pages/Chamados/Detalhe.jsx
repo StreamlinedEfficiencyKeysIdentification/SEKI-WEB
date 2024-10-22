@@ -16,7 +16,7 @@ const ChamadoDetalhes = () => {
         setChamado(chamadoData); // Armazena os dados do chamado no estado
         setLoading(false); // Define o carregamento como concluído
       } catch (err) {
-        setError(`Erro ao carregar os detalhes do chamado: ${err}`); // Define uma mensagem de erro
+        setError(`Erro ao carregar os detalhes do chamado: ${err.message}`); // Define uma mensagem de erro
         console.error(err);
         setLoading(false); // Define o carregamento como concluído
       }

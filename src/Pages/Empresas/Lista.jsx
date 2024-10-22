@@ -1,6 +1,7 @@
 import { Table, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import empresasService from '../../service/empresasService';
+import { useNavigate } from 'react-router-dom';
 
 function EmpresasLista() {
   const [empresas, setEmpresas] = useState([]);
@@ -92,15 +93,17 @@ function EmpresasLista() {
     }
   ];
 
+  const navigate = useNavigate();
+
   // Função para redirecionar aos detalhes da matriz
   const handleDetalhesMatriz = (record) => {
-    console.log('Abrindo detalhes da matriz:', record);
+    navigate(`/atendente/empresa/${record.IDdoc}`);
     // Implementar a navegação para a página de detalhes da matriz
   };
 
   // Função para redirecionar aos detalhes da filial
   const handleDetalhesFilial = (record) => {
-    console.log('Abrindo detalhes da filial:', record);
+    navigate(`/atendente/empresa/${record.IDdoc}`);
     // Implementar a navegação para a página de detalhes da filial
   };
 

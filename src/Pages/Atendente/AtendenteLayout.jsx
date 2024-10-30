@@ -13,7 +13,11 @@ const breadcrumbNameMap = {
   '/atendente/chamados/lista': 'Lista de Chamados',
   '/atendente/chamados/criar': 'Criar Chamado',
   '/atendente/usuarios/lista': 'Lista de Usuários',
-  '/atendente/usuarios/criar': 'Criar Usuário'
+  '/atendente/usuarios/criar': 'Criar Usuário',
+  '/atendente/empresa/lista': 'Lista de Empresas',
+  '/atendente/empresa/criar': 'Criar Empresa',
+  '/atendente/equipamento/lista': 'Lista de Equipamentos',
+  '/atendente/equipamento/criar': 'Criar Equipamento'
   // Adicione mais conforme necessário
 };
 
@@ -42,6 +46,14 @@ function AtendenteLayout() {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
       const breadcrumbLabel = breadcrumbNameMap[url]; // Usa o nome amigável do map
 
+      // Só exibe se houver um nome amigável no map
+      if (breadcrumbLabel) {
+        return {
+          key: url,
+          title: <span className="breadcrumb-item">{breadcrumbLabel}</span>
+        };
+      }
+
       // Adiciona lógica para a rota de detalhes do chamado
       if (url.match(/\/atendente\/chamados\/[^/]+\/[^/]+/)) {
         return {
@@ -50,11 +62,27 @@ function AtendenteLayout() {
         };
       }
 
-      // Só exibe se houver um nome amigável no map
-      if (breadcrumbLabel) {
+      // Adiciona lógica para a rota de detalhes do chamado
+      if (url.match(/\/atendente\/empresa\/[^/]+/)) {
         return {
           key: url,
-          title: <span className="breadcrumb-item">{breadcrumbLabel}</span>
+          title: <span className="breadcrumb-item">Detalhes da Empresa</span>
+        };
+      }
+
+      // Adiciona lógica para a rota de detalhes do chamado
+      if (url.match(/\/atendente\/usuarios\/[^/]+/)) {
+        return {
+          key: url,
+          title: <span className="breadcrumb-item">Detalhes do Usuario</span>
+        };
+      }
+
+      // Adiciona lógica para a rota de detalhes do chamado
+      if (url.match(/\/atendente\/equipamentos\/[^/]+/)) {
+        return {
+          key: url,
+          title: <span className="breadcrumb-item">Detalhes do Equipamento</span>
         };
       }
 

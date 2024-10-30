@@ -1,10 +1,28 @@
 import { auth } from './firebaseConfig';
 
-const chamadosService = {
-  findByUser: () => {
+const equipamentosService = {
+  getEquipamentosPorNivel: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/chamados'
+      url: 'http://localhost:3000/equipamentos/nivel'
+    });
+  },
+  generateQRCodeHash: () => {
+    return callApi({
+      method: 'GET',
+      url: 'http://localhost:3000/equipamentos/qrcode'
+    });
+  },
+  getEquipamentoById: (id) => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/equipamentos/${id}`
+    });
+  },
+  save: (usuario, qrcode, empresaSelecionada, setorSelecionado, marca, modelo) => {
+    return callApi({
+      method: 'POST',
+      url: `http://localhost:3000/equipamentos/create/${usuario}/${qrcode}/${empresaSelecionada}/${setorSelecionado}/${marca}/${modelo}`
     });
   }
 };
@@ -48,4 +66,4 @@ function callApi({ method, url, params }) {
   });
 }
 
-export default chamadosService;
+export default equipamentosService;

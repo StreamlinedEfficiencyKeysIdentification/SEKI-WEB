@@ -25,17 +25,23 @@ const chamadosService = {
       url: `http://localhost:3000/empresas/${empresaSelecionada}`
     });
   },
+  update: (chamado) => {
+    return callApi({
+      method: 'PATCH',
+      url: `http://localhost:3000/chamados/update`,
+      params: chamado
+    });
+  },
+  updateLido: (IDdoc, IDchamado) => {
+    return callApi({
+      method: 'PATCH',
+      url: `http://localhost:3000/chamados/updateLido/${IDdoc}/${IDchamado}`
+    });
+  },
   save: (titulo, descricao, empresaSelecionada, usuarioSelecionado) => {
     return callApi({
       method: 'POST',
       url: `http://localhost:3000/chamados/create/${titulo}/${descricao}/${empresaSelecionada}/${usuarioSelecionado}`
-    });
-  },
-  update: (chamado) => {
-    return callApi({
-      method: 'PATCH',
-      url: `http://localhost:3000/chamados/${chamado.uid}`,
-      params: chamado
     });
   }
 };

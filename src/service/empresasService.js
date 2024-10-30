@@ -13,6 +13,12 @@ const empresasService = {
       url: 'http://localhost:3000/empresas/disponiveis'
     });
   },
+  getSetoresPorEmpresa: (empresaSelecionada) => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/empresas/setores/${empresaSelecionada}`
+    });
+  },
   findById: (id) => {
     return callApi({
       method: 'GET',

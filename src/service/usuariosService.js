@@ -6,6 +6,36 @@ const usuariosService = {
       method: 'GET',
       url: `http://localhost:3000/empresas/${empresaSelecionada}`
     });
+  },
+  getUsuariosPorNivel: () => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/usuario/nivel`
+    });
+  },
+  getUsuarioByUid: (uid) => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/usuario/${uid}`
+    });
+  },
+  getNivel: () => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/usuario/find/nivel`
+    });
+  },
+  getResponsaveis: () => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/usuario/responsaveis`
+    });
+  },
+  save: (usuario, email, nome, empresaSelecionada, nivelSelecionado) => {
+    return callApi({
+      method: 'POST',
+      url: `http://localhost:3000/usuario/create/${usuario}/${email}/${nome}/${empresaSelecionada}/${nivelSelecionado}`
+    });
   }
 };
 

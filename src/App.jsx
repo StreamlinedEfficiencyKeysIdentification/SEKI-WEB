@@ -24,6 +24,11 @@ import AccessibilityMenu from './Components/Acessibilidade/AccessibilityMenu';
 import ScrollToTop from './Components/scrolltotop/scroll';
 import EmpresaDetalhes from './Pages/Empresas/Detalhe';
 import CriarEmpresa from './Pages/Empresas/Criar';
+import UsuarioDetalhes from './Pages/Usuarios/Detalhe';
+import CriarUsuario from './Pages/Usuarios/Criar';
+import EquipamentosLista from './Pages/Equipamentos/Lista';
+import EquipamentoDetalhes from './Pages/Equipamentos/Detalhe';
+import CriarEquipamento from './Pages/Equipamentos/Criar';
 
 function App() {
   useEffect(() => {
@@ -116,7 +121,8 @@ function App() {
 
           <Route path="usuarios" element={<Navigate to="/atendente/usuarios/lista" />} />
           <Route path="usuarios/lista" element={<UsuariosLista />} />
-          {/* <Route path="usuarios/criar" element={<CriarUsuario />} /> */}
+          <Route path="usuarios/criar" element={<CriarUsuario />} />
+          <Route path="usuarios/:uid" element={<UsuarioDetalhes />} />
 
           <Route path="empresa" element={<Navigate to="/atendente/empresa/lista" />} />
           <Route path="empresa/lista" element={<EmpresasLista />} />
@@ -124,8 +130,9 @@ function App() {
           <Route path="empresa/:IDdoc" element={<EmpresaDetalhes />} />
 
           <Route path="equipamento" element={<Navigate to="/atendente/equipamento/lista" />} />
-          {/* <Route path="equipamento/lista" element={<EquipamentosLista />} />
-          <Route path="equipamento/criar" element={<CriarEquipamento />} /> */}
+          <Route path="equipamento/lista" element={<EquipamentosLista />} />
+          <Route path="equipamento/criar" element={<CriarEquipamento />} />
+          <Route path="equipamento/:id" element={<EquipamentoDetalhes />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

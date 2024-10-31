@@ -59,8 +59,7 @@
   width: 100%;
   height: auto;
   max-height: 100%;
-  padding: 1rem;
-  background: #fff;
+  background: transparent;
   border-radius: 0.5rem 0.5rem 0 0;
   overflow-y: auto;
 }

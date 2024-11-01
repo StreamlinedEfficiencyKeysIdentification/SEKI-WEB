@@ -31,6 +31,13 @@ const usuariosService = {
       url: `http://localhost:3000/usuario/responsaveis`
     });
   },
+  update: (usuario) => {
+    return callApi({
+      method: 'PATCH',
+      url: `http://localhost:3000/usuario/update`,
+      params: usuario
+    });
+  },
   save: (usuario, email, nome, empresaSelecionada, nivelSelecionado) => {
     return callApi({
       method: 'POST',

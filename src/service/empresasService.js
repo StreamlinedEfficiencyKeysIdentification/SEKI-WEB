@@ -31,6 +31,13 @@ const empresasService = {
       url: 'http://localhost:3000/empresas/empresaspai'
     });
   },
+  update: (empresa) => {
+    return callApi({
+      method: 'PATCH',
+      url: 'http://localhost:3000/empresas/update',
+      params: empresa
+    });
+  },
   save: (cnpj, razaoSocial, empresaSelecionada) => {
     return callApi({
       method: 'POST',

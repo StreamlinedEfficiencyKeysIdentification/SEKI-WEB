@@ -19,6 +19,13 @@ const equipamentosService = {
       url: `http://localhost:3000/equipamentos/${id}`
     });
   },
+  update: (equipamento) => {
+    return callApi({
+      method: 'PATCH',
+      url: 'http://localhost:3000/equipamentos/update',
+      params: equipamento
+    });
+  },
   save: (usuario, qrcode, empresaSelecionada, setorSelecionado, marca, modelo) => {
     return callApi({
       method: 'POST',

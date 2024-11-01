@@ -81,13 +81,13 @@ function UsuariosLista() {
       key: 'Email'
     },
     {
-      title: 'ID Empresa',
-      dataIndex: 'IDempresa',
+      title: 'Empresa',
+      dataIndex: 'NomeEmpresa',
       key: 'IDempresa'
     },
     {
-      title: 'ID Nível',
-      dataIndex: 'IDnivel',
+      title: 'Nível',
+      dataIndex: 'NomeNivel',
       key: 'IDnivel'
     },
     {

@@ -44,7 +44,7 @@ function ChamadosLista() {
   const columns = [
     {
       title: 'Responsável',
-      dataIndex: 'Responsavel',
+      dataIndex: 'NomeResponsavel',
       key: 'responsavel',
       sorter: (a, b) => a.Responsavel.localeCompare(b.Responsavel)
     },
@@ -80,7 +80,7 @@ function ChamadosLista() {
     },
     {
       title: 'Usuário',
-      dataIndex: 'Usuario',
+      dataIndex: 'NomeUsuario',
       key: 'usuario',
       sorter: (a, b) => a.Usuario.localeCompare(b.Usuario)
     },

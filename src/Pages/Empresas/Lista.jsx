@@ -56,7 +56,7 @@ function EmpresasLista() {
     },
     {
       title: 'Quem Criou',
-      dataIndex: 'QuemCriou',
+      dataIndex: 'NomeQuemCriou',
       key: 'QuemCriou'
     },
     {
@@ -88,7 +88,7 @@ function EmpresasLista() {
     },
     {
       title: 'Quem Criou',
-      dataIndex: 'QuemCriou',
+      dataIndex: 'NomeQuemCriou',
       key: 'QuemCriou'
     }
   ];

@@ -81,18 +81,18 @@ function EquipamentosLista() {
       key: 'IDqrcode'
     },
     {
-      title: 'ID Empresa',
-      dataIndex: 'IDempresa',
+      title: 'Empresa',
+      dataIndex: 'NomeEmpresa',
       key: 'IDempresa'
     },
     {
       title: 'Setor',
-      dataIndex: 'IDsetor',
+      dataIndex: 'NomeSetor',
       key: 'IDsetor'
     },
     {
       title: 'Usuario',
-      dataIndex: 'IDusuario',
+      dataIndex: 'NomeUsuario',
       key: 'IDusuario'
     },
     {

@@ -85,6 +85,11 @@
   border-bottom: none;
 }
 
+.chamado-item:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
 .chamado-group {
   display: flex;
   flex-direction: row;

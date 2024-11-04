@@ -7,6 +7,24 @@ const chamadosService = {
       url: 'http://localhost:3000/chamados'
     });
   },
+  findByStatus: () => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/chamados/home/chamados`
+    });
+  },
+  findCount: () => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/chamados/home/chamadosCount`
+    });
+  },
+  findByRes: () => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/chamados/home/chamadosRes`
+    });
+  },
   findById: (IDdoc, IDchamado) => {
     return callApi({
       method: 'GET',

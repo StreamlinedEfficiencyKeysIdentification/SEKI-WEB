@@ -19,6 +19,12 @@ const usuariosService = {
       url: `http://localhost:3000/usuario/${uid}`
     });
   },
+  getUsuariosCount: () => {
+    return callApi({
+      method: 'GET',
+      url: `http://localhost:3000/usuario/home/usuariosCount`
+    });
+  },
   getNivel: () => {
     return callApi({
       method: 'GET',

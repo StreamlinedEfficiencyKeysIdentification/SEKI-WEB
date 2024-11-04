@@ -13,6 +13,12 @@ const empresasService = {
       url: 'http://localhost:3000/empresas/disponiveis'
     });
   },
+  getEmpresasByStatus: () => {
+    return callApi({
+      method: 'GET',
+      url: 'http://localhost:3000/empresas/home/empresasCount'
+    });
+  },
   getSetoresPorEmpresa: (empresaSelecionada) => {
     return callApi({
       method: 'GET',

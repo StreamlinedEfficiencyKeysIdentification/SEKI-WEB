@@ -13,6 +13,12 @@ const equipamentosService = {
       url: 'http://localhost:3000/equipamentos/qrcode'
     });
   },
+  getEquipamentosByStatus: () => {
+    return callApi({
+      method: 'GET',
+      url: 'http://localhost:3000/equipamentos/home/equipamentosCount'
+    });
+  },
   getEquipamentoById: (id) => {
     return callApi({
       method: 'GET',

@@ -5,7 +5,7 @@ import Header from '../../Components/HeaderBody/Header';
 import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
 import { auth } from '../../service/firebaseConfig';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const breadcrumbNameMap = {
@@ -23,14 +23,17 @@ const breadcrumbNameMap = {
 
 function AtendenteLayout() {
   const navigate = useNavigate();
+  const [refreshKey, setRefreshKey] = useState(0);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
         // Usuário autenticado
         navigate('/login');
-      } else {
-        user.getIdToken().then((token) => console.log(token));
       }
+      // else {
+      //   user.getIdToken().then((token) => console.log(token));
+      // }
     });
 
     // Limpa o listener quando o componente desmonta
@@ -111,14 +114,14 @@ function AtendenteLayout() {
                 ...breadcrumbItems // Adiciona dinamicamente os itens do breadcrumb
               ]}
             />
-            <div className="content-atualizar">
+            <div className="content-atualizar" onClick={() => setRefreshKey((prevKey) => prevKey + 1)}>
               <i className="bi bi-arrow-clockwise"></i>
               <span>Atualizar</span>
             </div>
           </div>
 
           <div className="container-outlet">
-            <Outlet />
+            <Outlet key={refreshKey} />
           </div>
         </div>
       </div>

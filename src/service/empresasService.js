@@ -4,50 +4,50 @@ const empresasService = {
   findByUser: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/empresas'
+      url: 'https://seki-api.onrender.com/empresas'
     });
   },
   getEmpresasDisponiveis: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/empresas/disponiveis'
+      url: 'https://seki-api.onrender.com/empresas/disponiveis'
     });
   },
   getEmpresasByStatus: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/empresas/home/empresasCount'
+      url: 'https://seki-api.onrender.com/empresas/home/empresasCount'
     });
   },
   getSetoresPorEmpresa: (empresaSelecionada) => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/empresas/setores/${empresaSelecionada}`
+      url: `https://seki-api.onrender.com/empresas/setores/${empresaSelecionada}`
     });
   },
   findById: (id) => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/empresas/find/${id}`
+      url: `https://seki-api.onrender.com/empresas/find/${id}`
     });
   },
   getEmpresasPai: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/empresas/empresaspai'
+      url: 'https://seki-api.onrender.com/empresas/empresaspai'
     });
   },
   update: (empresa) => {
     return callApi({
       method: 'PATCH',
-      url: 'http://localhost:3000/empresas/update',
+      url: 'https://seki-api.onrender.com/empresas/update',
       params: empresa
     });
   },
   save: (cnpj, razaoSocial, empresaSelecionada) => {
     return callApi({
       method: 'POST',
-      url: `http://localhost:3000/empresas/create/${cnpj}/${razaoSocial}/${empresaSelecionada}`
+      url: `https://seki-api.onrender.com/empresas/create/${cnpj}/${razaoSocial}/${empresaSelecionada}`
     });
   }
 };

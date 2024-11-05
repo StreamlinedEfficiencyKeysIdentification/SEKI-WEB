@@ -4,62 +4,62 @@ const chamadosService = {
   findByUser: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/chamados'
+      url: 'https://seki-api.onrender.com/chamados'
     });
   },
   findByStatus: () => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/chamados/home/chamados`
+      url: `https://seki-api.onrender.com/chamados/home/chamados`
     });
   },
   findCount: () => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/chamados/home/chamadosCount`
+      url: `https://seki-api.onrender.com/chamados/home/chamadosCount`
     });
   },
   findByRes: () => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/chamados/home/chamadosRes`
+      url: `https://seki-api.onrender.com/chamados/home/chamadosRes`
     });
   },
   findById: (IDdoc, IDchamado) => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/chamados/${IDdoc}/${IDchamado}`
+      url: `https://seki-api.onrender.com/chamados/${IDdoc}/${IDchamado}`
     });
   },
   getEmpresasDisponiveis: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/empresas/disponiveis'
+      url: 'https://seki-api.onrender.com/empresas/disponiveis'
     });
   },
   getUsuariosPorEmpresa: (empresaSelecionada) => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/empresas/${empresaSelecionada}`
+      url: `https://seki-api.onrender.com/empresas/${empresaSelecionada}`
     });
   },
   update: (chamado) => {
     return callApi({
       method: 'PATCH',
-      url: `http://localhost:3000/chamados/update`,
+      url: `https://seki-api.onrender.com/chamados/update`,
       params: chamado
     });
   },
   updateLido: (IDdoc, IDchamado) => {
     return callApi({
       method: 'PATCH',
-      url: `http://localhost:3000/chamados/updateLido/${IDdoc}/${IDchamado}`
+      url: `https://seki-api.onrender.com/chamados/updateLido/${IDdoc}/${IDchamado}`
     });
   },
   save: (titulo, descricao, empresaSelecionada, usuarioSelecionado) => {
     return callApi({
       method: 'POST',
-      url: `http://localhost:3000/chamados/create/${titulo}/${descricao}/${empresaSelecionada}/${usuarioSelecionado}`
+      url: `https://seki-api.onrender.com/chamados/create/${titulo}/${descricao}/${empresaSelecionada}/${usuarioSelecionado}`
     });
   }
 };

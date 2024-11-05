@@ -4,38 +4,38 @@ const equipamentosService = {
   getEquipamentosPorNivel: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/equipamentos/nivel'
+      url: 'https://seki-api.onrender.com/equipamentos/nivel'
     });
   },
   generateQRCodeHash: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/equipamentos/qrcode'
+      url: 'https://seki-api.onrender.com/equipamentos/qrcode'
     });
   },
   getEquipamentosByStatus: () => {
     return callApi({
       method: 'GET',
-      url: 'http://localhost:3000/equipamentos/home/equipamentosCount'
+      url: 'https://seki-api.onrender.com/equipamentos/home/equipamentosCount'
     });
   },
   getEquipamentoById: (id) => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/equipamentos/${id}`
+      url: `https://seki-api.onrender.com/equipamentos/${id}`
     });
   },
   update: (equipamento) => {
     return callApi({
       method: 'PATCH',
-      url: 'http://localhost:3000/equipamentos/update',
+      url: 'https://seki-api.onrender.com/equipamentos/update',
       params: equipamento
     });
   },
   save: (usuario, qrcode, empresaSelecionada, setorSelecionado, marca, modelo) => {
     return callApi({
       method: 'POST',
-      url: `http://localhost:3000/equipamentos/create/${usuario}/${qrcode}/${empresaSelecionada}/${setorSelecionado}/${marca}/${modelo}`
+      url: `https://seki-api.onrender.com/equipamentos/create/${usuario}/${qrcode}/${empresaSelecionada}/${setorSelecionado}/${marca}/${modelo}`
     });
   }
 };

@@ -4,50 +4,50 @@ const usuariosService = {
   getUsuariosPorEmpresa: (empresaSelecionada) => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/empresas/${empresaSelecionada}`
+      url: `https://seki-api.onrender.com/empresas/${empresaSelecionada}`
     });
   },
   getUsuariosPorNivel: () => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/usuario/nivel`
+      url: `https://seki-api.onrender.com/usuario/nivel`
     });
   },
   getUsuarioByUid: (uid) => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/usuario/${uid}`
+      url: `https://seki-api.onrender.com/usuario/${uid}`
     });
   },
   getUsuariosCount: () => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/usuario/home/usuariosCount`
+      url: `https://seki-api.onrender.com/usuario/home/usuariosCount`
     });
   },
   getNivel: () => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/usuario/find/nivel`
+      url: `https://seki-api.onrender.com/usuario/find/nivel`
     });
   },
   getResponsaveis: () => {
     return callApi({
       method: 'GET',
-      url: `http://localhost:3000/usuario/responsaveis`
+      url: `https://seki-api.onrender.com/usuario/responsaveis`
     });
   },
   update: (usuario) => {
     return callApi({
       method: 'PATCH',
-      url: `http://localhost:3000/usuario/update`,
+      url: `https://seki-api.onrender.com/usuario/update`,
       params: usuario
     });
   },
   save: (usuario, email, nome, empresaSelecionada, nivelSelecionado) => {
     return callApi({
       method: 'POST',
-      url: `http://localhost:3000/usuario/create/${usuario}/${email}/${nome}/${empresaSelecionada}/${nivelSelecionado}`
+      url: `https://seki-api.onrender.com/usuario/create/${usuario}/${email}/${nome}/${empresaSelecionada}/${nivelSelecionado}`
     });
   }
 };

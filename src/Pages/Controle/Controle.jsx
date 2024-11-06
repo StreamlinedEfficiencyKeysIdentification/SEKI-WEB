@@ -1,6 +1,6 @@
 import ImgC2 from '/Controle2.svg';
 import Cadeado from '/Cadeado.svg';
-import ImgC from '/Controle.svg';
+import ImgC from '/LoginA.png';
 import './controle.css';
 
 function Controle() {
@@ -13,7 +13,7 @@ function Controle() {
       <div className="linha"></div>
       <div className="c-container">
         <div className="ccc-img" data-aos="fade-up" data-aos-delay="200">
-          <img src={ImgC} />
+          <img src={ImgC} className="img-mobile" />
         </div>
         <div className="cc-content">
           <div className="ccc-info">

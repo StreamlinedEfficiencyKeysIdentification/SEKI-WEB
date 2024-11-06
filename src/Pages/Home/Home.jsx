@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { AiOutlineGlobal } from 'react-icons/ai';
-import Ghome from '/G-Home.svg';
+import Ghome from '/HOME.png';
+import Ghome2 from '/Home1.png';
 import './home.css';
 
 function Home() {
@@ -41,8 +42,15 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="hc-img" data-aos="fade-up-left" data-aos-delay="300">
-          <img src={Ghome} />
+        <div className="hc-img">
+          <img src={Ghome} alt="Versão Web SEKI" className="img-web" data-aos="fade-up-left" data-aos-delay="300" />
+          <img
+            src={Ghome2}
+            alt="Versão Mobile SEKI"
+            className="img-mobile"
+            data-aos="fade-up-left"
+            data-aos-delay="500"
+          />
         </div>
       </div>
     </section>

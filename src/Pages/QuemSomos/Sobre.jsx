@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import './sobre.css';
 import { useNavigate } from 'react-router-dom';
 

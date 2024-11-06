@@ -2,13 +2,20 @@ import GooglePlay from '/GooglePlay.svg';
 import AppStore from '/AppStore.svg';
 import QrCode from '/QrCode.svg';
 import Arrow from '/Arrow.svg';
-import RecursoImg from '/Recurso.svg';
+import RecursoImg from '/Login.png';
+import Chamado from '/AberturaChamado.png';
+import Rastreio from '/Equipamento.png';
+import Filiais from '/Filiais.png';
+import Patrimonio from '/ListaEquipamentos.png';
+import QRcode from '/QRcode.png';
 import './recurso.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Recurso() {
   const navigate = useNavigate();
+
+  const [imagemAtual, setImagemAtual] = useState(RecursoImg);
 
   const goToContato = () => {
     navigate('/contato');
@@ -59,42 +66,80 @@ function Recurso() {
           </div>
         </div>
       </div>
+
       <div id="Recurso">
         <div className="rc-titulo">
           <p>Nossos principais recursos</p>
         </div>
         <div className="r-container">
           <div className="left-column">
-            <div className="resource-box" data-aos="fade-down-right" data-aos-delay="200">
+            <div
+              className="resource-box"
+              data-aos="fade-down-right"
+              data-aos-delay="200"
+              onMouseEnter={() => setImagemAtual(Patrimonio)}
+              onMouseLeave={() => setImagemAtual(RecursoImg)}
+            >
               <h2>Controle de patrimônio</h2>
               <p>Gerencie todos os patrimônios em um só lugar.</p>
             </div>
-            <div className="resource-box" data-aos="fade-right" data-aos-delay="200">
+            <div
+              className="resource-box"
+              data-aos="fade-right"
+              data-aos-delay="200"
+              onMouseEnter={() => setImagemAtual(Chamado)}
+              onMouseLeave={() => setImagemAtual(RecursoImg)}
+            >
               <h2>Abertura de chamados</h2>
               <p>Facilite a resolução de problemas técnicos na sua empresa.</p>
             </div>
-            <div className="resource-box" data-aos="fade-up-right" data-aos-delay="200">
+            <div
+              className="resource-box"
+              data-aos="fade-up-right"
+              data-aos-delay="200"
+              onMouseEnter={() => setImagemAtual(Rastreio)}
+              onMouseLeave={() => setImagemAtual(RecursoImg)}
+            >
               <h2>Rastreabilidade</h2>
               <p>Tenha, ao seu alcance, os detalhes e os locais onde se encontram seus bens patrimoniais.</p>
             </div>
           </div>
 
           <div className="recurso" data-aos="zoom-in" data-aos-delay="100">
-            <img src={RecursoImg} alt="" />
+            {/* Renderiza a imagem de acordo com o estado imagemAtual */}
+            <img src={imagemAtual} alt="Imagem do recurso" />
             <div className="sombra-img"></div>
           </div>
 
           <div className="right-column">
-            <div className="resource-box" data-aos="fade-down-left" data-aos-delay="200">
+            <div
+              className="resource-box"
+              data-aos="fade-down-left"
+              data-aos-delay="200"
+              onMouseEnter={() => setImagemAtual(Filiais)}
+              onMouseLeave={() => setImagemAtual(RecursoImg)}
+            >
               <h2>Criação de Filiais</h2>
               <p>Tenha o controle de suas filiais na palma da sua mão.</p>
             </div>
-            <div className="resource-box" data-aos="fade-left" data-aos-delay="200">
-              <h2>Relatórios</h2>
-              <p>Resumos e resultados incríveis, com gráficos simples e completos.</p>
+            <div
+              className="resource-box"
+              data-aos="fade-left"
+              data-aos-delay="200"
+              onMouseEnter={() => setImagemAtual(QRcode)}
+              onMouseLeave={() => setImagemAtual(RecursoImg)}
+            >
+              <h2>QRcode</h2>
+              <p>Organize seus patrimônios por QRcode, simplificando a busca e tendo mais agilidade.</p>
             </div>
-            <div className="resource-box" data-aos="fade-up-left" data-aos-delay="200">
-              <h2>Gestão Eficiente dos Seus Bens</h2>
+            <div
+              className="resource-box"
+              data-aos="fade-up-left"
+              data-aos-delay="200"
+              onMouseEnter={() => setImagemAtual(RecursoImg)}
+              onMouseLeave={() => setImagemAtual(RecursoImg)}
+            >
+              <h2>Gestão eficiente dos seus bens</h2>
               <p>Mantenha um controle preciso sobre seus bens.</p>
             </div>
           </div>

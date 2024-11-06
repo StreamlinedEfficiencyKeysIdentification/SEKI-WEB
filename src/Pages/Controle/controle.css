@@ -16,14 +16,13 @@
 .ccc-img {
   display: none;
   width: 40%;
-  margin-right: 100px;
+  margin-right: 50px;
   filter: drop-shadow(45px 35px 30px rgba(0, 90, 140, 0.4));
 }
 
-.ccc-img img {
+.ccc-img .img-mobile {
   display: block;
   width: 100%;
-  max-width: 100%;
   height: auto;
   border-radius: 1rem;
 }
@@ -199,6 +198,11 @@
 
   .c2-container {
     padding: 0 1rem;
+  }
+
+  .ccc-img .img-mobile {
+    width: 450px;
+    height: 750px;
   }
 }
 

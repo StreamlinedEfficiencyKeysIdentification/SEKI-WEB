@@ -17,7 +17,7 @@
 .card2,
 .card3,
 .card4 {
-  background: linear-gradient(to bottom, var(--background-color-quem-somos), var(--background-color-quem-somos2));
+  background: linear-gradient(to bottom, var(--background-color-quem-somos1), var(--background-color-quem-somos2));
 }
 
 .card {
@@ -40,7 +40,7 @@
 
 .card h2 {
   font-size: calc(var(--font-size-quem-somos-h2) * var(--font-size-multiplier));
-  color: #044275;
+  color: #0073bc;
   margin: 0;
   z-index: 1; /* Sempre visível */
 }

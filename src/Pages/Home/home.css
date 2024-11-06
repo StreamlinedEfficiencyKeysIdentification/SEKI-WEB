@@ -129,8 +129,6 @@
   max-width: 615px;
   height: 598px;
   position: relative;
-  bottom: -7px;
-  right: -10px;
 }
 
 .hc-img::before {
@@ -150,9 +148,38 @@
   z-index: 99;
 }
 
+.hc-img .img-web {
+  height: 500px;
+  right: 50px;
+  border-radius: 0.5rem;
+  position: relative;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hc-img .img-mobile {
+  height: 450px;
+  top: 150px;
+  right: 800px;
+  position: relative;
+  border-radius: 1rem;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+}
+
 @media screen and (max-width: 1296px) {
   .h-container {
     padding: 0 1rem;
+  }
+
+  .hc-img .img-web {
+    height: 400px;
+    top: 50px;
+    right: -30px;
+  }
+
+  .hc-img .img-mobile {
+    height: 350px;
+    top: 150px;
+    right: 570px;
   }
 }
 

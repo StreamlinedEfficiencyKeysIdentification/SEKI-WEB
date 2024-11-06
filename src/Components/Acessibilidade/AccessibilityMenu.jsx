@@ -100,7 +100,7 @@ function AccessibilityMenu() {
             Acessibilidade <RiCloseLine size={32} color="white" />
           </span>
         ) : (
-          '♿'
+          <i className="bi bi-universal-access-circle"></i>
         )}
       </button>
       {isExpanded && (

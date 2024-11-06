@@ -2,7 +2,7 @@
   position: fixed;
   bottom: 70px;
   right: 20px;
-  background-color: #a2a2a2; /* Cor do fundo do botão */
+  background-color: #c0c0c0; /* Cor do fundo do botão */
   color: black;
   border: none;
   border-radius: 1rem 1rem 0 1rem;
@@ -16,5 +16,5 @@
 }
 
 .scroll-to-top:hover {
-  background-color: #5e5e5e; /* Cor ao passar o mouse */
+  background-color: #a2a2a2; /* Cor ao passar o mouse */
 }

@@ -95,12 +95,7 @@ function SideNav() {
   };
 
   return (
-    <div
-      className="side-nav"
-      style={{
-        height: '100vh'
-      }}
-    >
+    <div className="side-nav">
       <div
         className="header-side-nav"
         style={{
@@ -116,18 +111,19 @@ function SideNav() {
           {collapsed ? <AlignLeftOutlined /> : <AlignRightOutlined />}
         </Button>
       </div>
-      <Menu
-        className="menu-side-nav"
-        mode="inline"
-        theme="light"
-        style={{
-          width: collapsed ? 60 : 274
-        }}
-        inlineCollapsed={collapsed}
-        onClick={handleClick}
-        selectedKeys={selectedKeys}
-        items={items(navigate)}
-      />
+      <div className="menu-side-nav">
+        <Menu
+          mode="inline"
+          theme="light"
+          style={{
+            width: collapsed ? 60 : 274
+          }}
+          inlineCollapsed={collapsed}
+          onClick={handleClick}
+          selectedKeys={selectedKeys}
+          items={items(navigate)}
+        />
+      </div>
     </div>
   );
 }

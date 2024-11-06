@@ -1,3 +1,7 @@
+.side-nav {
+  height: 100vh;
+}
+
 .header-side-nav {
   display: flex;
   align-items: center;

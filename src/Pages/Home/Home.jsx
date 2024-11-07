@@ -22,7 +22,7 @@ function Home() {
               <div className="h-span">
                 <span>praticidade</span>
               </div>{' '}
-              que você mecere.
+              que você merece.
             </h1>
             <p>
               Obtenha o controle total dos seus patrimônios com uma solução completa, prática e segura para organizar

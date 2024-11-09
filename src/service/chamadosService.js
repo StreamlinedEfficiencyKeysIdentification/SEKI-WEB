@@ -31,6 +31,12 @@ const chamadosService = {
       url: `https://seki-api.onrender.com/chamados/${IDdoc}/${IDchamado}`
     });
   },
+  findTramites: (IDdoc, IDchamado) => {
+    return callApi({
+      method: 'GET',
+      url: `https://seki-api.onrender.com/chamados/tramites/${IDdoc}/${IDchamado}`
+    });
+  },
   getEmpresasDisponiveis: () => {
     return callApi({
       method: 'GET',
@@ -60,6 +66,13 @@ const chamadosService = {
     return callApi({
       method: 'POST',
       url: `https://seki-api.onrender.com/chamados/create/${titulo}/${descricao}/${empresaSelecionada}/${usuarioSelecionado}`
+    });
+  },
+  saveTramite: (tramite) => {
+    return callApi({
+      method: 'POST',
+      url: `https://seki-api.onrender.com/chamados/create/tramite`,
+      params: tramite
     });
   }
 };

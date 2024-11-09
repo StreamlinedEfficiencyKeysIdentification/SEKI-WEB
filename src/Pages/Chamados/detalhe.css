@@ -1,0 +1,194 @@
+.detalhe-chamado-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.linha {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  padding: 0;
+  margin: 0;
+}
+
+.botao-chamado {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 0 1rem;
+}
+
+.botao-chamado .botoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dc-content {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.coluna1,
+.coluna2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.coluna1 {
+  flex: 2;
+}
+
+.coluna2 {
+  flex: 1;
+}
+
+.chamado,
+.detalhe,
+.envolvidos,
+.tramites {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.chamado {
+  background-color: white;
+  border-radius: 0.25rem;
+  min-height: 400px;
+  padding: 1rem 0;
+}
+
+.chamado .titulo,
+.chamado .info-data,
+.chamado .descricao {
+  margin: 0 1rem;
+}
+
+.chamado .descricao {
+  display: flex;
+  overflow: auto;
+  height: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+
+.tramites {
+  background-color: white;
+  padding: 1rem 0;
+  border-radius: 0.25rem;
+  min-height: 350px;
+  margin-bottom: 1rem;
+}
+
+.tramites .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1rem;
+}
+
+.tramites .title Button {
+  background-color: rgb(0, 123, 255);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s;
+}
+
+.tramites .title Button:hover {
+  background-color: rgba(0, 123, 255, 0.8) !important;
+  color: white !important;
+}
+
+.tramites-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.tramite-item {
+  padding: 1rem;
+  border-radius: 5px;
+  max-width: 60%;
+}
+
+.tramite-esquerda {
+  background-color: #f1f1f1;
+  text-align: left;
+}
+
+.tramite-direita {
+  background-color: #d1e7dd;
+  margin-left: auto;
+  text-align: right;
+}
+
+.tramite-usuario {
+  font-weight: bold;
+}
+
+.tramite-mensagem {
+  margin: 0.5rem 0;
+}
+
+.tramite-data {
+  font-size: 0.85em;
+  color: #888;
+}
+
+.detalhe {
+  background-color: white;
+  padding: 1rem 0;
+  border-radius: 0.25rem;
+}
+
+.detalhe .title,
+.detalhe .info {
+  margin: 0 1rem;
+}
+
+.detalhe-chamado-container label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.envolvidos {
+  background-color: white;
+  padding: 1rem 0;
+  border-radius: 0.25rem;
+}
+
+.envolvidos .title,
+.envolvidos .info {
+  margin: 0 1rem;
+}
+
+.detalhe-chamado-container .spin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+@media screen and (max-width: 768px) {
+  .dc-content {
+    flex-direction: column;
+  }
+
+  .coluna1,
+  .coluna2 {
+    flex: 1;
+  }
+}

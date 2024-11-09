@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Alert, Spin, Table } from 'antd';
 import { useEffect, useState } from 'react';
 import './lista.css';
 import { useNavigate } from 'react-router-dom';
@@ -58,7 +58,18 @@ function ChamadosLista() {
       title: 'Data de Abertura',
       dataIndex: 'DataCriacao',
       key: 'dataAbertura',
-      sorter: (a, b) => new Date(a.DataCriacao) - new Date(b.DataCriacao)
+      sorter: (a, b) => {
+        const parseDate = (dateStr) => {
+          const [datePart, timePart] = dateStr.split(' às ');
+          const [day, month, year] = datePart.split('/');
+          const [hours, minutes, seconds] = timePart.split(':');
+          return new Date(year, month - 1, day, hours, minutes, seconds);
+        };
+
+        const dateA = parseDate(a.DataCriacao);
+        const dateB = parseDate(b.DataCriacao);
+        return dateA - dateB;
+      }
     },
     {
       title: 'Número',
@@ -74,7 +85,7 @@ function ChamadosLista() {
     },
     {
       title: 'Empresa',
-      dataIndex: 'Empresa',
+      dataIndex: 'NomeEmpresa',
       key: 'empresa',
       sorter: (a, b) => a.Empresa.localeCompare(b.Empresa)
     },
@@ -93,20 +104,36 @@ function ChamadosLista() {
     }
   ];
 
-  if (loading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao carregar chamados: {error.message}</p>;
+  // Configurações de localização personalizada para a tabela
+  const locale = {
+    triggerDesc: 'Clique para ordenar em ordem decrescente',
+    triggerAsc: 'Clique para ordenar em ordem crescente',
+    cancelSort: 'Clique para cancelar a ordenação'
+  };
 
   return (
-    <Table
-      columns={columns}
-      dataSource={chamados}
-      pagination={pagination}
-      onChange={handleTableChange}
-      rowKey={(record) => `${record.IDdoc}-${record.IDchamado}`} // Definir a chave única
-      onRow={(record) => ({
-        onClick: () => handleRowClick(record) // Adiciona a função de clique na linha
-      })}
-    />
+    <div className="container-chamado">
+      <div className="cc-content">
+        {error ? (
+          <Alert message="Erro" description={error} type="error" showIcon />
+        ) : (
+          <Spin spinning={loading} tip="Carregando dados..." size="large">
+            <Table
+              className="chamados-lista"
+              columns={columns}
+              dataSource={chamados}
+              pagination={pagination}
+              onChange={handleTableChange}
+              rowKey={(record) => `${record.IDdoc}-${record.IDchamado}`} // Definir a chave única
+              onRow={(record) => ({
+                onClick: () => handleRowClick(record) // Adiciona a função de clique na linha
+              })}
+              locale={locale}
+            />
+          </Spin>
+        )}
+      </div>
+    </div>
   );
 }
 

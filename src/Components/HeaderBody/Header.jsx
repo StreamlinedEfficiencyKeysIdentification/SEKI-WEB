@@ -3,6 +3,7 @@ import { Input } from 'antd';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../service/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function Header() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ function Header() {
   const logout = async () => {
     try {
       await signOut(auth);
+      Cookies.remove('uid');
       navigate('/');
     } catch (error) {
       console.error('Erro ao fazer logout:', error);

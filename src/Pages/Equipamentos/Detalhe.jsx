@@ -166,7 +166,20 @@ const EquipamentoDetalhes = () => {
   return (
     <div>
       <h2>Detalhes do Equipamento</h2>
-      <p>QRcode: {equipamento.idQrcode}</p>
+
+      <div className="qrcode-container">
+        <div className="info">
+          <label>QRcode</label> {equipamento.idQrcode}
+        </div>
+        <div className="gerar-qrcode">
+          Salvar QRcode?
+          <i
+            className="bi bi-qr-code"
+            disabled={isChanged}
+            style={{ color: isChanged ? 'gray' : 'black', cursor: isChanged ? 'not-allowed' : 'pointer' }}
+          ></i>
+        </div>
+      </div>
 
       <div>
         <label>Marca:</label>

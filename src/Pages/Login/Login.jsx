@@ -11,6 +11,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import Cookies from 'js-cookie';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -53,6 +54,19 @@ function Login() {
       // Fazer login com Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const usuarioLogado = userCredential.user.uid;
+
+      if (lembrar) {
+        Cookies.set('uid', usuarioLogado, {
+          expires: 7, // O cookie expira em 7 dias
+          secure: true,
+          sameSite: 'Strict'
+        });
+      } else {
+        Cookies.set('uid', usuarioLogado, {
+          secure: true,
+          sameSite: 'Strict' // Cookie de sessão (excluído ao fechar o navegador)
+        });
+      }
 
       // Buscar detalhes do usuário no Firestore
       const userDocRef = doc(db, 'DetalheUsuario', usuarioLogado);

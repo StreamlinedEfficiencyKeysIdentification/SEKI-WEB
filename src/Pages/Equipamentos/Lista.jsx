@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Table, Input } from 'antd';
+import { Table, Input, Alert, Spin } from 'antd';
 import equipamentosService from '../../service/equipamentosService';
 import { useNavigate } from 'react-router-dom';
+import './lista.css';
 
 function EquipamentosLista() {
   const [filtro, setFiltro] = useState('');
@@ -102,28 +103,33 @@ function EquipamentosLista() {
     }
   ];
 
-  if (loading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao carregar equipamentos: {error.message}</p>;
-
   return (
-    <div>
-      <h2>Lista de Equipamentos</h2>
-      <Input
-        placeholder="Buscar por Marca, Modelo"
-        value={filtro}
-        onChange={handleFiltroChange}
-        style={{ marginBottom: '10px', width: '100%' }}
-      />
-      <Table
-        columns={columns}
-        dataSource={equipamentos}
-        pagination={pagination}
-        onChange={handleTableChange}
-        rowKey={(record) => record.IDdoc}
-        onRow={(record) => ({
-          onClick: () => handleClick(record)
-        })}
-      />
+    <div className="container-equipamento">
+      <div className="ce-content">
+        {error ? (
+          <Alert message="Erro" description={error} type="error" showIcon />
+        ) : (
+          <Spin spinning={loading} tip="Carregando dados..." size="large">
+            <Input
+              placeholder="Buscar por Marca, Modelo"
+              value={filtro}
+              onChange={handleFiltroChange}
+              style={{ marginBottom: '10px', width: '100%' }}
+            />
+            <Table
+              className="equipamentos-lista"
+              columns={columns}
+              dataSource={equipamentos}
+              pagination={pagination}
+              onChange={handleTableChange}
+              rowKey={(record) => record.IDdoc}
+              onRow={(record) => ({
+                onClick: () => handleClick(record)
+              })}
+            />
+          </Spin>
+        )}
+      </div>
     </div>
   );
 }

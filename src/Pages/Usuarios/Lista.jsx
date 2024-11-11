@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Table, Input } from 'antd';
+import { Table, Input, Alert, Spin } from 'antd';
 import usuariosService from '../../service/usuariosService';
 import { useNavigate } from 'react-router-dom';
+import './lista.css';
 
 function UsuariosLista() {
   const [filtro, setFiltro] = useState('');
@@ -97,28 +98,33 @@ function UsuariosLista() {
     }
   ];
 
-  if (loading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao carregar usuários: {error.message}</p>;
-
   return (
-    <div>
-      <h2>Lista de Usuários</h2>
-      <Input
-        placeholder="Buscar por Nome, Usuário ou Email"
-        value={filtro}
-        onChange={handleFiltroChange}
-        style={{ marginBottom: '10px', width: '100%' }}
-      />
-      <Table
-        columns={columns}
-        dataSource={usuarios}
-        pagination={pagination}
-        onChange={handleTableChange}
-        rowKey={(record) => record.uid}
-        onRow={(record) => ({
-          onClick: () => handleClick(record)
-        })}
-      />
+    <div className="container-usuario">
+      <div className="cu-content">
+        {error ? (
+          <Alert message="Erro" description={error} type="error" showIcon />
+        ) : (
+          <Spin spinning={loading} tip="Carregando dados..." size="large">
+            <Input
+              placeholder="Buscar por Nome, Usuário ou Email"
+              value={filtro}
+              onChange={handleFiltroChange}
+              style={{ marginBottom: '10px', width: '100%' }}
+            />
+            <Table
+              className="usuarios-lista"
+              columns={columns}
+              dataSource={usuarios}
+              pagination={pagination}
+              onChange={handleTableChange}
+              rowKey={(record) => record.uid}
+              onRow={(record) => ({
+                onClick: () => handleClick(record)
+              })}
+            />
+          </Spin>
+        )}
+      </div>
     </div>
   );
 }

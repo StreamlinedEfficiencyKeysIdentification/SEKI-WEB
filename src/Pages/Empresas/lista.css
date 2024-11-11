@@ -1,0 +1,14 @@
+.container-empresa {
+  padding: 0 1rem 1rem;
+}
+
+.container-empresa .ce-content {
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.empresas-lista:hover {
+  cursor: pointer;
+}

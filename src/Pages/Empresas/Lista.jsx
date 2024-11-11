@@ -1,7 +1,8 @@
-import { Table, Button, Input } from 'antd';
+import { Table, Button, Input, Alert, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import empresasService from '../../service/empresasService';
 import { useNavigate } from 'react-router-dom';
+import './lista.css';
 
 function EmpresasLista() {
   const [filtro, setFiltro] = useState('');
@@ -164,44 +165,49 @@ function EmpresasLista() {
     // Implementar a navegação para a página de detalhes da filial
   };
 
-  if (loading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao carregar chamados: {error.message}</p>;
-
   return (
-    <div>
-      <Input
-        placeholder="Buscar por CNPJ ou Razão Social"
-        value={filtro}
-        onChange={handleFiltroChange}
-        style={{ marginBottom: '10px', width: '100%' }}
-      />
-      <Table
-        className="empresas-lista"
-        columns={columns}
-        dataSource={empresas.filter((empresa) => empresa.EmpresaPai === empresa.IDdoc)} // Filtra apenas as matrizes
-        pagination={pagination}
-        onChange={handleTableChange}
-        rowKey={(record) => record.IDdoc}
-        expandable={{
-          expandedRowRender: (record) => {
-            const filiais = getFiliais(record.IDdoc);
-            return filiais.length > 0 ? (
-              <Table
-                columns={columnsFilial}
-                dataSource={filiais}
-                pagination={false}
-                rowKey={(filial) => filial.IDdoc}
-                onRow={(filial) => ({
-                  onClick: () => handleDetalhesFilial(filial)
-                })}
-              />
-            ) : (
-              <p>Nenhuma filial encontrada.</p>
-            );
-          },
-          rowExpandable: (record) => getFiliais(record.IDdoc).length > 0
-        }}
-      />
+    <div className="container-empresa">
+      <div className="ce-content">
+        {error ? (
+          <Alert message="Erro" description={error} type="error" showIcon />
+        ) : (
+          <Spin spinning={loading} tip="Carregando dados..." size="large">
+            <Input
+              placeholder="Buscar por CNPJ ou Razão Social"
+              value={filtro}
+              onChange={handleFiltroChange}
+              style={{ marginBottom: '10px', width: '100%' }}
+            />
+            <Table
+              className="empresas-lista"
+              columns={columns}
+              dataSource={empresas.filter((empresa) => empresa.EmpresaPai === empresa.IDdoc)} // Filtra apenas as matrizes
+              pagination={pagination}
+              onChange={handleTableChange}
+              rowKey={(record) => record.IDdoc}
+              expandable={{
+                expandedRowRender: (record) => {
+                  const filiais = getFiliais(record.IDdoc);
+                  return filiais.length > 0 ? (
+                    <Table
+                      columns={columnsFilial}
+                      dataSource={filiais}
+                      pagination={false}
+                      rowKey={(filial) => filial.IDdoc}
+                      onRow={(filial) => ({
+                        onClick: () => handleDetalhesFilial(filial)
+                      })}
+                    />
+                  ) : (
+                    <p>Nenhuma filial encontrada.</p>
+                  );
+                },
+                rowExpandable: (record) => getFiliais(record.IDdoc).length > 0
+              }}
+            />
+          </Spin>
+        )}
+      </div>
     </div>
   );
 }

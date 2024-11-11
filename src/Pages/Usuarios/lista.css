@@ -1,0 +1,14 @@
+.container-usuario {
+  padding: 0 1rem 1rem;
+}
+
+.container-usuario .cu-content {
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.usuarios-lista:hover {
+  cursor: pointer;
+}

@@ -11,13 +11,13 @@ import { onAuthStateChanged } from 'firebase/auth';
 const breadcrumbNameMap = {
   '/atendente/home': '',
   '/atendente/chamados/lista': 'Lista de Chamados',
-  '/atendente/chamados/criar': 'Criar Chamado',
+  '/atendente/chamados/criar': 'Novo Chamado',
   '/atendente/usuarios/lista': 'Lista de Usuários',
-  '/atendente/usuarios/criar': 'Criar Usuário',
+  '/atendente/usuarios/criar': 'Novo Usuário',
   '/atendente/empresa/lista': 'Lista de Empresas',
-  '/atendente/empresa/criar': 'Criar Empresa',
+  '/atendente/empresa/criar': 'Nova Empresa',
   '/atendente/equipamento/lista': 'Lista de Equipamentos',
-  '/atendente/equipamento/criar': 'Criar Equipamento'
+  '/atendente/equipamento/criar': 'Novo Equipamento'
   // Adicione mais conforme necessário
 };
 

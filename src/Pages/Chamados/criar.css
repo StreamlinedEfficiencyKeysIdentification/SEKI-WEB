@@ -1,0 +1,28 @@
+.criar-chamado-container {
+  padding: 0 1rem 1rem;
+}
+
+.novo-chamado-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 0.25rem;
+}
+
+.novo-chamado-content h2 {
+  padding: 1rem;
+}
+
+.novo-chamado-content .linha {
+  margin-bottom: 1rem;
+}
+
+.novo-chamado-content .botoes {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.content-form-chamado {
+  padding: 1rem;
+}

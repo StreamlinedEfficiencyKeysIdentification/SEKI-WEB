@@ -9,13 +9,6 @@
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px; /* Ajuste a altura conforme necessário */
-}
-
 .chamados-lista:hover {
   cursor: pointer;
 }

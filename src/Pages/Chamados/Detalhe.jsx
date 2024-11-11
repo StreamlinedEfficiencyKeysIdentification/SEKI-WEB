@@ -100,7 +100,6 @@ const ChamadoDetalhes = () => {
         }
       } catch (err) {
         setError(`Erro ao carregar os detalhes do chamado: ${err.message}`);
-        console.error(err);
         setLoading(false);
       }
     };
@@ -235,14 +234,11 @@ const ChamadoDetalhes = () => {
       {loading ? (
         <div className="spin-container">
           <Spin tip="Carregando detalhes do chamado..." size="large">
-            <div style={{ height: 'auto', width: '200px', background: 'transparent', fontSize: '2rem' }}></div>{' '}
-            {/* Elemento aninhado para compatibilidade */}
+            <div style={{ height: 'auto', width: '200px', background: 'transparent', fontSize: '2rem' }}></div>
           </Spin>
         </div>
       ) : error ? (
         <Alert message={error} type="error" showIcon />
-      ) : !chamado ? (
-        <Alert message="Chamado não encontrado" type="error" showIcon />
       ) : (
         <>
           <div className="dc-content">

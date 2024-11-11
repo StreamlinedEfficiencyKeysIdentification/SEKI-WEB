@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import usuariosService from '../../../service/usuariosService';
 import empresasService from '../../../service/empresasService';
 import equipamentosService from '../../../service/equipamentosService';
+import { Alert, Spin } from 'antd';
 
 function Home() {
   const [chamadosData, setChamadosData] = useState([]);
@@ -114,144 +115,147 @@ function Home() {
     fetchEquipamentosByStatus();
   }, []);
 
-  if (loading) {
-    return <div>Carregando...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>; // Exibe a mensagem de erro, se houver
-  }
-
   return (
     <div className="home-main">
-      <div className="charts-container">
-        {/* Gráfico de Chamados */}
-        <div className="chart">
-          <h3>Chamados</h3>
-          <PieChart width={250} height={300}>
-            <Pie
-              data={chamadosData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              fill="#8884d8"
-              label
-              animationDuration={1000} // Define 1 segundo de animação
-            >
-              {chamadosData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-
-            <Tooltip />
-            <Legend />
-          </PieChart>
+      {loading ? (
+        <div className="spin-container">
+          <Spin tip="Carregando informações do usuário..." size="large">
+            <div style={{ height: 'auto', width: '200px', background: 'transparent', fontSize: '2rem' }}></div>{' '}
+            {/* Elemento aninhado para compatibilidade */}
+          </Spin>
         </div>
+      ) : error ? (
+        <Alert message={error} type="error" showIcon />
+      ) : (
+        <div className="charts-container">
+          {/* Gráfico de Chamados */}
+          <div className="chart">
+            <h3>Chamados</h3>
+            <PieChart width={250} height={300}>
+              <Pie
+                data={chamadosData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+                animationDuration={1000} // Define 1 segundo de animação
+              >
+                {chamadosData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
 
-        {/* Exibição de Chamados sob Responsabilidade */}
-        <div className="responsabilidade">
-          <i className="bi bi-headphones"></i>
-          <h3>Chamados sob minha responsabilidade</h3>
-          <div className="responsabilidade-box">{chamadosSobResponsabilidade}</div>
-        </div>
-
-        {/* Gráfico de Empresas */}
-        <div className="chart">
-          <h3>Empresas</h3>
-          <PieChart width={250} height={300}>
-            <Pie
-              data={empresasData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              fill="#8884d8"
-              label
-              animationDuration={1000}
-            >
-              {empresasData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </div>
-
-        {/* Gráfico de Usuários */}
-        <div className="chart">
-          <h3>Usuários</h3>
-          <PieChart width={250} height={300}>
-            <Pie
-              data={usuariosData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              fill="#8884d8"
-              label
-              animationDuration={1000}
-            >
-              {usuariosData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </div>
-
-        {/* Gráfico de Equipamentos */}
-        <div className="chart">
-          <h3>Equipamentos</h3>
-          <PieChart width={250} height={300}>
-            <Pie
-              data={equipamentosData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              fill="#8884d8"
-              animationDuration={1000}
-              label
-            >
-              {equipamentosData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </div>
-        <div className="chamados-recentes">
-          <div className="chamados-header">
-            <h3>Meus chamados</h3>
-            <a href="/atendente/chamados/lista" className="icon-link">
-              <i className="bi bi-list-ul" size={20}></i>
-            </a>
+              <Tooltip />
+              <Legend />
+            </PieChart>
           </div>
-          <ul className="chamados-list">
-            {chamadosRecentes?.map((chamado) => (
-              <li key={chamado.IDchamado} className="chamado-item" onClick={() => handleRowClick(chamado)}>
-                <div className="chamado-group">
-                  <strong>{chamado.IDchamado}</strong>
-                  {chamado.DataCriacao}
-                </div>
-                <div className="chamado-group">
-                  <div>{chamado.Titulo}</div>
-                  {chamado.Status}
-                </div>
-              </li>
-            ))}
-          </ul>
+
+          {/* Exibição de Chamados sob Responsabilidade */}
+          <div className="responsabilidade">
+            <i className="bi bi-headphones"></i>
+            <h3>Chamados sob minha responsabilidade</h3>
+            <div className="responsabilidade-box">{chamadosSobResponsabilidade}</div>
+          </div>
+
+          {/* Gráfico de Empresas */}
+          <div className="chart">
+            <h3>Empresas</h3>
+            <PieChart width={250} height={300}>
+              <Pie
+                data={empresasData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+                animationDuration={1000}
+              >
+                {empresasData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </div>
+
+          {/* Gráfico de Usuários */}
+          <div className="chart">
+            <h3>Usuários</h3>
+            <PieChart width={250} height={300}>
+              <Pie
+                data={usuariosData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+                animationDuration={1000}
+              >
+                {usuariosData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </div>
+
+          {/* Gráfico de Equipamentos */}
+          <div className="chart">
+            <h3>Equipamentos</h3>
+            <PieChart width={250} height={300}>
+              <Pie
+                data={equipamentosData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                animationDuration={1000}
+                label
+              >
+                {equipamentosData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </div>
+          <div className="chamados-recentes">
+            <div className="chamados-header">
+              <h3>Meus chamados</h3>
+              <a href="/atendente/chamados/lista" className="icon-link">
+                <i className="bi bi-list-ul" size={20}></i>
+              </a>
+            </div>
+            <ul className="chamados-list">
+              {chamadosRecentes?.map((chamado) => (
+                <li key={chamado.IDchamado} className="chamado-item" onClick={() => handleRowClick(chamado)}>
+                  <div className="chamado-group">
+                    <strong>{chamado.IDchamado}</strong>
+                    {chamado.DataCriacao}
+                  </div>
+                  <div className="chamado-group">
+                    <div>{chamado.Titulo}</div>
+                    {chamado.Status}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

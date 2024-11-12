@@ -1,0 +1,28 @@
+.criar-equipamento-container {
+  padding: 0 1rem 1rem;
+}
+
+.novo-equipamento-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 0.25rem;
+}
+
+.novo-equipamento-content h2 {
+  padding: 1rem;
+}
+
+.novo-equipamento-content .linha {
+  margin-bottom: 1rem;
+}
+
+.novo-equipamento-content .botoes {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.content-form-equipamento {
+  padding: 1rem;
+}

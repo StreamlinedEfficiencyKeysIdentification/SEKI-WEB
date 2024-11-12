@@ -3,145 +3,215 @@ import { useState, useEffect } from 'react';
 import empresasService from '../../service/empresasService';
 import usuariosService from '../../service/usuariosService';
 import equipamentosService from '../../service/equipamentosService';
+import { Alert, Button, Form, Input, message, Select, Spin } from 'antd';
+import './criar.css';
 
 function CriarEquipamento() {
-  const [usuario, setUsuario] = useState('');
-  const [qrcode, setQrcode] = useState('');
-  const [empresaSelecionada, setEmpresaSelecionada] = useState('');
-  const [setorSelecionado, setSetorSelecionado] = useState('');
-  const [marca, setMarca] = useState('');
-  const [modelo, setModelo] = useState('');
+  const [form] = Form.useForm();
   const [usuarios, setUsuarios] = useState([]);
   const [empresas, setEmpresas] = useState([]);
   const [setores, setSetores] = useState([]);
+  const [empresaSelecionada, setEmpresaSelecionada] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isChanged, setIsChanged] = useState(false);
 
   // Função para gerar o hash do QR code
-  const handleGenerateQRCode = async () => {
-    try {
-      const hash = await equipamentosService.generateQRCodeHash();
-      setQrcode(hash); // Define o hash no campo qrcode
-    } catch (error) {
-      console.error('Erro ao gerar QR code:', error);
-    }
+  const handleGenerateQRCode = async (a) => {
+    const hash = await equipamentosService.generateQRCodeHash(a);
+    return hash; // Define o hash no campo qrcode
   };
 
   useEffect(() => {
     async function fetchUsuarios() {
-      const usuarios = await usuariosService.getUsuariosPorNivel(); // Implementar esta função no back-end
-      setUsuarios(usuarios);
+      try {
+        const usuarios = await usuariosService.getUsuariosPorNivel(); // Implementar esta função no back-end
+        setUsuarios(usuarios.map((usuario) => ({ value: usuario.uid, label: usuario.Nome })));
+      } catch (error) {
+        setError(`Erro ao carregar os usuários ${error.message}`);
+        console.error(error);
+      }
     }
+
     fetchUsuarios();
   }, []);
 
   // Função para buscar empresas conforme o nível do usuário
   useEffect(() => {
     async function fetchEmpresas() {
-      const empresas = await empresasService.getEmpresasDisponiveis(); // Implementar esta função no back-end
-      setEmpresas(empresas);
+      try {
+        const empresas = await empresasService.getEmpresasDisponiveis(); // Implementar esta função no back-end
+        setEmpresas(empresas.map((empresa) => ({ value: empresa.IDempresa, label: empresa.RazaoSocial })));
+        setLoading(false);
+      } catch (err) {
+        setError(`Erro ao carregar as empresas: ${err.message}`);
+        setLoading(false);
+      }
     }
+
     fetchEmpresas();
   }, []);
 
   useEffect(() => {
     async function fetchSetor() {
       if (empresaSelecionada) {
-        const setor = await empresasService.getSetoresPorEmpresa(empresaSelecionada); // Implementar esta função no back-end
-        setSetores(setor);
+        try {
+          const setor = await empresasService.getSetoresPorEmpresa(empresaSelecionada); // Implementar esta função no back-end
+          setSetores(setor.map((setor) => ({ value: setor.IDdoc, label: setor.Descricao })));
+        } catch (error) {
+          setError(`Erro ao carregar os setores ${error.message}`);
+          console.error(error);
+        }
       }
     }
+
     fetchSetor();
   }, [empresaSelecionada]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async (values) => {
+    setIsChanged(false);
     try {
-      // Chama o serviço para salvar o chamado
+      const qrcode = await handleGenerateQRCode();
 
-      await equipamentosService.save(usuario, qrcode, empresaSelecionada, setorSelecionado, marca, modelo); // Implementar esta função no back-end
+      try {
+        // Chama o serviço para salvar o chamado
+        await equipamentosService.save(
+          values.usuario ? values.usuario : ' ',
+          qrcode,
+          values.empresaSelecionada,
+          values.setorSelecionado,
+          values.marca,
+          values.modelo
+        ); // Implementar esta função no back-end
 
-      alert('Equipamento criado com sucesso!');
+        message.success('Equipamento criado com sucesso!');
 
-      // Limpa os campos do formulário após o sucesso
-      setUsuario('');
-      setQrcode('');
-      setEmpresaSelecionada('');
-      setSetorSelecionado('');
-      setMarca('');
-      setModelo('');
-    } catch (error) {
-      console.error('Erro ao criar o equipamento:', error);
-      alert('Erro ao criar o equipamento. Tente novamente.');
+        // Limpa os campos do formulário após o sucesso
+        form.resetFields();
+      } catch {
+        message.error('Erro ao criar o equipamento. Tente novamente mais tarde.');
+      }
+    } catch {
+      message.error('Erro ao gerar qrcode.');
     }
   };
 
   return (
-    <div>
-      <h2>Criar Novo Equipamento</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Qrcode:</label>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <input
-              type="text"
-              value={qrcode}
-              readOnly // Torna o campo somente leitura
-              style={{ marginRight: '8px' }}
-              required
-            />
-            <button type="button" onClick={handleGenerateQRCode}>
-              <i className="bi bi-arrow-clockwise"></i>
-            </button>
+    <div className="criar-equipamento-container">
+      {error ? (
+        <Alert message={error} type="error" showIcon />
+      ) : (
+        <div className="novo-equipamento-content">
+          <h2>Criação</h2>
+
+          <div className="linha"></div>
+
+          <div className="content-form-equipamento">
+            <Spin spinning={loading} tip="Carregando dados..." size="large">
+              <Form
+                form={form}
+                name="control-hooks"
+                layout="vertical"
+                style={{
+                  maxWidth: 1000
+                }}
+                initialValues={{
+                  remember: true
+                }}
+                onFinish={handleSubmit}
+                autoComplete="off"
+                onValuesChange={() => setIsChanged(true)}
+              >
+                <Form.Item
+                  label="Modelo"
+                  name="marca"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, insira uma Razão Social!'
+                    }
+                  ]}
+                >
+                  <Input placeholder="Digite a Razão Social da empresa" />
+                </Form.Item>
+
+                <Form.Item
+                  label="Marca"
+                  name="modelo"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, insira uma Razão Social!'
+                    }
+                  ]}
+                >
+                  <Input placeholder="Digite a Razão Social da empresa" />
+                </Form.Item>
+
+                <Form.Item
+                  label="Empresa"
+                  name="empresaSelecionada"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, selecione uma empresa!'
+                    }
+                  ]}
+                >
+                  <Select
+                    showSearch
+                    placeholder="Selecione uma empresa"
+                    optionFilterProp="label"
+                    options={empresas}
+                    onChange={(value) => setEmpresaSelecionada(value)}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  label="Setor"
+                  name="setorSelecionado"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, selecione uma empresa!'
+                    }
+                  ]}
+                >
+                  <Select
+                    showSearch
+                    placeholder="Selecione uma empresa"
+                    optionFilterProp="label"
+                    options={setores}
+                    disabled={!empresaSelecionada}
+                  />
+                </Form.Item>
+
+                <Form.Item label="Usuário" name="usuario">
+                  <Select showSearch placeholder="Selecione uma empresa" optionFilterProp="label" options={usuarios} />
+                </Form.Item>
+
+                <Form.Item>
+                  <div className="botoes">
+                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                      Criar
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        form.resetFields();
+                        setIsChanged(false);
+                        setEmpresaSelecionada('');
+                      }}
+                      disabled={!isChanged}
+                    >
+                      Limpar
+                    </Button>
+                  </div>
+                </Form.Item>
+              </Form>
+            </Spin>
           </div>
         </div>
-        <div>
-          <label>Marca:</label>
-          <input type="text" value={marca} onChange={(e) => setMarca(e.target.value)} required />
-        </div>
-        <div>
-          <label>Modelo:</label>
-          <input type="text" value={modelo} onChange={(e) => setModelo(e.target.value)} required />
-        </div>
-        <div>
-          <label>Usuario:</label>
-          <select value={usuario} onChange={(e) => setUsuario(e.target.value)} required>
-            <option value="">Selecione uma empresa</option>
-            {usuarios.map((usuario) => (
-              <option key={usuario.uid} value={usuario.uid}>
-                {usuario.Nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Empresa:</label>
-          <select value={empresaSelecionada} onChange={(e) => setEmpresaSelecionada(e.target.value)} required>
-            <option value="">Selecione uma empresa</option>
-            {empresas.map((empresa) => (
-              <option key={empresa.IDempresa} value={empresa.IDempresa}>
-                {empresa.RazaoSocial}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Setor:</label>
-          <select
-            value={setorSelecionado}
-            onChange={(e) => setSetorSelecionado(e.target.value)}
-            disabled={!empresaSelecionada}
-            required
-          >
-            <option value="">Selecione um setor</option>
-            {setores.map((setor) => (
-              <option key={setor.IDdoc} value={setor.IDdoc}>
-                {setor.Descricao}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button type="submit">Criar Equipamento</button>
-      </form>
+      )}
     </div>
   );
 }

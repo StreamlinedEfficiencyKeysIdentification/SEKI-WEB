@@ -1,0 +1,28 @@
+.criar-empresa-container {
+  padding: 0 1rem 1rem;
+}
+
+.novo-empresa-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 0.25rem;
+}
+
+.novo-empresa-content h2 {
+  padding: 1rem;
+}
+
+.novo-empresa-content .linha {
+  margin-bottom: 1rem;
+}
+
+.novo-empresa-content .botoes {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.novo-empresa-content .content-form-empresa {
+  padding: 1rem;
+}

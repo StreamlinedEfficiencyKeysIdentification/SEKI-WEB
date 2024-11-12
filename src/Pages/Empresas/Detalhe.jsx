@@ -1,21 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Select, Button, Input, Switch } from 'antd';
+import { Select, Button, Input, Switch, Spin, Alert, Form, message } from 'antd';
 import empresasService from '../../service/empresasService';
+import './detalhe.css';
 
 const EmpresaDetalhes = () => {
   const { IDdoc } = useParams();
+  const [form] = Form.useForm();
   const [empresa, setEmpresa] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [empresasPai, setEmpresasPai] = useState([]);
   const [isChanged, setIsChanged] = useState(false);
-
-  // Estados para os campos editáveis
-  const [cnpj, setCnpj] = useState('');
-  const [razaoSocial, setRazaoSocial] = useState('');
-  const [empresaPai, setEmpresaPai] = useState(null);
-  const [status, setStatus] = useState(false);
 
   const formatarCNPJ = (value) => {
     return value
@@ -29,9 +25,8 @@ const EmpresaDetalhes = () => {
 
   const handleCnpjChange = (e) => {
     const value = e.target.value;
-    const formattedCNPJ = formatarCNPJ(value); // Formata o valor do CNPJ
-    setCnpj(formattedCNPJ); // Atualiza o estado com o CNPJ formatado
-    setIsChanged(true);
+    const formattedCNPJ = formatarCNPJ(value);
+    form.setFieldsValue({ cnpj: formattedCNPJ }); // Atualiza o valor formatado no formulário
   };
 
   useEffect(() => {
@@ -39,10 +34,15 @@ const EmpresaDetalhes = () => {
       try {
         const empresaData = await empresasService.findById(IDdoc);
         setEmpresa(empresaData);
-        setCnpj(formatarCNPJ(empresaData.CNPJ));
-        setRazaoSocial(empresaData.RazaoSocial);
-        setEmpresaPai(empresaData.EmpresaPai);
-        setStatus(empresaData.Status);
+
+        // Define os valores iniciais no formulário
+        form.setFieldsValue({
+          cnpj: formatarCNPJ(empresaData.CNPJ),
+          razaoSocial: empresaData.RazaoSocial,
+          empresaPai: empresaData.EmpresaPai,
+          status: empresaData.Status
+        });
+
         setLoading(false);
       } catch (err) {
         setError(`Erro ao carregar os detalhes da empresa: ${err.message}`);
@@ -50,7 +50,7 @@ const EmpresaDetalhes = () => {
       }
     };
     fetchEmpresa();
-  }, [IDdoc]);
+  }, [IDdoc, form]);
 
   // Busca a lista de empresas pai para o select
   useEffect(() => {
@@ -61,96 +61,139 @@ const EmpresaDetalhes = () => {
     fetchEmpresasPai();
   }, []);
 
-  const handleFieldChange = (field, value) => {
-    setIsChanged(true);
-    if (field === 'RazaoSocial') setRazaoSocial(value);
-    if (field === 'EmpresaPai') setEmpresaPai(value);
-    if (field === 'Status') setStatus(value);
-  };
-
-  const handleSave = async () => {
-    if (!cnpj || !razaoSocial || !empresaPai) {
+  const handleSave = async (values) => {
+    if (!values.cnpj || !values.razaoSocial || !values.empresaPai) {
       alert('Preencha todos os campos obrigatórios.');
       return;
     }
-    if (cnpj.length < 18) {
+    if (values.cnpj.length < 18) {
       alert('CNPJ inválido.');
       return;
     }
     try {
+      setIsChanged(false);
       const updatedEmpresa = {
         IDdoc: empresa.IDdoc,
-        CNPJ: cnpj.replace(/\D/g, ''),
-        RazaoSocial: razaoSocial,
-        EmpresaPai: empresaPai,
-        Status: status ? 'Ativo' : 'Inativo'
+        CNPJ: values.cnpj.replace(/\D/g, ''),
+        RazaoSocial: values.razaoSocial,
+        EmpresaPai: values.empresaPai,
+        Status: values.status ? 'Ativo' : 'Inativo'
       };
+
       await empresasService.update(updatedEmpresa);
-      alert('Empresa atualizada com sucesso!');
-      setIsChanged(false);
-    } catch (error) {
-      console.error('Erro ao atualizar a empresa:', error);
-      alert('Erro ao atualizar a empresa. Tente novamente.');
+
+      message.success('Empresa atualizada com sucesso!');
+    } catch {
+      message.error('Erro ao atualizar empresa!');
     }
   };
 
-  const handleCancel = () => {
-    setCnpj(formatarCNPJ(empresa.CNPJ));
-    setRazaoSocial(empresa.RazaoSocial);
-    setEmpresaPai(empresa.EmpresaPai);
-    setStatus(empresa.Status);
+  const onReset = () => {
+    form.setFieldsValue({
+      cnpj: formatarCNPJ(empresa.CNPJ),
+      razaoSocial: empresa.RazaoSocial,
+      empresaPai: empresa.EmpresaPai,
+      status: empresa.Status
+    });
     setIsChanged(false);
   };
 
-  if (loading) {
-    return <div>Carregando...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!empresa) {
-    return <div>Empresa não encontrada.</div>;
-  }
-
   return (
-    <div>
-      <h2>Detalhes da Empresa</h2>
-      <div className="input-group">
-        <label>CNPJ *</label>
-        <Input placeholder="Digite o CNPJ da sua empresa" value={cnpj} onChange={handleCnpjChange} />
-      </div>
-      <div>
-        <label>Razão Social:</label>
-        <Input
-          placeholder="Digite o Nome da empresa"
-          value={razaoSocial}
-          onChange={(e) => handleFieldChange('RazaoSocial', e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Empresa Pai:</label>
-        <Select
-          showSearch
-          placeholder="Selecione uma empresa"
-          optionFilterProp="label"
-          value={empresaPai}
-          onChange={(value) => handleFieldChange('EmpresaPai', value)}
-          options={empresasPai}
-        />
-      </div>
-      <div>
-        <label>Status:</label>
-        <Switch checked={status} onChange={(checked) => handleFieldChange('Status', checked)} />
-      </div>
+    <div className="detalhe-empresa-container">
+      {error ? (
+        <Alert message={error} type="error" showIcon />
+      ) : (
+        <div className="detalhe-empresa-content">
+          <h2>Empresa</h2>
 
-      {isChanged && (
-        <div style={{ marginTop: '20px' }}>
-          <Button type="primary" onClick={handleSave} style={{ marginRight: '10px' }}>
-            Salvar
-          </Button>
-          <Button onClick={handleCancel}>Cancelar</Button>
+          <div className="linha"></div>
+
+          <div className="content-form-empresa">
+            <Spin spinning={loading} tip="Carregando dados..." size="large">
+              <Form
+                form={form}
+                name="control-hooks"
+                layout="vertical"
+                style={{
+                  maxWidth: 1000
+                }}
+                initialValues={{
+                  remember: true
+                }}
+                onFinish={handleSave}
+                autoComplete="off"
+                onValuesChange={() => setIsChanged(true)}
+              >
+                <Form.Item
+                  label="CNPJ"
+                  name="cnpj"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, insira um CNPJ!'
+                    }
+                  ]}
+                >
+                  <Input placeholder="Digite o CNPJ da sua empresa" onChange={handleCnpjChange} />
+                </Form.Item>
+
+                <Form.Item
+                  label="Razão Social"
+                  name="razaoSocial"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, insira uma Razão Social!'
+                    }
+                  ]}
+                >
+                  <Input placeholder="Digite a Razão Social da empresa" />
+                </Form.Item>
+
+                <Form.Item
+                  label="Matriz"
+                  name="empresaPai"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, selecione uma empresa!'
+                    }
+                  ]}
+                >
+                  <Select
+                    showSearch
+                    placeholder="Selecione uma empresa"
+                    optionFilterProp="label"
+                    options={empresasPai}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  label="Status"
+                  name="status"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, selecione um usuario!'
+                    }
+                  ]}
+                >
+                  <Switch />
+                </Form.Item>
+
+                <Form.Item>
+                  <div className="botoes">
+                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                      Salvar
+                    </Button>
+                    <Button onClick={onReset} disabled={!isChanged}>
+                      Cancelar
+                    </Button>
+                  </div>
+                </Form.Item>
+              </Form>
+            </Spin>
+          </div>
         </div>
       )}
     </div>

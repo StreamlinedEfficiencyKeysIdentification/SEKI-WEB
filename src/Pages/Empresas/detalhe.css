@@ -1,0 +1,28 @@
+.detalhe-empresa-container {
+  padding: 0 1rem 1rem;
+}
+
+.detalhe-empresa-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 0.25rem;
+}
+
+.detalhe-empresa-content h2 {
+  padding: 1rem;
+}
+
+.detalhe-empresa-content .linha {
+  margin-bottom: 1rem;
+}
+
+.detalhe-empresa-content .botoes {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.detalhe-empresa-content .content-form-empresa {
+  padding: 1rem;
+}

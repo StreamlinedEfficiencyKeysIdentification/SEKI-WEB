@@ -1,0 +1,28 @@
+.criar-usuario-container {
+  padding: 0 1rem 1rem;
+}
+
+.novo-usuario-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 0.25rem;
+}
+
+.novo-usuario-content h2 {
+  padding: 1rem;
+}
+
+.novo-usuario-content .linha {
+  margin-bottom: 1rem;
+}
+
+.novo-usuario-content .botoes {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.content-form-usuario {
+  padding: 1rem;
+}

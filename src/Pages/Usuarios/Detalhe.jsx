@@ -1,24 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Select, Button, Switch, Input } from 'antd';
+import { Select, Button, Switch, Input, Spin, Alert, Form, message } from 'antd';
 import usuariosService from '../../service/usuariosService';
 import empresasService from '../../service/empresasService';
+import './detalhe.css';
 
 const UsuarioDetalhes = () => {
   const { uid } = useParams(); // Pega os parâmetros da URL
+  const [form] = Form.useForm();
   const [usuario, setUsuario] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [empresas, setEmpresas] = useState([]);
   const [niveis, setNiveis] = useState([]);
-  const [isChanged, setIsChanged] = useState(false);
   const [usuarioByUid, setUsuarioByUid] = useState(null);
-
-  const [nomeTemp, setNomeTemp] = useState(null);
-  const [emailTemp, setEmailTemp] = useState(null);
-  const [empresaTemp, setEmpresaTemp] = useState(null);
-  const [nivelTemp, setNivelTemp] = useState(null);
-  const [statusTemp, setStatusTemp] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isChanged, setIsChanged] = useState(false);
 
   const fetchUsuarioByUid = useCallback(async (uid) => {
     if (!uid) return;
@@ -41,16 +37,19 @@ const UsuarioDetalhes = () => {
       try {
         // Busca a empresa pelo uidDoc e uidEmpresa
         const usuarioData = await usuariosService.getUsuarioByUid(uid);
-
         setUsuario(usuarioData); // Armazena os dados da empresa no estado
-        setNomeTemp(usuarioData.nome);
-        setEmailTemp(usuarioData.email);
-        setEmpresaTemp(usuarioData.idEmpresa);
-        setNivelTemp(usuarioData.idNivel);
-        setStatusTemp(usuarioData.status);
-        setLoading(false); // Define o carregamento como concluído
+
+        // Define os valores iniciais no formulário
+        form.setFieldsValue({
+          nome: usuarioData.nome,
+          email: usuarioData.email,
+          empresa: usuarioData.idEmpresa,
+          nivel: usuarioData.idNivel == 2 ? 'Master' : usuarioData.idNivel,
+          status: usuarioData.status
+        });
 
         fetchUsuarioByUid(usuarioData.quemCriou);
+        setLoading(false); // Define o carregamento como concluído
       } catch (err) {
         setError(`Erro ao carregar os detalhes da empresa: ${err.message}`); // Define uma mensagem de erro
         setLoading(false); // Define o carregamento como concluído
@@ -58,7 +57,7 @@ const UsuarioDetalhes = () => {
     };
 
     fetchUsuario();
-  }, [uid, fetchUsuarioByUid]);
+  }, [uid, fetchUsuarioByUid, form]);
 
   useEffect(() => {
     const fetchEmpresas = async () => {
@@ -75,42 +74,19 @@ const UsuarioDetalhes = () => {
     fetchNiveis();
   }, []);
 
-  const handleSelectChange = (field, value) => {
-    setIsChanged(true);
-    switch (field) {
-      case 'nome':
-        setNomeTemp(value);
-        break;
-      case 'email':
-        setEmailTemp(value);
-        break;
-      case 'idEmpresa':
-        setEmpresaTemp(value);
-        break;
-      case 'idNivel':
-        setNivelTemp(value);
-        break;
-      case 'status':
-        setStatusTemp(value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleSave = async () => {
+  const handleSave = async (values) => {
     try {
       const updatedUsuario = {
         uid: usuario.uid,
-        Nome: nomeTemp,
-        Email: emailTemp,
-        IDempresa: empresaTemp,
-        IDnivel: nivelTemp,
-        Status: statusTemp ? 'Ativo' : 'Inativo'
+        Nome: values.nome,
+        Email: values.email,
+        IDempresa: values.empresa,
+        IDnivel: values.nivel,
+        Status: values.status ? 'Ativo' : 'Inativo'
       };
 
       await usuariosService.update(updatedUsuario);
-      alert('Chamado atualizado com sucesso!');
+      message.success('Chamado atualizado com sucesso!');
       setIsChanged(false);
       // window.location.reload(); // Recarrega a página
     } catch (error) {
@@ -119,93 +95,161 @@ const UsuarioDetalhes = () => {
     }
   };
 
-  const handleCancel = () => {
-    // Restaura os dados temporários com os valores originais
-    setNomeTemp(usuario.nome);
-    setEmailTemp(usuario.email);
-    setEmpresaTemp(usuario.idEmpresa);
-    setNivelTemp(usuario.idNivel);
-    setStatusTemp(usuario.status);
+  const onReset = () => {
+    form.setFieldsValue({
+      nome: usuario.nome,
+      email: usuario.email,
+      empresa: usuario.idEmpresa,
+      nivel: usuario.idNivel,
+      status: usuario.status
+    });
     setIsChanged(false);
   };
 
-  if (loading) {
-    return <div>Carregando...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>; // Exibe a mensagem de erro, se houver
-  }
-
-  if (!usuario) {
-    return <div>Usuario não encontrado.</div>;
-  }
-
   return (
-    <div>
-      <h2>Detalhes do Usuario</h2>
-      <p>Usuario: {usuario.usuario}</p>
+    <div className="detalhe-usuario-container">
+      {loading ? (
+        <div className="spin-container">
+          <Spin tip="Carregando detalhes do chamado..." size="large">
+            <div style={{ height: 'auto', width: '200px', background: 'transparent', fontSize: '2rem' }}></div>
+          </Spin>
+        </div>
+      ) : error ? (
+        <Alert message={error} type="error" showIcon />
+      ) : (
+        <div className="dc-content">
+          <div className="coluna1">
+            <div className="usuario">
+              <div className="titulo">
+                <label>{usuario.usuario}</label>
+              </div>
+              <div className="linha"></div>
+              <div className="info-data">
+                <Form
+                  form={form}
+                  name="control-hooks"
+                  layout="vertical"
+                  style={{
+                    maxWidth: 1000
+                  }}
+                  initialValues={{
+                    remember: true
+                  }}
+                  onFinish={handleSave}
+                  autoComplete="off"
+                  onValuesChange={() => setIsChanged(true)}
+                >
+                  <Form.Item
+                    label="E-mail"
+                    name="email"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Por favor, insira um E-mail válido!',
+                        type: 'email'
+                      }
+                    ]}
+                  >
+                    <Input placeholder="Digite o E-mail do usuário" />
+                  </Form.Item>
 
-      <div>
-        <label>Nome:</label>
-        <Input
-          placeholder="Digite o Nome do usuário"
-          value={nomeTemp}
-          onChange={(e) => handleSelectChange('nome', e.target.value)}
-        />
-      </div>
+                  <Form.Item
+                    label="Nome"
+                    name="nome"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Por favor, insira um Nome!'
+                      }
+                    ]}
+                  >
+                    <Input placeholder="Digite o Nome do usuário" />
+                  </Form.Item>
 
-      <div>
-        <label>E-mail:</label>
-        <Input
-          placeholder="Digite o E-mail do usuário"
-          value={emailTemp}
-          onChange={(e) => handleSelectChange('email', e.target.value)}
-        />
-      </div>
+                  <Form.Item
+                    label="Empresa"
+                    name="empresa"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Por favor, selecione uma empresa!'
+                      }
+                    ]}
+                  >
+                    <Select
+                      showSearch
+                      placeholder="Selecione uma empresa"
+                      optionFilterProp="label"
+                      options={empresas}
+                    />
+                  </Form.Item>
 
-      <div>
-        <label>Empresa:</label>
-        <Select
-          showSearch
-          placeholder="Selecione uma empresa"
-          optionFilterProp="label"
-          value={empresaTemp}
-          onChange={(value) => handleSelectChange('idEmpresa', value)}
-          options={empresas}
-        />
-      </div>
+                  <Form.Item
+                    label="Nível de acesso"
+                    name="nivel"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Por favor, selecione um Nível de acesso!'
+                      }
+                    ]}
+                  >
+                    <Select
+                      showSearch
+                      placeholder="Selecione um nível de acesso"
+                      optionFilterProp="label"
+                      options={niveis}
+                    />
+                  </Form.Item>
 
-      <div>
-        <label>Nivel:</label>
-        <Select
-          showSearch
-          placeholder="Selecione um nivel"
-          optionFilterProp="label"
-          value={nivelTemp == '2' ? 'Master' : nivelTemp}
-          onChange={(value) => handleSelectChange('idNivel', value)}
-          options={niveis}
-        />
-      </div>
+                  <Form.Item
+                    label="Status"
+                    name="status"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Por favor, selecione um usuario!'
+                      }
+                    ]}
+                  >
+                    <Switch />
+                  </Form.Item>
 
-      <div>
-        <label>Status:</label>
-        <Switch checked={statusTemp} onChange={(checked) => handleSelectChange('status', checked)} />
-      </div>
+                  <div className="botoes">
+                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                      Salvar
+                    </Button>
+                    <Button onClick={onReset} disabled={!isChanged}>
+                      Cancelar
+                    </Button>
+                  </div>
+                </Form>
+              </div>
+            </div>
+          </div>
 
-      {isChanged && (
-        <div>
-          <Button type="primary" onClick={handleSave}>
-            Salvar
-          </Button>
-          <Button onClick={handleCancel}>Cancelar</Button>
+          <div className="coluna2">
+            <div className="detalhe">
+              <div className="title">
+                <label>Informações</label>
+              </div>
+              <div className="linha"></div>
+              <div className="info">
+                <label>Criado por</label> {usuarioByUid ? usuarioByUid.nome : 'Usuário não encontrado'}
+              </div>
+              <div className="info">
+                <label>Criado em</label> {usuario.dataCriacao}
+              </div>
+              <div className="info">
+                <label>Ultimo acesso em</label> {usuario.dataAcesso}
+              </div>
+              <div className="info">
+                <label>Primeiro Acesso?</label> {usuario.primeiroAcesso ? 'Sim' : 'Não'}
+              </div>
+            </div>
+          </div>
         </div>
       )}
-
-      <p>Criado em: {usuario.dataCriacao}</p>
-      <p>Atualizado em: {usuario.dataAcesso}</p>
-      <p>Primeiro acesso? {usuario.primeiroAcesso ? 'Sim' : 'Não'}</p>
-      <p>Quem criou? {usuarioByUid ? usuarioByUid.nome : 'Usuário não encontrado'}</p>
     </div>
   );
 };

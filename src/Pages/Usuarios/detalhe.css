@@ -1,0 +1,38 @@
+.detalhe-usuario-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.detalhe-usuario-container .botoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.coluna1 .usario,
+.detalhe,
+.envolvidos,
+.tramites {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.coluna1 .usuario {
+  background-color: white;
+  border-radius: 0.25rem;
+  min-height: 400px;
+}
+
+.usuario .titulo,
+.usuario .info-data {
+  padding: 1rem;
+}
+
+.detalhe-usuario-container .spin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}

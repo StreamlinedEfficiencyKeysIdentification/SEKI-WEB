@@ -74,15 +74,16 @@ function CriarEquipamento() {
       const qrcode = await handleGenerateQRCode();
 
       try {
+        const equipamento = {
+          usuario: values.usuario ? values.usuario : '',
+          qrcode: qrcode,
+          empresaSelecionada: values.empresaSelecionada,
+          setorSelecionado: values.setorSelecionado,
+          marca: values.marca,
+          modelo: values.modelo
+        };
         // Chama o serviço para salvar o chamado
-        await equipamentosService.save(
-          values.usuario ? values.usuario : ' ',
-          qrcode,
-          values.empresaSelecionada,
-          values.setorSelecionado,
-          values.marca,
-          values.modelo
-        ); // Implementar esta função no back-end
+        await equipamentosService.save(equipamento); // Implementar esta função no back-end
 
         message.success('Equipamento criado com sucesso!');
 

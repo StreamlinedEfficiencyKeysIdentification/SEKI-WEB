@@ -32,10 +32,11 @@ const equipamentosService = {
       params: equipamento
     });
   },
-  save: (usuario, qrcode, empresaSelecionada, setorSelecionado, marca, modelo) => {
+  save: (equipamento) => {
     return callApi({
       method: 'POST',
-      url: `https://seki-api.onrender.com/equipamentos/create/${usuario}/${qrcode}/${empresaSelecionada}/${setorSelecionado}/${marca}/${modelo}`
+      url: `https://seki-api.onrender.com/equipamentos/create`,
+      params: equipamento
     });
   }
 };

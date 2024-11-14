@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import equipamentosService from '../../service/equipamentosService';
 import usuariosService from '../../service/usuariosService';
 import empresasService from '../../service/empresasService';
-import { Alert, Button, Form, Input, message, Select, Spin, Switch } from 'antd';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { Alert, Button, Form, Input, message, QRCode, Segmented, Select, Space, Spin, Switch } from 'antd';
 import './detalhe.css';
 import html2canvas from 'html2canvas';
-import { QRCodeCanvas } from 'qrcode.react';
+
+const MIN_SIZE = 48;
+const MAX_SIZE = 300;
 
 const EquipamentoDetalhes = () => {
   const { id } = useParams(); // Pega os parâmetros da URL
@@ -20,33 +23,16 @@ const EquipamentoDetalhes = () => {
   const [usuarioByUid, setUsuarioByUid] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
   const [nomeEmpresa, setNomeEmpresa] = useState('');
-  const [dataFetched, setDataFetched] = useState(false);
+  const [renderType, setRenderType] = useState('canvas');
+  const [size, setSize] = useState(160);
+  const spaceRef = useRef(null);
 
   useEffect(() => {
-    if (dataFetched) return;
-
     const fetchEquipamento = async () => {
       try {
         const equipamentoData = await equipamentosService.getEquipamentoById(id);
         setEquipamento(equipamentoData); // Armazena os dados do equipamento no estado
 
-        const usuarioByUidData = await fetchUsuarioByUid(equipamentoData.quemCriou);
-        setUsuarioByUid(usuarioByUidData);
-
-        const setoresData = await fetchSetores(equipamentoData.idEmpresa);
-        setSetores(setoresData);
-
-        // Depois de carregar todos os dados, marca como "dataFetched"
-        setDataFetched(true);
-        setLoading(false); // Define o carregamento como concluído
-      } catch (error) {
-        setError(`Erro ao carregar os detalhes do equipamento: ${error.message}`); // Define uma mensagem de erro
-        setLoading(false); // Define o carregamento como concluído
-      }
-    };
-
-    const fetchEmpresas = async () => {
-      try {
         const empresasData = await empresasService.getEmpresasDisponiveis();
         setEmpresas(
           empresasData.map((empresa) => ({
@@ -55,28 +41,6 @@ const EquipamentoDetalhes = () => {
           }))
         );
 
-        if (equipamento) {
-          // Após buscar as empresas, encontre a empresa correspondente
-          const empresaCorrespondente = empresasData.find((empresa) => empresa.IDempresa === equipamento.idEmpresa);
-          setNomeEmpresa(empresaCorrespondente ? empresaCorrespondente.RazaoSocial : 'Empresa não encontrada');
-
-          form.setFieldsValue({
-            marca: equipamento.marca,
-            modelo: equipamento.modelo,
-            empresaSelecionada: equipamento.idEmpresa,
-            setorSelecionado: equipamento.idSetor,
-            usuario: equipamento.idUsuario,
-            status: equipamento.status
-          });
-        }
-      } catch (error) {
-        setError(`Erro ao buscar as empresas: ${error.message}`);
-        setLoading(false);
-      }
-    };
-
-    const fetchUsuarios = async () => {
-      try {
         const usuariosData = await usuariosService.getUsuariosPorNivel();
         setUsuarios(
           usuariosData.map((usuario) => ({
@@ -84,35 +48,38 @@ const EquipamentoDetalhes = () => {
             label: usuario.Nome
           }))
         );
-      } catch (error) {
-        setError(`Erro ao buscar os usuarios: ${error.message}`);
-        setLoading(false);
-      }
-    };
 
-    const fetchUsuarioByUid = async (uid) => {
-      try {
-        const usuarioByUidData = await usuariosService.getUsuarioByUid(uid);
-        return usuarioByUidData;
-      } catch (error) {
-        console.error('Erro ao buscar o usuário:', error);
-      }
-    };
+        if (equipamentoData && empresasData) {
+          const usuarioByUidData = await usuariosService.getUsuarioByUid(equipamentoData.quemCriou);
+          setUsuarioByUid(usuarioByUidData);
 
-    const fetchSetores = async (idEmpresa) => {
-      try {
-        const setoresData = await empresasService.getSetoresPorEmpresa(idEmpresa);
-        return setoresData.map((setor) => ({ value: setor.IDdoc, label: setor.Descricao }));
+          const setoresData = await empresasService.getSetoresPorEmpresa(equipamentoData.idEmpresa);
+          setSetores(setoresData.map((setor) => ({ value: setor.IDdoc, label: setor.Descricao })));
+
+          // Após buscar as empresas, encontre a empresa correspondente
+          const empresaCorrespondente = empresasData.find((empresa) => empresa.IDempresa === equipamentoData.idEmpresa);
+          setNomeEmpresa(empresaCorrespondente ? empresaCorrespondente.RazaoSocial : 'Empresa não encontrada');
+
+          form.setFieldsValue({
+            marca: equipamentoData.marca,
+            modelo: equipamentoData.modelo,
+            empresaSelecionada: equipamentoData.idEmpresa,
+            setorSelecionado: equipamentoData.idSetor,
+            usuario: equipamentoData.idUsuario,
+            status: equipamentoData.status
+          });
+        }
+
+        setLoading(false); // Define o carregamento como concluído
       } catch (error) {
-        console.error('Erro ao buscar os setores:', error);
+        setError(`Erro ao carregar os detalhes do equipamento: ${error.message}`); // Define uma mensagem de erro
+        setLoading(false); // Define o carregamento como concluído
       }
     };
 
     // Chama as funções de busca de dados
     fetchEquipamento();
-    fetchEmpresas();
-    fetchUsuarios();
-  }, [form, id, equipamento, dataFetched]);
+  }, [form, id]);
 
   const handleSave = async (values) => {
     try {
@@ -147,21 +114,60 @@ const EquipamentoDetalhes = () => {
     setIsChanged(false);
   };
 
-  const handleSalvarImagem = async () => {
-    const container = document.getElementById('qrcode-container');
-    if (container) {
-      try {
-        const canvas = await html2canvas(container);
-        const dataUrl = canvas.toDataURL('image/png');
+  function doDownload(url, fileName) {
+    const a = document.createElement('a');
+    a.download = fileName;
+    a.href = url;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = `qrcode_${equipamento.idQrcode}.png`;
-        link.click();
-      } catch (error) {
-        console.error('Erro ao salvar a imagem:', error);
-      }
+  const handleDownload = async () => {
+    if (spaceRef.current) {
+      const canvas = await html2canvas(spaceRef.current);
+      const link = document.createElement('a');
+      link.download = `QRCode${equipamento.idQrcode}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     }
+  };
+
+  // const downloadCanvasQRCode = () => {
+  //   const canvas = document.getElementById('myqrcode')?.querySelector('canvas');
+  //   if (canvas) {
+  //     const url = canvas.toDataURL();
+  //     doDownload(url, `QRCode${equipamento.idQrcode}.png`);
+  //   }
+  // };
+
+  const downloadSvgQRCode = () => {
+    // const svg = document.getElementById('myqrcode')?.querySelector('svg');
+    const svgData = new XMLSerializer().serializeToString(spaceRef.current);
+    const blob = new Blob([svgData], {
+      type: 'image/svg+xml;charset=utf-8'
+    });
+    const url = URL.createObjectURL(blob);
+    doDownload(url, `QRCode${equipamento.idQrcode}.svg`);
+  };
+
+  const increase = () => {
+    setSize((prevSize) => {
+      const newSize = prevSize + 10;
+      if (newSize >= MAX_SIZE) {
+        return MAX_SIZE;
+      }
+      return newSize;
+    });
+  };
+  const decline = () => {
+    setSize((prevSize) => {
+      const newSize = prevSize - 10;
+      if (newSize <= MIN_SIZE) {
+        return MIN_SIZE;
+      }
+      return newSize;
+    });
   };
 
   return (
@@ -302,17 +308,48 @@ const EquipamentoDetalhes = () => {
               <div className="linha"></div>
               <div>
                 <div className="qrcode-container">
-                  <div className="info">
-                    <label>QRcode</label>
-                  </div>
-                  <div className="gerar-qrcode">
-                    {equipamento.idQrcode}
-                    <QRCodeCanvas value={equipamento.idQrcode} size={200} />
-                    <label>{nomeEmpresa}</label>
-                    <Button type="primary" onClick={handleSalvarImagem}>
-                      Salvar como PNG
+                  <Space className="space" direction="vertical">
+                    <Button.Group className="botoes-group">
+                      <div>
+                        <Button onClick={decline} disabled={size <= MIN_SIZE} icon={<MinusOutlined />}>
+                          Smaller
+                        </Button>
+                        <Button onClick={increase} disabled={size >= MAX_SIZE} icon={<PlusOutlined />}>
+                          Larger
+                        </Button>
+                      </div>
+                      Tamanho: {size}px
+                    </Button.Group>
+                    <Segmented
+                      options={['canvas', 'svg']}
+                      value={renderType}
+                      onChange={setRenderType}
+                      style={{
+                        marginBottom: 16
+                      }}
+                    />
+                    <div className="qr-content" id="myqrcode" ref={spaceRef}>
+                      <label>{equipamento.idQrcode}</label>
+                      <QRCode
+                        type={renderType}
+                        value={equipamento.idQrcode}
+                        bgColor="#fff"
+                        size={size}
+                        iconSize={size / 4}
+                        icon="https://i.imgur.com/aBY5Kgf.png"
+                      />
+                      <label>{nomeEmpresa}</label>
+                    </div>
+                    <Button
+                      type="primary"
+                      onClick={renderType === 'canvas' ? handleDownload : downloadSvgQRCode}
+                      style={{
+                        marginTop: 16
+                      }}
+                    >
+                      Download
                     </Button>
-                  </div>
+                  </Space>
                 </div>
               </div>
 

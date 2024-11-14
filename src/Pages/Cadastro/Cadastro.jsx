@@ -101,7 +101,7 @@ function Cadastro() {
       CNPJ: cnpj.replace(/\D/g, ''),
       RazaoSocial: razaoSocial,
       Status: 'Ativo',
-      QuemCriou: '',
+      QuemCriou: 'RoUSS0Cd2Tb6bayH5bZ79rn5hdl2',
       EmpresaPai: proximoId.toString()
     };
 
@@ -129,7 +129,7 @@ function Cadastro() {
       // Criar documento em DetalheUsuario
       await setDoc(doc(db, 'DetalheUsuario', uid), {
         PrimeiroAcesso: false,
-        QuemCriou: '',
+        QuemCriou: 'RoUSS0Cd2Tb6bayH5bZ79rn5hdl2',
         DataCriacao: serverTimestamp()
       });
 

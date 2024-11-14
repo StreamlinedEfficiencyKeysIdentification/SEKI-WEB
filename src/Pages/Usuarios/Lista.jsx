@@ -111,17 +111,19 @@ function UsuariosLista() {
               onChange={handleFiltroChange}
               style={{ marginBottom: '10px', width: '100%' }}
             />
-            <Table
-              className="usuarios-lista"
-              columns={columns}
-              dataSource={usuarios}
-              pagination={pagination}
-              onChange={handleTableChange}
-              rowKey={(record) => record.uid}
-              onRow={(record) => ({
-                onClick: () => handleClick(record)
-              })}
-            />
+            <div className="table">
+              <Table
+                className="usuarios-lista"
+                columns={columns}
+                dataSource={usuarios}
+                pagination={pagination}
+                onChange={handleTableChange}
+                rowKey={(record) => record.uid}
+                onRow={(record) => ({
+                  onClick: () => handleClick(record)
+                })}
+              />
+            </div>
           </Spin>
         )}
       </div>

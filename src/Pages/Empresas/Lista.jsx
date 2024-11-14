@@ -178,33 +178,35 @@ function EmpresasLista() {
               onChange={handleFiltroChange}
               style={{ marginBottom: '10px', width: '100%' }}
             />
-            <Table
-              className="empresas-lista"
-              columns={columns}
-              dataSource={empresas.filter((empresa) => empresa.EmpresaPai === empresa.IDdoc)} // Filtra apenas as matrizes
-              pagination={pagination}
-              onChange={handleTableChange}
-              rowKey={(record) => record.IDdoc}
-              expandable={{
-                expandedRowRender: (record) => {
-                  const filiais = getFiliais(record.IDdoc);
-                  return filiais.length > 0 ? (
-                    <Table
-                      columns={columnsFilial}
-                      dataSource={filiais}
-                      pagination={false}
-                      rowKey={(filial) => filial.IDdoc}
-                      onRow={(filial) => ({
-                        onClick: () => handleDetalhesFilial(filial)
-                      })}
-                    />
-                  ) : (
-                    <p>Nenhuma filial encontrada.</p>
-                  );
-                },
-                rowExpandable: (record) => getFiliais(record.IDdoc).length > 0
-              }}
-            />
+            <div className="table">
+              <Table
+                className="empresas-lista"
+                columns={columns}
+                dataSource={empresas.filter((empresa) => empresa.EmpresaPai === empresa.IDdoc)} // Filtra apenas as matrizes
+                pagination={pagination}
+                onChange={handleTableChange}
+                rowKey={(record) => record.IDdoc}
+                expandable={{
+                  expandedRowRender: (record) => {
+                    const filiais = getFiliais(record.IDdoc);
+                    return filiais.length > 0 ? (
+                      <Table
+                        columns={columnsFilial}
+                        dataSource={filiais}
+                        pagination={false}
+                        rowKey={(filial) => filial.IDdoc}
+                        onRow={(filial) => ({
+                          onClick: () => handleDetalhesFilial(filial)
+                        })}
+                      />
+                    ) : (
+                      <p>Nenhuma filial encontrada.</p>
+                    );
+                  },
+                  rowExpandable: (record) => getFiliais(record.IDdoc).length > 0
+                }}
+              />
+            </div>
           </Spin>
         )}
       </div>

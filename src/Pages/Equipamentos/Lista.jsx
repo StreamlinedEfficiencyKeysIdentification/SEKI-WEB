@@ -116,17 +116,19 @@ function EquipamentosLista() {
               onChange={handleFiltroChange}
               style={{ marginBottom: '10px', width: '100%' }}
             />
-            <Table
-              className="equipamentos-lista"
-              columns={columns}
-              dataSource={equipamentos}
-              pagination={pagination}
-              onChange={handleTableChange}
-              rowKey={(record) => record.IDdoc}
-              onRow={(record) => ({
-                onClick: () => handleClick(record)
-              })}
-            />
+            <div className="table">
+              <Table
+                className="equipamentos-lista"
+                columns={columns}
+                dataSource={equipamentos}
+                pagination={pagination}
+                onChange={handleTableChange}
+                rowKey={(record) => record.IDdoc}
+                onRow={(record) => ({
+                  onClick: () => handleClick(record)
+                })}
+              />
+            </div>
           </Spin>
         )}
       </div>

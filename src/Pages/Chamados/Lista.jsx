@@ -118,18 +118,20 @@ function ChamadosLista() {
           <Alert message="Erro" description={error} type="error" showIcon />
         ) : (
           <Spin spinning={loading} tip="Carregando dados..." size="large">
-            <Table
-              className="chamados-lista"
-              columns={columns}
-              dataSource={chamados}
-              pagination={pagination}
-              onChange={handleTableChange}
-              rowKey={(record) => `${record.IDdoc}-${record.IDchamado}`} // Definir a chave única
-              onRow={(record) => ({
-                onClick: () => handleRowClick(record) // Adiciona a função de clique na linha
-              })}
-              locale={locale}
-            />
+            <div className="table">
+              <Table
+                className="chamados-lista"
+                columns={columns}
+                dataSource={chamados}
+                pagination={pagination}
+                onChange={handleTableChange}
+                rowKey={(record) => `${record.IDdoc}-${record.IDchamado}`} // Definir a chave única
+                onRow={(record) => ({
+                  onClick: () => handleRowClick(record) // Adiciona a função de clique na linha
+                })}
+                locale={locale}
+              />
+            </div>
           </Spin>
         )}
       </div>

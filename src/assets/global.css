@@ -45,6 +45,11 @@ a {
   max-width: 1296px;
 }
 
+.table {
+  width: 100%;
+  overflow-x: auto;
+}
+
 /* Estilização da barra de rolagem */
 ::-webkit-scrollbar {
   width: 10px;

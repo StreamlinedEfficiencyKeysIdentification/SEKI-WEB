@@ -133,14 +133,6 @@ const EquipamentoDetalhes = () => {
     }
   };
 
-  // const downloadCanvasQRCode = () => {
-  //   const canvas = document.getElementById('myqrcode')?.querySelector('canvas');
-  //   if (canvas) {
-  //     const url = canvas.toDataURL();
-  //     doDownload(url, `QRCode${equipamento.idQrcode}.png`);
-  //   }
-  // };
-
   const downloadSvgQRCode = () => {
     // const svg = document.getElementById('myqrcode')?.querySelector('svg');
     const svgData = new XMLSerializer().serializeToString(spaceRef.current);

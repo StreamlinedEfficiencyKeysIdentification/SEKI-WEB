@@ -1,3 +1,7 @@
+.container-nav {
+  z-index: 102;
+}
+
 .side-nav {
   height: 100vh;
   box-shadow: 1px 0px 4px rgba(0, 0, 0, 0.25);
@@ -39,4 +43,33 @@
 
 .menu-side-nav .bi {
   font-size: 1.2rem !important;
+}
+
+.ant-drawer-body {
+  padding: 0 !important;
+}
+
+.container-mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  height: 60px;
+  width: 60px;
+  background-color: #449cd6;
+  position: fixed;
+  z-index: 100;
+}
+
+.container-mobile .button-side-nav {
+  background-color: transparent;
+  color: white;
+  box-shadow: none;
+  font-size: 1.3rem;
+  padding: 0;
+}
+
+.container-mobile .button-side-nav:hover {
+  background-color: transparent !important;
+  color: black !important;
 }

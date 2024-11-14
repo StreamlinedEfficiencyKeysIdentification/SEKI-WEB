@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AlignLeftOutlined, AlignRightOutlined } from '@ant-design/icons';
-import { Button, Menu } from 'antd';
+import { Button, Drawer, Menu } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '/SEKI.svg';
 import './sideNav.css';
@@ -79,6 +79,25 @@ function SideNav() {
   const navigate = useNavigate(); // Para navegar pelo app
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMobile(window.innerWidth < 1024);
+    };
+
+    // Verifique o tamanho inicial da janela
+    handleResize();
+
+    // Adicione o event listener para escutar mudanças no tamanho da janela
+    window.addEventListener('resize', handleResize);
+
+    // Limpe o event listener quando o componente for desmontado
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // Atualiza os itens selecionados com base na URL
   useEffect(() => {
@@ -95,35 +114,79 @@ function SideNav() {
   };
 
   return (
-    <div className="side-nav">
-      <div
-        className="header-side-nav"
-        style={{
-          justifyContent: collapsed ? 'center' : 'flex-end'
-        }}
-      >
-        {!collapsed && (
-          <div className="header-side-logo">
-            <img src={Logo}></img>
+    <div className="container-nav">
+      {!mobile ? (
+        <div className="side-nav">
+          <div
+            className="header-side-nav"
+            style={{
+              justifyContent: collapsed ? 'center' : 'flex-end'
+            }}
+          >
+            {!collapsed && (
+              <div className="header-side-logo">
+                <img src={Logo}></img>
+              </div>
+            )}
+            <Button className="button-side-nav" type="primary" onClick={toggleCollapsed}>
+              {collapsed ? <AlignLeftOutlined /> : <AlignRightOutlined />}
+            </Button>
           </div>
-        )}
-        <Button className="button-side-nav" type="primary" onClick={toggleCollapsed}>
-          {collapsed ? <AlignLeftOutlined /> : <AlignRightOutlined />}
-        </Button>
-      </div>
-      <div className="menu-side-nav">
-        <Menu
-          mode="inline"
-          theme="light"
-          style={{
-            width: collapsed ? 60 : 274
-          }}
-          inlineCollapsed={collapsed}
-          onClick={handleClick}
-          selectedKeys={selectedKeys}
-          items={items(navigate)}
-        />
-      </div>
+          <div className="menu-side-nav">
+            <Menu
+              mode="inline"
+              theme="light"
+              style={{
+                width: collapsed ? 60 : 274
+              }}
+              inlineCollapsed={collapsed}
+              onClick={handleClick}
+              selectedKeys={selectedKeys}
+              items={items(navigate)}
+            />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="container-mobile">
+            <Button
+              className="button-side-nav"
+              type="primary"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              {<AlignLeftOutlined />}
+            </Button>
+          </div>
+          <Drawer
+            closable
+            destroyOnClose
+            title={<img src={Logo}></img>}
+            placement="left"
+            open={open}
+            onClose={() => {
+              setOpen(false);
+            }}
+            className="drawer"
+            width={300}
+          >
+            <Menu
+              mode="inline"
+              theme="light"
+              style={{
+                width: '100%'
+              }}
+              onClick={(e) => {
+                navigate(e.key);
+                setOpen(false);
+              }}
+              selectedKeys={selectedKeys}
+              items={items(navigate)}
+            />
+          </Drawer>
+        </>
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlignLeftOutlined, AlignRightOutlined } from '@ant-design/icons';
+import { AlignLeftOutlined, AlignRightOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Drawer, Menu } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '/SEKI.svg';
@@ -84,7 +84,12 @@ function SideNav() {
 
   useEffect(() => {
     const handleResize = () => {
-      setMobile(window.innerWidth < 1024);
+      const isMobile = window.innerWidth < 1024;
+      setMobile(isMobile);
+
+      if (!isMobile) {
+        setOpen(false);
+      }
     };
 
     // Verifique o tamanho inicial da janela
@@ -125,7 +130,7 @@ function SideNav() {
           >
             {!collapsed && (
               <div className="header-side-logo">
-                <img src={Logo}></img>
+                <img src={Logo} alt="Logo" onClick={() => navigate('/atendente/home')}></img>
               </div>
             )}
             <Button className="button-side-nav" type="primary" onClick={toggleCollapsed}>
@@ -160,9 +165,31 @@ function SideNav() {
             </Button>
           </div>
           <Drawer
-            closable
+            closable={false}
             destroyOnClose
-            title={<img src={Logo}></img>}
+            title={
+              <div
+                className="header-side-nav"
+                style={{
+                  justifyContent: 'center',
+                  backgroundColor: 'transparent'
+                }}
+              >
+                <div className="header-side-logo">
+                  <img src={Logo} alt="Logo" onClick={() => navigate('/atendente/home')}></img>
+                </div>
+                <Button
+                  type="text"
+                  onClick={() => setOpen(false)}
+                  className="button-side-nav"
+                  style={{
+                    color: 'black'
+                  }}
+                >
+                  <CloseOutlined />
+                </Button>
+              </div>
+            }
             placement="left"
             open={open}
             onClose={() => {

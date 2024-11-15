@@ -44,6 +44,13 @@ const empresasService = {
       params: empresa
     });
   },
+  saveSetores: (setores) => {
+    return callApi({
+      method: 'PATCH',
+      url: 'https://seki-api.onrender.com/empresas/update/setores',
+      params: setores
+    });
+  },
   save: (cnpj, razaoSocial, empresaSelecionada) => {
     return callApi({
       method: 'POST',

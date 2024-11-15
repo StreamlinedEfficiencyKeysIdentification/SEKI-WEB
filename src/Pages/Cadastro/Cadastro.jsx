@@ -8,6 +8,7 @@ import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { collection, doc, setDoc, getDocs, serverTimestamp } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import emailjs from '@emailjs/browser';
 
 function Cadastro() {
   const [razaoSocial, setRazaoSocial] = useState('');
@@ -20,6 +21,7 @@ function Cadastro() {
   const [termoCadastro, setTermoCadastro] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [senhaValida, setSenhaValida] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleCadastroClick = () => {
@@ -79,6 +81,24 @@ function Cadastro() {
     return nextId;
   };
 
+  const sendEmail = async () => {
+    const formEmail = {
+      user_subject: 'Criação de Usuário',
+      message: `Seu usuário foi criado com sucesso! Para entrar no sistema, acesse o link abaixo com o e-mail e senha cadastrados. `,
+      user_email: email,
+      user_name: nome
+    };
+
+    try {
+      // Envia o e-mail usando o EmailJS
+      await emailjs.send('service_3v4rnsl', 'template_iecf4gn', formEmail, 'vfwarZrM3MChAFVqG');
+      toast.success('Mensagem enviada com sucesso!');
+    } catch (error) {
+      console.error('Erro ao enviar e-mail:', error);
+      toast.error('Erro ao enviar mensagem, tente novamente.');
+    }
+  };
+
   const cadastrar = async () => {
     if (!termoCadastro) {
       setErrorMessage('Por favor, aceite os termos de uso.');
@@ -94,6 +114,7 @@ function Cadastro() {
       setErrorMessage('As senhas não coincidem ou não atendem aos requisitos.');
       return;
     }
+    setLoading(true);
 
     const proximoId = await getProximoId();
 
@@ -133,6 +154,8 @@ function Cadastro() {
         DataCriacao: serverTimestamp()
       });
 
+      await sendEmail();
+
       toast.success('Usuário cadastrado com sucesso!');
       setRazaoSocial('');
       setCnpj('');
@@ -147,6 +170,8 @@ function Cadastro() {
     } catch (error) {
       console.error('Erro ao cadastrar usuário:', error);
       toast.error('Erro ao cadastrar!');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -262,7 +287,9 @@ function Cadastro() {
             </label>
           </div>
           <div className="error-message">{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}</div>
-          <button type="submit">Cadastrar</button>
+          <button type="submit" disabled={loading} style={{ backgroundColor: loading ? 'gray' : '#0072bb' }}>
+            Cadastrar
+          </button>
           <div className="i-have-account">
             <label>
               Já sou cadastrado.

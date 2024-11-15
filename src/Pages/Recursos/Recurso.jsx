@@ -11,6 +11,8 @@ import QRcode from '/QRcode.png';
 import './recurso.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Collapse, theme } from 'antd';
 
 function Recurso() {
   const navigate = useNavigate();
@@ -34,6 +36,45 @@ function Recurso() {
       });
     });
   }, []);
+
+  const { token } = theme.useToken();
+  const panelStyle = {
+    marginBottom: 24,
+    background: token.colorBgElevated,
+    borderRadius: token.borderRadiusLG,
+    border: 'none'
+  };
+
+  const getItems = (panelStyle) => [
+    {
+      key: '1',
+      label: 'Qual a importância do controle patrimonial para uma empresa?',
+      children: (
+        <p>
+          O controle patrimonial permite que a empresa gerencie seus bens de forma eficiente, evitando perdas e
+          facilitando a manutenção dos ativos.
+        </p>
+      ),
+      style: panelStyle
+    },
+    {
+      key: '2',
+      label: 'Vou poder utilizar no celular também?',
+      children: <p>Sim, o sistema SEKI é compatível com dispositivos móveis, permitindo o uso no celular ou tablet.</p>,
+      style: panelStyle
+    },
+    {
+      key: '3',
+      label: 'O SEKI pode ser usado offline?',
+      children: (
+        <p>
+          Não, infelizmente o SEKI não possui a funcionalidade de uso offline. Para utilizar o sistema, é necessário se
+          conectar à internet.
+        </p>
+      ),
+      style: panelStyle
+    }
+  ];
 
   return (
     <section className="section">
@@ -152,37 +193,15 @@ function Recurso() {
         </div>
 
         <div className="container-perguntas">
-          <div className="faq">
-            <details className="faq-item">
-              <summary>
-                <span>Qual a importância do controle patrimonial para uma empresa?</span>
-                <span className="icon">+</span>
-              </summary>
-              <p>
-                O controle patrimonial permite que a empresa gerencie seus bens de forma eficiente, evitando perdas e
-                facilitando a manutenção dos ativos.
-              </p>
-            </details>
-
-            <details className="faq-item">
-              <summary>
-                <span>Vou poder utilizar no celular também?</span>
-                <span className="icon">+</span>
-              </summary>
-              <p>Sim, o sistema SEKI é compatível com dispositivos móveis, permitindo o uso no celular ou tablet.</p>
-            </details>
-
-            <details className="faq-item">
-              <summary>
-                <span>O SEKI pode ser usado offline?</span>
-                <span className="icon">+</span>
-              </summary>
-              <p>
-                Não, infelizmente o SEKI não possui a funcionalidade de uso offline. Para utilizar o sistema, é
-                necessário se conectar à internet.
-              </p>
-            </details>
-          </div>
+          <Collapse
+            className="collapse"
+            bordered={false}
+            defaultActiveKey={['1']}
+            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+            expandIconPosition="end"
+            style={{ background: 'transparent' }}
+            items={getItems(panelStyle)}
+          />
 
           <div className="contact-section" data-aos="fade-up" data-aos-delay="200">
             <div className="contato-info">

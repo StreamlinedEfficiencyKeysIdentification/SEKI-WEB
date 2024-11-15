@@ -12,13 +12,17 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import Cookies from 'js-cookie';
+import CryptoJS from 'crypto-js';
 
 function Login() {
+  const secretKey = import.meta.env.VITE_SECRET_KEY;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [lembrar, setLembrar] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleHomeClick = () => {
     navigate('/');
   };
@@ -46,6 +50,8 @@ function Login() {
       return;
     }
 
+    setLoading(true);
+
     try {
       const persistenceType = lembrar ? browserLocalPersistence : browserSessionPersistence;
 
@@ -56,43 +62,58 @@ function Login() {
       const usuarioLogado = userCredential.user.uid;
 
       if (lembrar) {
-        Cookies.set('uid', usuarioLogado, {
-          expires: 7, // O cookie expira em 7 dias
+        // Encriptar o uid antes de armazenar no cookie
+        const encryptedUid = CryptoJS.AES.encrypt(usuarioLogado, secretKey).toString();
+        Cookies.set('uid', encryptedUid, { expires: 7, secure: true, sameSite: 'Strict' });
+      } else {
+        const encryptedUid = CryptoJS.AES.encrypt(usuarioLogado, secretKey).toString();
+        Cookies.set('uid', encryptedUid, { secure: true, sameSite: 'Strict' });
+      }
+
+      const user = doc(db, 'Usuarios', usuarioLogado);
+      const userRes = await getDoc(user);
+
+      if (userRes.exists()) {
+        const userResData = userRes.data();
+        Cookies.set('nivel', userResData.IDnivel, {
           secure: true,
           sameSite: 'Strict'
         });
-      } else {
-        Cookies.set('uid', usuarioLogado, {
+        Cookies.set('empresa', userResData.IDempresa, {
           secure: true,
-          sameSite: 'Strict' // Cookie de sessão (excluído ao fechar o navegador)
-        });
-      }
-
-      // Buscar detalhes do usuário no Firestore
-      const userDocRef = doc(db, 'DetalheUsuario', usuarioLogado);
-      const userDoc = await getDoc(userDocRef);
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        const primeiroAcesso = userData.PrimeiroAcesso || false;
-        const redefinirSenha = userData.RedefinirSenha || false;
-
-        // Atualizar o campo 'DataAcesso' no Firestore
-        await updateDoc(userDocRef, {
-          DataAcesso: serverTimestamp()
+          sameSite: 'Strict'
         });
 
-        if (primeiroAcesso || redefinirSenha) {
-          // Redirecionar para alteração de senha
-          navigate('/alterar_senha', { msg: primeiroAcesso ? 'Primeiro Acesso' : 'Redefina sua Senha' });
-        } else {
-          // Redirecionar para a página principal
-          navigate('/atendente/home');
+        // Buscar detalhes do usuário no Firestore
+        const userDocRef = doc(db, 'DetalheUsuario', usuarioLogado);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const primeiroAcesso = userData.PrimeiroAcesso || false;
+          const redefinirSenha = userData.RedefinirSenha || false;
+
+          // Atualizar o campo 'DataAcesso' no Firestore
+          await updateDoc(userDocRef, {
+            DataAcesso: serverTimestamp()
+          });
+
+          if (primeiroAcesso || redefinirSenha) {
+            setLoading(false);
+            // Redirecionar para alteração de senha
+            navigate('/alterar_senha', { msg: primeiroAcesso ? 'Primeiro Acesso' : 'Redefina sua Senha' });
+          } else {
+            setLoading(false);
+            // Redirecionar para a página principal
+            navigate('/atendente/home');
+          }
         }
       } else {
+        setLoading(false);
         console.log('Documento do usuário não encontrado no Firestore.');
       }
     } catch (error) {
+      setLoading(false);
       let message = 'Erro ao fazer login.';
       if (error.code === 'auth/invalid-email') {
         message = 'Email não está no formato correto.';
@@ -138,7 +159,9 @@ function Login() {
             </label>
             <a href="/esqueci">Esqueci minha senha</a>
           </div>
-          <button type="submit">Entrar</button>
+          <button type="submit" disabled={loading} style={{ backgroundColor: !loading ? '#0072bb' : 'gray' }}>
+            Entrar
+          </button>
           <div className="dont-have-account">
             <p>
               Ainda não tem conta?

@@ -41,8 +41,8 @@ function CriarUsuario() {
     try {
       setIsChanged(false);
 
-      // Chama o serviço para salvar o chamado
-      await usuariosService.save(
+      // Chama o serviço para salvar o usuário
+      const response = await usuariosService.save(
         values.usuario,
         values.email,
         values.nome,
@@ -50,12 +50,18 @@ function CriarUsuario() {
         values.nivelSelecionado
       );
 
-      message.success('Usuario criado com sucesso!');
+      // Verifica a resposta do backend
+      if (response.success) {
+        message.success('Usuário criado com sucesso!');
 
-      // Limpa os campos do formulário após o sucesso
-      form.resetFields();
-    } catch {
-      message.error('Erro ao criar o Usuario. Tente novamente mais tarde.');
+        // Limpa os campos do formulário após o sucesso
+        form.resetFields();
+      } else {
+        message.error(response.message); // Mostra o erro retornado do backend
+      }
+    } catch (error) {
+      message.error('Erro ao criar o usuário. Tente novamente mais tarde.');
+      console.error(error); // Para depuração
     }
   };
 

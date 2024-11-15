@@ -6,8 +6,10 @@ import empresasService from '../../service/empresasService';
 import usuariosService from '../../service/usuariosService';
 import './detalhe.css';
 import Cookies from 'js-cookie';
+import CryptoJS from 'crypto-js';
 
 const ChamadoDetalhes = () => {
+  const secretKey = import.meta.env.VITE_SECRET_KEY;
   const { IDdoc, IDchamado } = useParams();
   const [chamado, setChamado] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,7 +32,8 @@ const ChamadoDetalhes = () => {
   const [tramiteMessage, setTramiteMessage] = useState('');
   const [sendEmail, setSendEmail] = useState(false);
 
-  const uid = Cookies.get('uid');
+  const encryptedUid = Cookies.get('uid');
+  const uid = CryptoJS.AES.decrypt(encryptedUid, secretKey).toString(CryptoJS.enc.Utf8);
 
   const storeRecentChamado = useCallback(() => {
     const newChamado = {

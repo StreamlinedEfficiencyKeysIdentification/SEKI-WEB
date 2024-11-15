@@ -7,6 +7,7 @@ import usuariosService from '../../../service/usuariosService';
 import empresasService from '../../../service/empresasService';
 import equipamentosService from '../../../service/equipamentosService';
 import { Alert, Spin } from 'antd';
+import Cookies from 'js-cookie';
 
 function Home() {
   const [chamadosData, setChamadosData] = useState([]);
@@ -18,6 +19,9 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const nivelData = Cookies.get('nivel');
+  const nivel = parseInt(nivelData);
+
   // Exemplo de cores
   const COLORS = ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0'];
 
@@ -28,92 +32,83 @@ function Home() {
 
   useEffect(() => {
     // Aqui você faria as chamadas para buscar os dados reais dos gráficos e dos chamados recentes
-    const fetchChamados = async () => {
+    const fetchData = async () => {
       try {
-        // Busca a empresa pelo uidDoc e uidEmpresa
-        const statusData = await chamadosService.findByStatus();
-        const countData = await chamadosService.findCount();
-        const chamadosData = await chamadosService.findByRes();
+        if (nivel === 2 || nivel === 1) {
+          const statusData = await chamadosService.findByStatus();
+          const countData = await chamadosService.findCount();
+          const chamadosData = await chamadosService.findByRes();
 
-        // Converte o objeto em um array
-        const statusArray = Object.keys(statusData).map((key) => ({
-          name: key,
-          value: statusData[key]
-        }));
+          const usuarioData = await usuariosService.getUsuariosCount();
+          const empresaData = await empresasService.getEmpresasByStatus();
+          const equipamentoData = await equipamentosService.getEquipamentosByStatus();
 
-        setChamadosData(statusArray);
-        setChamadosSobResponsabilidade(countData);
-        setChamadosRecentes(chamadosData);
-        setLoading(false);
+          const statusArray = Object.keys(statusData).map((key) => ({
+            name: key,
+            value: statusData[key]
+          }));
+
+          // Converte o objeto em um array
+          const UsuarioArray = Object.keys(usuarioData).map((key) => ({
+            name: key,
+            value: usuarioData[key]
+          }));
+
+          const EmpresaArray = Object.keys(empresaData).map((key) => ({
+            name: key,
+            value: empresaData[key]
+          }));
+
+          const EquipamentoArray = Object.keys(equipamentoData).map((key) => ({
+            name: key,
+            value: equipamentoData[key]
+          }));
+
+          setChamadosData(statusArray);
+          setChamadosSobResponsabilidade(countData);
+          setChamadosRecentes(chamadosData);
+
+          setUsuariosData(UsuarioArray);
+          setEmpresasData(EmpresaArray);
+          setEquipamentosData(EquipamentoArray);
+        } else if (nivel === 3) {
+          const countData = await chamadosService.findCount();
+          const chamadosData = await chamadosService.findByRes();
+
+          const usuarioData = await usuariosService.getUsuariosCount();
+          const equipamentoData = await equipamentosService.getEquipamentosByStatus();
+
+          // Converte o objeto em um array
+          const UsuarioArray = Object.keys(usuarioData).map((key) => ({
+            name: key,
+            value: usuarioData[key]
+          }));
+
+          const EquipamentoArray = Object.keys(equipamentoData).map((key) => ({
+            name: key,
+            value: equipamentoData[key]
+          }));
+
+          setChamadosSobResponsabilidade(countData);
+          setChamadosRecentes(chamadosData);
+
+          setUsuariosData(UsuarioArray);
+          setEquipamentosData(EquipamentoArray);
+        } else if (nivel === 4) {
+          const chamadosData = await chamadosService.findByRes();
+
+          setChamadosRecentes(chamadosData);
+        }
       } catch (err) {
         setError(`Erro ao carregar os detalhes da empresa: ${err.message}`);
+        setLoading(false);
+      } finally {
         setLoading(false);
       }
     };
 
-    const fetchUsuariosByStatus = async () => {
-      try {
-        // Busca a empresa pelo uidDoc e uidEmpresa
-        const statusData = await usuariosService.getUsuariosCount();
-
-        // Converte o objeto em um array
-        const statusArray = Object.keys(statusData).map((key) => ({
-          name: key,
-          value: statusData[key]
-        }));
-
-        setUsuariosData(statusArray);
-        setLoading(false);
-      } catch (err) {
-        setError(`Erro ao carregar os detalhes da empresa: ${err.message}`);
-        setLoading(false);
-      }
-    };
-
-    const fetchEmpresasByStatus = async () => {
-      try {
-        // Busca a empresa pelo uidDoc e uidEmpresa
-        const statusData = await empresasService.getEmpresasByStatus();
-
-        // Converte o objeto em um array
-        const statusArray = Object.keys(statusData).map((key) => ({
-          name: key,
-          value: statusData[key]
-        }));
-
-        setEmpresasData(statusArray);
-        setLoading(false);
-      } catch (err) {
-        setError(`Erro ao carregar os detalhes da empresa: ${err.message}`);
-        setLoading(false);
-      }
-    };
-
-    const fetchEquipamentosByStatus = async () => {
-      try {
-        // Busca a empresa pelo uidDoc e uidEmpresa
-        const statusData = await equipamentosService.getEquipamentosByStatus();
-
-        // Converte o objeto em um array
-        const statusArray = Object.keys(statusData).map((key) => ({
-          name: key,
-          value: statusData[key]
-        }));
-
-        setEquipamentosData(statusArray);
-        setLoading(false);
-      } catch (err) {
-        setError(`Erro ao carregar os detalhes da empresa: ${err.message}`);
-        setLoading(false);
-      }
-    };
-
-    setChamadosRecentes(); // Pega os 5 últimos chamados
-    fetchChamados();
-    fetchUsuariosByStatus();
-    fetchEmpresasByStatus();
-    fetchEquipamentosByStatus();
-  }, []);
+    fetchData();
+  }, [nivel]);
 
   return (
     <div className="home-main">
@@ -128,110 +123,116 @@ function Home() {
         <Alert message={error} type="error" showIcon />
       ) : (
         <div className="charts-container">
-          {/* Gráfico de Chamados */}
-          <div className="chart">
-            <h3>Chamados</h3>
-            <PieChart width={250} height={300}>
-              <Pie
-                data={chamadosData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-                animationDuration={1000} // Define 1 segundo de animação
-              >
-                {chamadosData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
+          {nivel <= 2 && (
+            <div className="chart">
+              <h3>Chamados</h3>
+              <PieChart width={250} height={300}>
+                <Pie
+                  data={chamadosData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  label
+                  animationDuration={1000} // Define 1 segundo de animação
+                >
+                  {chamadosData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
 
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </div>
+          )}
 
-          {/* Exibição de Chamados sob Responsabilidade */}
-          <div className="responsabilidade">
-            <i className="bi bi-headphones"></i>
-            <h3>Chamados sob minha responsabilidade</h3>
-            <div className="responsabilidade-box">{chamadosSobResponsabilidade}</div>
-          </div>
+          {nivel <= 3 && (
+            <div className="responsabilidade">
+              <i className="bi bi-headphones"></i>
+              <h3>Chamados sob minha responsabilidade</h3>
+              <div className="responsabilidade-box">{chamadosSobResponsabilidade}</div>
+            </div>
+          )}
 
-          {/* Gráfico de Empresas */}
-          <div className="chart">
-            <h3>Empresas</h3>
-            <PieChart width={250} height={300}>
-              <Pie
-                data={empresasData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-                animationDuration={1000}
-              >
-                {empresasData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
+          {nivel <= 2 && (
+            <div className="chart">
+              <h3>Empresas</h3>
+              <PieChart width={250} height={300}>
+                <Pie
+                  data={empresasData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  label
+                  animationDuration={1000}
+                >
+                  {empresasData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </div>
+          )}
 
-          {/* Gráfico de Usuários */}
-          <div className="chart">
-            <h3>Usuários</h3>
-            <PieChart width={250} height={300}>
-              <Pie
-                data={usuariosData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                label
-                animationDuration={1000}
-              >
-                {usuariosData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
+          {nivel <= 3 && (
+            <div className="chart">
+              <h3>Usuários</h3>
+              <PieChart width={250} height={300}>
+                <Pie
+                  data={usuariosData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  label
+                  animationDuration={1000}
+                >
+                  {usuariosData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
 
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </div>
+          )}
 
-          {/* Gráfico de Equipamentos */}
-          <div className="chart">
-            <h3>Equipamentos</h3>
-            <PieChart width={250} height={300}>
-              <Pie
-                data={equipamentosData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                fill="#8884d8"
-                animationDuration={1000}
-                label
-              >
-                {equipamentosData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
+          {nivel <= 3 && (
+            <div className="chart">
+              <h3>Equipamentos</h3>
+              <PieChart width={250} height={300}>
+                <Pie
+                  data={equipamentosData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  animationDuration={1000}
+                  label
+                >
+                  {equipamentosData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </div>
+          )}
+
           <div className="chamados-recentes">
             <div className="chamados-header">
               <h3>Meus chamados</h3>

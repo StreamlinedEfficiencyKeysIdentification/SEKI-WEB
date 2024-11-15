@@ -4,8 +4,9 @@ import { Button, Drawer, Menu } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Logo from '/SEKI.svg';
 import './sideNav.css';
+import Cookies from 'js-cookie';
 
-const items = (navigate) => [
+const items = (navigate, nivel) => [
   {
     key: '/atendente/home',
     icon: <i className="bi bi-house"></i>,
@@ -21,57 +22,73 @@ const items = (navigate) => [
         key: '/atendente/chamados/lista',
         label: 'Lista de Chamados'
       },
-      {
-        key: '/atendente/chamados/criar',
-        label: 'Novo Chamado'
-      }
+      ...(nivel <= 3
+        ? [
+            {
+              key: '/atendente/chamados/criar',
+              label: 'Novo Chamado'
+            }
+          ]
+        : [])
     ]
   },
-  {
-    key: 'sub2',
-    label: 'Empresa',
-    icon: <i className="bi bi-building"></i>,
-    children: [
-      {
-        key: '/atendente/empresa/lista',
-        label: 'Lista de Empresas'
-      },
-      {
-        key: '/atendente/empresa/criar',
-        label: 'Nova Empresa'
-      }
-    ]
-  },
-  {
-    key: 'sub3',
-    label: 'Usuário',
-    icon: <i className="bi bi-person"></i>,
-    children: [
-      {
-        key: '/atendente/usuarios/lista',
-        label: 'Lista de Usuários'
-      },
-      {
-        key: '/atendente/usuarios/criar',
-        label: 'Novo Usuário'
-      }
-    ]
-  },
-  {
-    key: 'sub4',
-    label: 'Equipamento',
-    icon: <i className="bi bi-pc-display"></i>,
-    children: [
-      {
-        key: '/atendente/equipamento/lista',
-        label: 'Lista de Equipamentos'
-      },
-      {
-        key: '/atendente/equipamento/criar',
-        label: 'Novo Equipamento'
-      }
-    ]
-  }
+  ...(nivel <= 2
+    ? [
+        {
+          key: 'sub2',
+          label: 'Empresa',
+          icon: <i className="bi bi-building"></i>,
+          children: [
+            {
+              key: '/atendente/empresa/lista',
+              label: 'Lista de Empresas'
+            },
+            {
+              key: '/atendente/empresa/criar',
+              label: 'Nova Empresa'
+            }
+          ]
+        }
+      ]
+    : []),
+  ...(nivel <= 3
+    ? [
+        {
+          key: 'sub3',
+          label: 'Usuário',
+          icon: <i className="bi bi-person"></i>,
+          children: [
+            {
+              key: '/atendente/usuarios/lista',
+              label: 'Lista de Usuários'
+            },
+            {
+              key: '/atendente/usuarios/criar',
+              label: 'Novo Usuário'
+            }
+          ]
+        }
+      ]
+    : []),
+  ...(nivel <= 3
+    ? [
+        {
+          key: 'sub4',
+          label: 'Equipamento',
+          icon: <i className="bi bi-pc-display"></i>,
+          children: [
+            {
+              key: '/atendente/equipamento/lista',
+              label: 'Lista de Equipamentos'
+            },
+            {
+              key: '/atendente/equipamento/criar',
+              label: 'Novo Equipamento'
+            }
+          ]
+        }
+      ]
+    : [])
 ];
 
 function SideNav() {
@@ -81,6 +98,9 @@ function SideNav() {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [open, setOpen] = useState(false);
   const [mobile, setMobile] = useState(false);
+
+  const nivelData = Cookies.get('nivel');
+  const nivel = parseInt(nivelData);
 
   useEffect(() => {
     const handleResize = () => {
@@ -147,7 +167,7 @@ function SideNav() {
               inlineCollapsed={collapsed}
               onClick={handleClick}
               selectedKeys={selectedKeys}
-              items={items(navigate)}
+              items={items(navigate, nivel)}
             />
           </div>
         </div>

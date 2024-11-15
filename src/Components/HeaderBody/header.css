@@ -18,6 +18,7 @@
 
 .header-nav-search .bi-search {
   position: absolute;
+  top: 0.5rem;
   left: 0.5rem;
   font-size: 1rem;
   color: white;
@@ -25,7 +26,7 @@
 }
 
 .header-nav-search .search {
-  max-width: 300px;
+  width: 300px;
   color: white;
   background-color: transparent;
   border: none;
@@ -65,6 +66,34 @@
   color: white;
 }
 
+.popover-call {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.call-item {
+  display: flex;
+  cursor: pointer;
+  gap: 0.25rem;
+}
+
+.call-item:hover {
+  color: #449cd6;
+}
+
+.call-item label {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.call-item .item-titulo {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .header-nav ::-webkit-input-placeholder {
   color: white;
 }
@@ -93,7 +122,7 @@
   }
 
   .header-nav-search .search {
-    max-width: 300px;
-    padding: 0;
+    width: auto;
+    padding: 0.25rem;
   }
 }

@@ -32,6 +32,38 @@ const ChamadoDetalhes = () => {
 
   const uid = Cookies.get('uid');
 
+  const storeRecentChamado = useCallback(() => {
+    const newChamado = {
+      IDdoc,
+      IDchamado,
+      Titulo: chamado?.Titulo // Substitua pelo campo real de título do chamado
+    };
+
+    // Recupera a lista atual de chamados dos cookies
+    const chamadosList = JSON.parse(Cookies.get('recentChamados') || '[]');
+
+    // Verifica se o chamado atual já existe na lista e não o adiciona novamente
+    if (!chamadosList.some((item) => item.IDdoc === IDdoc && item.IDchamado === IDchamado)) {
+      // Adiciona o novo chamado no início da lista
+      chamadosList.unshift(newChamado);
+
+      // Garante que a lista tenha no máximo 5 chamados
+      if (chamadosList.length > 5) {
+        chamadosList.pop(); // Remove o último item se houver mais de 5 chamados
+      }
+
+      // Armazena a lista atualizada nos cookies
+      Cookies.set('recentChamados', JSON.stringify(chamadosList), { expires: 7 }); // Define expiração de 7 dias
+    }
+  }, [IDdoc, IDchamado, chamado]);
+
+  useEffect(() => {
+    // Chama a função para armazenar dados nos cookies quando o chamado é carregado
+    if (chamado) {
+      storeRecentChamado();
+    }
+  }, [chamado, storeRecentChamado]);
+
   useEffect(() => {
     const handleResize = () => {
       setMobile(window.innerWidth < 768);

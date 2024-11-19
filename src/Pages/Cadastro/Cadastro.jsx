@@ -88,10 +88,13 @@ function Cadastro() {
       user_email: email,
       user_name: nome
     };
+    const serviceKey = import.meta.env.VITE_EMAILJS_SERVICE_KEY;
+    const templateKey = import.meta.env.VITE_EMAILJS_TEMPLATE_KEY;
+    const userKey = import.meta.env.VITE_EMAILJS_USER_KEY;
 
     try {
       // Envia o e-mail usando o EmailJS
-      await emailjs.send('service_3v4rnsl', 'template_iecf4gn', formEmail, 'vfwarZrM3MChAFVqG');
+      await emailjs.send(serviceKey, templateKey, formEmail, userKey);
       toast.success('Mensagem enviada com sucesso!');
     } catch (error) {
       console.error('Erro ao enviar e-mail:', error);

@@ -83,6 +83,14 @@ function Login() {
           secure: true,
           sameSite: 'Strict'
         });
+        Cookies.set('nome', userResData.Nome, {
+          secure: true,
+          sameSite: 'Strict'
+        });
+        Cookies.set('usuario', userResData.Usuario, {
+          secure: true,
+          sameSite: 'Strict'
+        });
 
         // Buscar detalhes do usuário no Firestore
         const userDocRef = doc(db, 'DetalheUsuario', usuarioLogado);

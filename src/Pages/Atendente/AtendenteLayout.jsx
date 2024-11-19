@@ -3,10 +3,11 @@ import { Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
 import SideNav from '../../Components/SideNav/SideNav';
 import Header from '../../Components/HeaderBody/Header';
 import { HomeOutlined } from '@ant-design/icons';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Tour } from 'antd';
 import { auth } from '../../service/firebaseConfig';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
+import Cookies from 'js-cookie';
 
 const breadcrumbNameMap = {
   '/atendente/home': '',
@@ -24,6 +25,48 @@ const breadcrumbNameMap = {
 function AtendenteLayout() {
   const navigate = useNavigate();
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isTourOpen, setIsTourOpen] = useState(false);
+
+  const steps = [
+    {
+      title: 'Tour',
+      description: 'Vamos fazer um tour pelo sistema.',
+      target: null
+    },
+    {
+      title: 'Cabeçalho',
+      description: 'Este é o cabeçalho do sistema.',
+      target: () => document.querySelector('#tour-header')
+    },
+    {
+      title: 'Chamados recentes',
+      description: 'Use esta barra de pesquisa para encontrar os chamados acessados recentemente.',
+      target: () => document.querySelector('#tour-search')
+    },
+    {
+      title: 'Ajuda',
+      description: 'Aqui você será direcionado para ajuda caso tenha alguma dúvida ou problema.',
+      target: () => document.querySelector('#tour-notification')
+    },
+    {
+      title: 'Perfil',
+      description:
+        'Aqui você pode sair do usuário clicando no ícone ou movendo o mouse em cima para visualizar o usuário e o nome logado',
+      target: () => document.querySelector('#tour-profile')
+    },
+    {
+      title: 'Menu lateral',
+      description:
+        'Aqui está o menu lateral para navegar pelas opções principais. Dentre elas chamados, empresas, usuário e equipamentos.',
+      target: () => document.querySelector('#tour-sidenav'),
+      placement: 'right'
+    },
+    {
+      title: 'Conteúdo Principal',
+      description: 'Esta área mostra as informações da funcionalidade selecionada.',
+      target: () => document.querySelector('#tour-outlet')
+    }
+  ];
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -36,9 +79,19 @@ function AtendenteLayout() {
       // }
     });
 
+    const tourShown = Cookies.get('tourShown');
+    if (!tourShown) {
+      setIsTourOpen(true);
+    }
+
     // Limpa o listener quando o componente desmonta
     return () => unsubscribe();
   }, [navigate]);
+
+  const handleTourClose = () => {
+    setIsTourOpen(false);
+    Cookies.set('tourShown', 'true', { expires: 365 }); // Define o cookie para um ano
+  };
 
   const location = useLocation(); // Hook para capturar a localização atual
   const pathSnippets = location.pathname.split('/').filter((i) => i);
@@ -120,11 +173,13 @@ function AtendenteLayout() {
             </div>
           </div>
 
-          <div className="container-outlet">
+          <div className="container-outlet" id="tour-outlet">
             <Outlet key={refreshKey} />
           </div>
         </div>
       </div>
+
+      <Tour open={isTourOpen} onClose={handleTourClose} steps={steps} />
     </div>
   );
 }

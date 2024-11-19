@@ -139,7 +139,7 @@ function SideNav() {
   };
 
   return (
-    <div className="container-nav">
+    <div className="container-nav" id="tour-sidenav">
       {!mobile ? (
         <div className="side-nav">
           <div

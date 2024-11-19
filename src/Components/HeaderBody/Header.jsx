@@ -1,16 +1,31 @@
 import './header.css';
-import { Input, Popover } from 'antd';
+import { Input, Popover, Tooltip } from 'antd';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../service/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Header() {
   // Estado para armazenar os últimos 5 chamados
   const [recentCalls, setRecentCalls] = useState([]);
   const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const usuario = Cookies.get('usuario');
+      const nome = Cookies.get('nome');
+
+      setTitle(
+        <label>
+          {usuario} <br /> {nome}
+        </label>
+      );
+    };
+    fetchUser();
+  }, []);
 
   // Função para simular a obtenção dos últimos 5 chamados (exemplo)
   const fetchRecentCalls = () => {
@@ -59,8 +74,8 @@ function Header() {
   };
 
   return (
-    <div className="header-nav">
-      <div className="header-nav-search">
+    <div className="header-nav" id="tour-header">
+      <div className="header-nav-search" id="tour-search">
         <Popover
           content={popoverContent}
           title="Últimos chamados"
@@ -76,9 +91,11 @@ function Header() {
         </Popover>
       </div>
       <div className="header-nav-personal">
-        <i className="bi bi-question-circle"></i>
+        <i className="bi bi-question-circle" id="tour-notification"></i>
         <div className="personal">
-          <i className="bi bi-person-circle" onClick={logout}></i>
+          <Tooltip placement="bottom" title={title}>
+            <i className="bi bi-person-circle" id="tour-profile" onClick={logout}></i>
+          </Tooltip>
         </div>
       </div>
     </div>

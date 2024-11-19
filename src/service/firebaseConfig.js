@@ -5,13 +5,13 @@ import { getFirestore } from 'firebase/firestore';
 
 //Configuração do firebase
 const firebaseConfig = {
-  apiKey: 'AIzaSyDl1-EOxkyA3BgX7vF915h2-G3t8jz3wqw',
-  authDomain: 'seki-99cd1.firebaseapp.com',
-  projectId: 'seki-99cd1',
-  storageBucket: 'seki-99cd1.appspot.com',
-  messagingSenderId: '714606196800',
-  appId: '1:714606196800:web:3d0c9a805a48f5edbe07a5',
-  measurementId: 'G-5R8ZGL5YY0'
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 //Exportando o firebase

@@ -7,17 +7,63 @@ import usuariosService from '../../service/usuariosService';
 import './detalhe.css';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
+import { collection, onSnapshot, query, where, orderBy, getDoc, doc } from 'firebase/firestore';
+import { db } from './../../service/firebaseConfig';
+
+async function getNomeUsuario(uid) {
+  const docRef = doc(db, 'Usuarios', uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data().Nome; // Substitua "nome" pelo campo correto no seu documento de usuário
+  } else {
+    return 'Usuário não encontrado';
+  }
+}
+
+const useTramitesEmTempoReal = (IDempresa, IDchamado) => {
+  const [tramites, setTramites] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(
+        collection(db, 'Tramites'),
+        where('IDempresa', '==', IDempresa),
+        where('IDchamado', '==', IDchamado),
+        orderBy('DataMensagem', 'desc')
+      ),
+      async (snapshot) => {
+        const tramitesDoChamado = await Promise.all(
+          snapshot.docs.map(async (doc) => {
+            const data = doc.data();
+            const nomeUsuario = await getNomeUsuario(data.IDusuario);
+            return {
+              id: doc.id,
+              ...data,
+              nomeUsuario
+            };
+          })
+        );
+        setTramites(tramitesDoChamado);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [IDempresa, IDchamado]);
+
+  return tramites;
+};
 
 const ChamadoDetalhes = () => {
   const secretKey = import.meta.env.VITE_SECRET_KEY;
   const { IDdoc, IDchamado } = useParams();
+  const tramites = useTramitesEmTempoReal(IDdoc, IDchamado);
   const [chamado, setChamado] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [empresas, setEmpresas] = useState([]);
   const [usuario, setUsuario] = useState([]);
   const [responsaveis, setResponsaveis] = useState([]);
-  const [tramites, setTramites] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
   const [isChangedModal, setIsChangedModal] = useState(false);
@@ -99,23 +145,6 @@ const ChamadoDetalhes = () => {
       setUsuario([]);
     }
   }, []);
-
-  useEffect(() => {
-    async function carregarTramites() {
-      try {
-        const response = await chamadosService.findTramites(IDdoc, IDchamado);
-        if (response.success) {
-          setTramites(response.data);
-        } else {
-          console.error(response.message);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar trâmites:', error);
-      }
-    }
-
-    carregarTramites();
-  }, [IDdoc, IDchamado]);
 
   useEffect(() => {
     const fetchChamado = async () => {
@@ -302,32 +331,21 @@ const ChamadoDetalhes = () => {
                   <div className="linha"></div>
                   <div className="tramites-container">
                     {tramites.length > 0 ? (
-                      tramites
-                        .sort((a, b) => {
-                          const parseDate = (dateStr) => {
-                            const [datePart, timePart] = dateStr.split(' às ');
-                            const [day, month, year] = datePart.split('/').map(Number);
-                            const [hours, minutes, seconds] = timePart.split(':').map(Number);
-                            return new Date(year, month - 1, day, hours, minutes, seconds);
-                          };
+                      tramites.map((tramite, index) => {
+                        // Verifique se o IDusuario é igual ao UID armazenado no cookie
+                        const isCurrentUser = tramite.IDusuario === uid;
 
-                          return parseDate(b.DataMensagem) - parseDate(a.DataMensagem);
-                        })
-                        .map((tramite, index) => {
-                          // Verifique se o IDusuario é igual ao UID armazenado no cookie
-                          const isCurrentUser = tramite.usuarioDetalhes.IDusuario === uid;
-
-                          return (
-                            <div
-                              key={index}
-                              className={`tramite-item ${isCurrentUser ? 'tramite-direita' : 'tramite-esquerda'}`}
-                            >
-                              <div className="tramite-usuario">{tramite.usuarioDetalhes.Nome}:</div>
-                              <div className="tramite-mensagem">{tramite.Mensagem}</div>
-                              <div className="tramite-data">{tramite.DataMensagem}</div>
-                            </div>
-                          );
-                        })
+                        return (
+                          <div
+                            key={index}
+                            className={`tramite-item ${isCurrentUser ? 'tramite-direita' : 'tramite-esquerda'}`}
+                          >
+                            <div className="tramite-usuario">{tramite.nomeUsuario}:</div>
+                            <div className="tramite-mensagem">{tramite.Mensagem}</div>
+                            <div className="tramite-data">{tramite.DataMensagem.toDate().toLocaleString()}</div>
+                          </div>
+                        );
+                      })
                     ) : (
                       <Empty description="Não há dados" />
                     )}
@@ -412,32 +430,21 @@ const ChamadoDetalhes = () => {
                   <div className="linha"></div>
                   <div className="tramites-container">
                     {tramites.length > 0 ? (
-                      tramites
-                        .sort((a, b) => {
-                          const parseDate = (dateStr) => {
-                            const [datePart, timePart] = dateStr.split(' às ');
-                            const [day, month, year] = datePart.split('/').map(Number);
-                            const [hours, minutes, seconds] = timePart.split(':').map(Number);
-                            return new Date(year, month - 1, day, hours, minutes, seconds);
-                          };
+                      tramites.map((tramite, index) => {
+                        // Verifique se o IDusuario é igual ao UID armazenado no cookie
+                        const isCurrentUser = tramite.IDusuario === uid;
 
-                          return parseDate(b.DataMensagem) - parseDate(a.DataMensagem);
-                        })
-                        .map((tramite, index) => {
-                          // Verifique se o IDusuario é igual ao UID armazenado no cookie
-                          const isCurrentUser = tramite.usuarioDetalhes.IDusuario === uid;
-
-                          return (
-                            <div
-                              key={index}
-                              className={`tramite-item ${isCurrentUser ? 'tramite-direita' : 'tramite-esquerda'}`}
-                            >
-                              <div className="tramite-usuario">{tramite.usuarioDetalhes.Nome}:</div>
-                              <div className="tramite-mensagem">{tramite.Mensagem}</div>
-                              <div className="tramite-data">{tramite.DataMensagem}</div>
-                            </div>
-                          );
-                        })
+                        return (
+                          <div
+                            key={index}
+                            className={`tramite-item ${isCurrentUser ? 'tramite-direita' : 'tramite-esquerda'}`}
+                          >
+                            <div className="tramite-usuario">{tramite.nomeUsuario}:</div>
+                            <div className="tramite-mensagem">{tramite.Mensagem}</div>
+                            <div className="tramite-data">{tramite.DataMensagem.toDate().toLocaleString()}</div>
+                          </div>
+                        );
+                      })
                     ) : (
                       <Empty description="Não há dados" />
                     )}

@@ -229,7 +229,7 @@ function SideNav() {
                 setOpen(false);
               }}
               selectedKeys={selectedKeys}
-              items={items(navigate)}
+              items={items(navigate, nivel)}
             />
           </Drawer>
         </>

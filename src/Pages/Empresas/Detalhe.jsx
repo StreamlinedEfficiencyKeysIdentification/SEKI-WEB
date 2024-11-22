@@ -21,6 +21,7 @@ const EmpresaDetalhes = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [newSetor, setNewSetor] = useState('');
   const [editingSetorId, setEditingSetorId] = useState(null);
+  const [savingEmpresa, setSavingEmpresa] = useState(false);
 
   const formatarCNPJ = (value) => {
     return value
@@ -83,6 +84,9 @@ const EmpresaDetalhes = () => {
       alert('CNPJ inválido.');
       return;
     }
+
+    setSavingEmpresa(true);
+
     try {
       setIsChanged(false);
       const updatedEmpresa = {
@@ -96,7 +100,9 @@ const EmpresaDetalhes = () => {
       await empresasService.update(updatedEmpresa);
 
       message.success('Empresa atualizada com sucesso!');
+      setSavingEmpresa(false);
     } catch {
+      setSavingEmpresa(false);
       message.error('Erro ao atualizar empresa!');
     }
   };
@@ -381,10 +387,10 @@ const EmpresaDetalhes = () => {
 
                 <Form.Item>
                   <div className="botoes">
-                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                    <Button type="primary" htmlType="submit" disabled={!isChanged || savingEmpresa}>
                       Salvar
                     </Button>
-                    <Button onClick={onReset} disabled={!isChanged}>
+                    <Button onClick={onReset} disabled={!isChanged || savingEmpresa}>
                       Cancelar
                     </Button>
                   </div>

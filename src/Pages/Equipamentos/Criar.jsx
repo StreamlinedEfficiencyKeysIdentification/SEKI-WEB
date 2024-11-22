@@ -15,6 +15,7 @@ function CriarEquipamento() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
+  const [savingEquipamento, setSavingEquipamento] = useState(false);
 
   // Função para gerar o hash do QR code
   const handleGenerateQRCode = async (a) => {
@@ -70,6 +71,8 @@ function CriarEquipamento() {
 
   const handleSubmit = async (values) => {
     setIsChanged(false);
+    setSavingEquipamento(true);
+
     try {
       const qrcode = await handleGenerateQRCode();
 
@@ -89,10 +92,13 @@ function CriarEquipamento() {
 
         // Limpa os campos do formulário após o sucesso
         form.resetFields();
+        setSavingEquipamento(false);
       } catch {
+        setSavingEquipamento(false);
         message.error('Erro ao criar o equipamento. Tente novamente mais tarde.');
       }
     } catch {
+      setSavingEquipamento(false);
       message.error('Erro ao gerar qrcode.');
     }
   };
@@ -193,7 +199,7 @@ function CriarEquipamento() {
 
                 <Form.Item>
                   <div className="botoes">
-                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                    <Button type="primary" htmlType="submit" disabled={!isChanged || savingEquipamento}>
                       Criar
                     </Button>
                     <Button
@@ -202,7 +208,7 @@ function CriarEquipamento() {
                         setIsChanged(false);
                         setEmpresaSelecionada('');
                       }}
-                      disabled={!isChanged}
+                      disabled={!isChanged || savingEquipamento}
                     >
                       Limpar
                     </Button>

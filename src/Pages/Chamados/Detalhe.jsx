@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Select, Button, Modal, Input, Switch, message, Alert, Spin, Empty } from 'antd';
+import { Select, Button, Modal, Input, message, Alert, Spin, Empty } from 'antd';
 import chamadosService from '../../service/chamadosService';
 import empresasService from '../../service/empresasService';
 import usuariosService from '../../service/usuariosService';
@@ -68,6 +68,8 @@ const ChamadoDetalhes = () => {
   const [isChanged, setIsChanged] = useState(false);
   const [isChangedModal, setIsChangedModal] = useState(false);
   const [mobile, setMobile] = useState(false);
+  const [savingChamado, setSavingChamado] = useState(false);
+  const [savingTramite, setSavingTramite] = useState(false);
 
   // Variáveis temporárias para os campos editáveis
   const [empresaTemp, setEmpresaTemp] = useState(null);
@@ -76,7 +78,6 @@ const ChamadoDetalhes = () => {
 
   // Variáveis para o pop-up
   const [tramiteMessage, setTramiteMessage] = useState('');
-  const [sendEmail, setSendEmail] = useState(false);
 
   const encryptedUid = Cookies.get('uid');
   const uid = CryptoJS.AES.decrypt(encryptedUid, secretKey).toString(CryptoJS.enc.Utf8);
@@ -203,6 +204,8 @@ const ChamadoDetalhes = () => {
   };
 
   const handleSave = async () => {
+    setSavingChamado(true);
+
     try {
       const updatedChamado = {
         ...chamado,
@@ -211,13 +214,14 @@ const ChamadoDetalhes = () => {
         Status: statusTemp
       };
       await chamadosService.update(updatedChamado);
-      alert('Chamado atualizado com sucesso!');
+      message.success('Chamado atualizado com sucesso!');
       setChamado(updatedChamado);
       setIsChanged(false);
+      setSavingChamado(false);
       // window.location.reload(); // Recarrega a página
-    } catch (error) {
-      console.error('Erro ao atualizar o chamado:', error);
-      alert('Erro ao atualizar o chamado. Tente novamente.');
+    } catch {
+      setSavingChamado(false);
+      message.error('Erro ao atualizar o chamado. Tente novamente.');
     }
   };
 
@@ -237,6 +241,7 @@ const ChamadoDetalhes = () => {
     if (!tramiteMessage) {
       return message.error('A mensagem do trâmite não pode estar vazia.', 5);
     }
+    setSavingTramite(true);
     try {
       // Enviar os dados para a API
       await chamadosService.saveTramite({
@@ -247,8 +252,10 @@ const ChamadoDetalhes = () => {
       });
       setIsModalOpen(false);
       setTramiteMessage('');
+      setSavingTramite(false);
       message.success('Trâmite salvo com sucesso!');
     } catch (err) {
+      setSavingTramite(false);
       message.error(`Erro ao salvar o trâmite. ${err.message}`, 5);
     }
   };
@@ -274,7 +281,6 @@ const ChamadoDetalhes = () => {
 
           setStatusTemp(chamado.Status);
           setTramiteMessage('');
-          setSendEmail(false);
         }
       });
     } else {
@@ -287,10 +293,12 @@ const ChamadoDetalhes = () => {
       <div className="botao-chamado">
         {isChanged && (
           <div className="botoes">
-            <Button type="primary" onClick={handleSave}>
+            <Button type="primary" onClick={handleSave} disabled={savingChamado}>
               Salvar
             </Button>
-            <Button onClick={handleCancel}>Cancelar</Button>
+            <Button onClick={handleCancel} disabled={savingChamado}>
+              Cancelar
+            </Button>
           </div>
         )}
       </div>
@@ -456,7 +464,14 @@ const ChamadoDetalhes = () => {
         </>
       )}
 
-      <Modal title="Novo Trâmite" open={isModalOpen} onOk={handleOk} onCancel={handleModalCancel} destroyOnClose>
+      <Modal
+        title="Novo Trâmite"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleModalCancel}
+        confirmLoading={savingTramite}
+        destroyOnClose
+      >
         <Input.TextArea
           value={tramiteMessage}
           onChange={(e) => {
@@ -476,15 +491,6 @@ const ChamadoDetalhes = () => {
             { value: 'Concluído', label: 'Concluído' }
           ]}
         />
-        <div style={{ marginTop: '10px' }}>
-          <Switch
-            checked={sendEmail}
-            onChange={(checked) => {
-              setSendEmail(checked), setIsChangedModal(true);
-            }}
-          />
-          <span style={{ marginLeft: '10px' }}>Enviar e-mail</span>
-        </div>
       </Modal>
     </div>
   );

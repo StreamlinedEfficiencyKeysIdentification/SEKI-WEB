@@ -10,6 +10,7 @@ function CriarEmpresa() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
+  const [savingEmpresa, setSavingEmpresa] = useState(false);
 
   // Função para buscar empresas conforme o nível do usuário
   useEffect(() => {
@@ -53,6 +54,8 @@ function CriarEmpresa() {
       return;
     }
 
+    setSavingEmpresa(true);
+
     try {
       setIsChanged(false);
 
@@ -63,7 +66,9 @@ function CriarEmpresa() {
 
       // Limpa os campos do formulário após o sucesso
       form.resetFields();
+      setSavingEmpresa(false);
     } catch {
+      setSavingEmpresa(false);
       message.error('Erro ao criar empresa!');
     }
   };
@@ -135,7 +140,7 @@ function CriarEmpresa() {
 
                 <Form.Item>
                   <div className="botoes">
-                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                    <Button type="primary" htmlType="submit" disabled={!isChanged || savingEmpresa}>
                       Salvar
                     </Button>
                     <Button
@@ -143,7 +148,7 @@ function CriarEmpresa() {
                         form.resetFields();
                         setIsChanged(false);
                       }}
-                      disabled={!isChanged}
+                      disabled={!isChanged || savingEmpresa}
                     >
                       Cancelar
                     </Button>

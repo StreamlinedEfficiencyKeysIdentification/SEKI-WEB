@@ -22,6 +22,7 @@ const EquipamentoDetalhes = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [usuarioByUid, setUsuarioByUid] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
+  const [savingEquipamento, setSavingEquipamento] = useState(false);
   const [nomeEmpresa, setNomeEmpresa] = useState('');
   const [renderType, setRenderType] = useState('canvas');
   const [size, setSize] = useState(160);
@@ -82,6 +83,8 @@ const EquipamentoDetalhes = () => {
   }, [form, id]);
 
   const handleSave = async (values) => {
+    setSavingEquipamento(true);
+
     try {
       const updatedEquipamento = {
         IDdoc: equipamento.id,
@@ -96,8 +99,10 @@ const EquipamentoDetalhes = () => {
       await equipamentosService.update(updatedEquipamento);
       message.success('Equipamento atualizado com sucesso!');
       setIsChanged(false);
-      // window.location.reload(); // Recarrega a página
+
+      setSavingEquipamento(false);
     } catch {
+      setSavingEquipamento(false);
       message.error('Erro ao atualizar o Equipamento. Tente novamente mais tarde.');
     }
   };
@@ -280,10 +285,10 @@ const EquipamentoDetalhes = () => {
                   </Form.Item>
 
                   <div className="botoes">
-                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                    <Button type="primary" htmlType="submit" disabled={!isChanged || savingEquipamento}>
                       Salvar
                     </Button>
-                    <Button onClick={onReset} disabled={!isChanged}>
+                    <Button onClick={onReset} disabled={!isChanged || savingEquipamento}>
                       Cancelar
                     </Button>
                   </div>

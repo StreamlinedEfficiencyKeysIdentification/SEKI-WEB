@@ -15,6 +15,7 @@ const UsuarioDetalhes = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
+  const [savingUsuario, setSavingUsuario] = useState(false);
 
   const fetchUsuarioByUid = useCallback(async (uid) => {
     if (!uid) return;
@@ -75,6 +76,8 @@ const UsuarioDetalhes = () => {
   }, []);
 
   const handleSave = async (values) => {
+    setSavingUsuario(true);
+
     try {
       const updatedUsuario = {
         uid: usuario.uid,
@@ -88,10 +91,10 @@ const UsuarioDetalhes = () => {
       await usuariosService.update(updatedUsuario);
       message.success('Chamado atualizado com sucesso!');
       setIsChanged(false);
-      // window.location.reload(); // Recarrega a página
-    } catch (error) {
-      console.error('Erro ao atualizar o chamado:', error);
-      alert('Erro ao atualizar o chamado. Tente novamente.');
+      setSavingUsuario(false);
+    } catch {
+      setSavingUsuario(false);
+      message.error('Erro ao atualizar o chamado. Tente novamente.');
     }
   };
 
@@ -216,10 +219,10 @@ const UsuarioDetalhes = () => {
                   </Form.Item>
 
                   <div className="botoes">
-                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                    <Button type="primary" htmlType="submit" disabled={!isChanged || savingUsuario}>
                       Salvar
                     </Button>
-                    <Button onClick={onReset} disabled={!isChanged}>
+                    <Button onClick={onReset} disabled={!isChanged || savingUsuario}>
                       Cancelar
                     </Button>
                   </div>

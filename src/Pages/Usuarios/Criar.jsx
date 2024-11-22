@@ -12,6 +12,7 @@ function CriarUsuario() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
+  const [savingUsuario, setSavingUsuario] = useState(false);
 
   // Função para buscar empresas conforme o nível do usuário
   useEffect(() => {
@@ -38,6 +39,8 @@ function CriarUsuario() {
   }, []);
 
   const handleSubmit = async (values) => {
+    setSavingUsuario(true);
+
     try {
       setIsChanged(false);
 
@@ -56,12 +59,14 @@ function CriarUsuario() {
 
         // Limpa os campos do formulário após o sucesso
         form.resetFields();
+        setSavingUsuario(false);
       } else {
+        setSavingUsuario(false);
         message.error(response.message); // Mostra o erro retornado do backend
       }
-    } catch (error) {
+    } catch {
+      setSavingUsuario(false);
       message.error('Erro ao criar o usuário. Tente novamente mais tarde.');
-      console.error(error); // Para depuração
     }
   };
 
@@ -164,7 +169,7 @@ function CriarUsuario() {
 
                 <Form.Item>
                   <div className="botoes">
-                    <Button type="primary" htmlType="submit" disabled={!isChanged}>
+                    <Button type="primary" htmlType="submit" disabled={!isChanged || savingUsuario}>
                       Salvar
                     </Button>
                     <Button
@@ -172,7 +177,7 @@ function CriarUsuario() {
                         form.resetFields();
                         setIsChanged(false);
                       }}
-                      disabled={!isChanged}
+                      disabled={!isChanged || savingUsuario}
                     >
                       Cancelar
                     </Button>

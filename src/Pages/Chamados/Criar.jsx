@@ -16,6 +16,7 @@ function CriarChamado() {
   const [usuarioSelecionado, setUsuarioSelecionado] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [savingChamado, setSavingChamado] = useState(false);
 
   const [empresaTemp, setEmpresaTemp] = useState(null);
   const [usuarioTemp, setUsuarioTemp] = useState(null);
@@ -53,6 +54,7 @@ function CriarChamado() {
   }, [empresaSelecionada]);
 
   const handleSubmit = async (values) => {
+    setSavingChamado(true);
     try {
       // Chama o serviço para salvar o chamado
       await chamadosService.save(values.titulo, values.descricao, empresaSelecionada, usuarioSelecionado);
@@ -61,8 +63,9 @@ function CriarChamado() {
 
       // Limpa os campos do formulário após o sucesso
       onReset();
-    } catch (error) {
-      console.error(error);
+      setSavingChamado(false);
+    } catch {
+      setSavingChamado(false);
       message.error('Erro ao criar o chamado!');
     }
   };
@@ -188,10 +191,12 @@ function CriarChamado() {
                 </Form.Item>
                 <Form.Item>
                   <div className="botoes">
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" disabled={savingChamado}>
                       Criar
                     </Button>
-                    <Button onClick={onReset}>Limpar</Button>
+                    <Button onClick={onReset} disabled={savingChamado}>
+                      Limpar
+                    </Button>
                   </div>
                 </Form.Item>
               </Form>

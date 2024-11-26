@@ -130,29 +130,29 @@ function CriarEquipamento() {
                 onValuesChange={() => setIsChanged(true)}
               >
                 <Form.Item
-                  label="Modelo"
-                  name="marca"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Por favor, insira uma Razão Social!'
-                    }
-                  ]}
-                >
-                  <Input placeholder="Digite a Razão Social da empresa" />
-                </Form.Item>
-
-                <Form.Item
                   label="Marca"
                   name="modelo"
                   rules={[
                     {
                       required: true,
-                      message: 'Por favor, insira uma Razão Social!'
+                      message: 'Por favor, insira a Marca do Equipamento!'
                     }
                   ]}
                 >
-                  <Input placeholder="Digite a Razão Social da empresa" />
+                  <Input placeholder="Ex: Dell" />
+                </Form.Item>
+
+                <Form.Item
+                  label="Modelo"
+                  name="marca"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Por favor, insira o modelo do Equipamento!'
+                    }
+                  ]}
+                >
+                  <Input placeholder="Ex: Inspirion 15" />
                 </Form.Item>
 
                 <Form.Item
@@ -180,13 +180,13 @@ function CriarEquipamento() {
                   rules={[
                     {
                       required: true,
-                      message: 'Por favor, selecione uma empresa!'
+                      message: 'Por favor, selecione o setor em que o Equipamento esta!'
                     }
                   ]}
                 >
                   <Select
                     showSearch
-                    placeholder="Selecione uma empresa"
+                    placeholder="Selecione o setor"
                     optionFilterProp="label"
                     options={setores}
                     disabled={!empresaSelecionada}
@@ -194,7 +194,12 @@ function CriarEquipamento() {
                 </Form.Item>
 
                 <Form.Item label="Usuário" name="usuario">
-                  <Select showSearch placeholder="Selecione uma empresa" optionFilterProp="label" options={usuarios} />
+                  <Select
+                    showSearch
+                    placeholder="Selecione o usuário que pertence ao Equipamento"
+                    optionFilterProp="label"
+                    options={usuarios}
+                  />
                 </Form.Item>
 
                 <Form.Item>

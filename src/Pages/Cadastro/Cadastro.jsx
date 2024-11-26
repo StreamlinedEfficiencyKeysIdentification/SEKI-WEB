@@ -2,7 +2,7 @@ import './cadastro.css';
 import Logo from '/SEKI.svg';
 import ImgCad from '/ImgCadastro.svg';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { db, auth } from '../../service/firebaseConfig';
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { collection, doc, setDoc, getDocs, serverTimestamp } from 'firebase/firestore';
@@ -297,7 +297,7 @@ function Cadastro() {
           <div className="i-have-account">
             <label>
               Já sou cadastrado.
-              <a href="/login">Quero fazer Login</a>
+              <RouterLink to="/login">Quero fazer Login</RouterLink>
             </label>
           </div>
         </form>

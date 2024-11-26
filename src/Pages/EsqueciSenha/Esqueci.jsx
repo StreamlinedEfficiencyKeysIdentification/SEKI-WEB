@@ -1,6 +1,6 @@
 import Logo from '/SEKI.svg';
 import './esqueci.css';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { auth } from './../../service/firebaseConfig';
 import { useState } from 'react';
 
@@ -52,7 +52,7 @@ function Esqueci() {
           <button type="submit">Enviar</button>
           <div className="back-to-login">
             <p>
-              Voltar para o<a href="/login">Login</a>
+              Voltar para o<RouterLink to="/login">Login</RouterLink>
             </p>
           </div>
         </form>

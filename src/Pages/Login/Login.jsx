@@ -1,6 +1,6 @@
 import Logo from '/SEKI.svg';
 import './login.css';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { auth, db } from './../../service/firebaseConfig';
 import {
@@ -165,7 +165,7 @@ function Login() {
               <input type="checkbox" id="check-lembrar" value={lembrar} onChange={(e) => setLembrar(e.target.value)} />
               Lembrar de mim
             </label>
-            <a href="/esqueci">Esqueci minha senha</a>
+            <RouterLink to="/esqueci">Esqueci minha senha</RouterLink>
           </div>
           <button type="submit" disabled={loading} style={{ backgroundColor: !loading ? '#0072bb' : 'gray' }}>
             Entrar
@@ -173,7 +173,7 @@ function Login() {
           <div className="dont-have-account">
             <p>
               Ainda não tem conta?
-              <a href="/cadastro">Cadastre-se</a>
+              <RouterLink to="/cadastro">Cadastre-se</RouterLink>
             </p>
           </div>
         </form>
